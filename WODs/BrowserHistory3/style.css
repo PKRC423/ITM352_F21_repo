@@ -32,6 +32,7 @@ img {
     padding: 3em;
 }
 .middle {
+    width: 300px;
     margin-left: 300px;
     margin-right: 300px;
     padding: 3em;
