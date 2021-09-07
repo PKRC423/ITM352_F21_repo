@@ -1,18 +1,6 @@
 h1, h2 {
     font-family: 'Oswald', sans-serif;
 }
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-li {
-    display: inline;
-}
-#index a{
-    margin-left: 50px;
-    margin-right: 50px;
-}
 body {
     font-family: 'Open sans', sans-serif;
     color: darkblue;
@@ -22,21 +10,4 @@ body {
 }
 img {
     float: left;
-    margin-right: 10px;
-}
-.left {
-    float: left;
-    width: 300px;
-    padding: 3em;
-}
-.right {
-    float: right;
-    width: 300px;
-    padding: 3em;
-}
-.middle {
-    width: 300px;
-    margin-left: 300px;
-    margin-right: 300px;
-    padding: 3em;
 }
