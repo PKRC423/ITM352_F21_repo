@@ -3,7 +3,7 @@ body {
     width: 800px;
     margin: 0 auto;
 }
-/* Typography */ 
+/* Styling the products display */ 
 #item {
     width: 200px;
     height: 200px;
@@ -18,11 +18,23 @@ main {
     flex-flow: row wrap;
     justify-content: space-around;
     background-image: "phone_globe.kpg";
-    color: black
-    ;
+    color: red;
 }
-/* Styling the products display */ 
+/* Typography */  
 div {
     border: 5px solid black;
     display: flex;
+}
+.rotate img
+{
+  animation: rotation .3s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }

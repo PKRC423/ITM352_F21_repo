@@ -5,10 +5,10 @@ a. Open a blank webpage, inspect, then go to the Console and use document.write(
 b. Explain how you could add the current date and time a web page using server side web page processing.
             You can do it by making the code have a script that will keep updating the user on the time it is with the code given in lab.
 c. Explain why the date and time for (a) may be different than (b)
-
+It depends on where the system they are requesting on is on the globe. They could be in different time zones yet still interacting on the same server, like online video games.
 Exercise #2:
 ----How is a static web page different than a dynamic web page? Give an example of each (explain or show code).
-
+In a static website, pages will stay the same unless someone manually changes it. While dynamic websites, the content can differ between users. Dynamic site frequently change while static ones do not very often.
 Exercise #3:
 Make a directory Lab3 in your personal 352 repo. In this directory, create a new file hello.html and use an EMMET boilerplate to start and add the following inside the body:
 
@@ -16,13 +16,13 @@ Make a directory Lab3 in your personal 352 repo. In this directory, create a new
 Start your local server and request hello.html. Inspect the page and using the browser console type demo and see what you get. Then starting from document get the element by ID then the innerHTML property. Now change set the innerHTML to “Goodby World!”.
 
 a) ----What happened in the browser? Explain this.
-
+Manually through the website's console we can create set values for elements of the website. 
 b) Now right-click in the page and select View Page Source. Looking at the HTML source, 
 -----explain why the paragraph tag still has “Hello World!” and not “Goodby World!” in it. Hint: Think about the DOM what you are actually changing with the script code.
-
+Because that is what is shwon on the source we requested. The browser recieved the request and read the code, interpretted it, and told us what it interpretted.
 c) Close the page source page and on the hello.html page right-click and select Inspect. Go to the Elements tab ann navigate to the paragraph element (or use the selector and click in the paragraph). 
 -------Why is the value here “Goodby World!”? Hint: The Elements view is a DOM tree for the page.
-
+The Source is what it is and can only be changed manually, while the DOM is dynamic.
 Exercise #4: SmartPhoneProducts1_1 “whirling dervish image game”
 Using Javascript and the DOM, make a little image game that has the images rotate for an onmouseover event and stop on an onclick event.
 
