@@ -1,0 +1,27 @@
+/* General */  
+body {
+    width: 800px;
+    margin: 0 auto;
+}
+/* Styling the products display */ 
+#item {
+    width: 200px;
+    height: 200px;
+}
+/* block styling */
+h1, h2 {
+    align-content: center;
+}
+/* Form styling */
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    background-image: "phone_globe.kpg";
+    color: red;
+}
+/* Typography */  
+div {
+    border: 5px solid black;
+    display: flex;
+}

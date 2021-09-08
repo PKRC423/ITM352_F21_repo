@@ -1,0 +1,52 @@
+Exercise #1:
+a. Open a blank webpage, inspect, then go to the Console and use document.write(new Date());. 
+------Explain how you could this to add the current date and time a web page using client side web page processing.
+            You can use this to add the date/time to any page so the user could see it while on your site, it would show the time through commands made on the site console throught the inspect option.
+b. Explain how you could add the current date and time a web page using server side web page processing.
+            You can do it by making the code have a script that will keep updating the user on the time it is with the code given in lab.
+c. Explain why the date and time for (a) may be different than (b)
+
+Exercise #2:
+----How is a static web page different than a dynamic web page? Give an example of each (explain or show code).
+
+Exercise #3:
+Make a directory Lab3 in your personal 352 repo. In this directory, create a new file hello.html and use an EMMET boilerplate to start and add the following inside the body:
+
+<p id="demo">Hello World!</p>
+Start your local server and request hello.html. Inspect the page and using the browser console type demo and see what you get. Then starting from document get the element by ID then the innerHTML property. Now change set the innerHTML to “Goodby World!”.
+
+a) ----What happened in the browser? Explain this.
+
+b) Now right-click in the page and select View Page Source. Looking at the HTML source, 
+-----explain why the paragraph tag still has “Hello World!” and not “Goodby World!” in it. Hint: Think about the DOM what you are actually changing with the script code.
+
+c) Close the page source page and on the hello.html page right-click and select Inspect. Go to the Elements tab ann navigate to the paragraph element (or use the selector and click in the paragraph). 
+-------Why is the value here “Goodby World!”? Hint: The Elements view is a DOM tree for the page.
+
+Exercise #4: SmartPhoneProducts1_1 “whirling dervish image game”
+Using Javascript and the DOM, make a little image game that has the images rotate for an onmouseover event and stop on an onclick event.
+
+Task 1:
+Make a copy of SmartPhoneProducts1 and rename the directory SmartPhoneProducts1_1. If you don’t have a working version of SmartPhoneProducts1 you can use get a copy here.
+
+Task 2: Add the following to the stylesheet
+.rotate img
+{
+  animation: rotation .3s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+Task 3:
+Set the onmouseover event for the first <section> to change its className property to 'item rotate' (use the this reference to access the DOM object for this element). Save and refresh the page and test that the icon spins when the mouse moves over it. Refresh the page to stop the spin! Use find and replace to change the other <section> tags to match this one.
+
+Task 4:
+Now set the onclick event attribute for <section> elements to set the class to just 'item'. Refresh the page after saving the file and move the mouse over an image to get it spinning. When you click on the image it should stop. It may be a little tricky to click the mouse and get it to stop with moving the mouse which will start it spinnign again! The game is to get everything spinng and see how quickly you can get all of them to stop by clicking on the images.
+
+Here’s an example of how SmartPhoneProducts1_1 (with Extra Credit) should work when you’re done:
