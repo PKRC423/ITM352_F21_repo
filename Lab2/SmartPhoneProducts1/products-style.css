@@ -17,7 +17,7 @@ main {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    background-image: "Images/phone_globe.jpg";
+    background-image: url("Images/phone_globe.jpg");
     color: black
     ;
 }
