@@ -18,7 +18,7 @@ main {
     flex-flow: row wrap;
     justify-content: space-around;
     background-image: url("Images/phone_globe.jpg");
-    color: black
+    color: white;
     ;
 }
 /* Styling the products display */ 
