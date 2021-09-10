@@ -3,7 +3,7 @@ body {
     width: 800px;
     margin: 0 auto;
 }
-/* Styling the products display */ 
+/* Typography */ 
 #item {
     width: 200px;
     height: 200px;
@@ -17,10 +17,11 @@ main {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    background-image: "phone_globe.kpg";
-    color: red;
+    background-image: url("Images/phone_globe.jpg");
+    color: white;
+    ;
 }
-/* Typography */  
+/* Styling the products display */ 
 div {
     border: 5px solid black;
     display: flex;
