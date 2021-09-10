@@ -44,7 +44,7 @@ Task 2: Create a directory SmartPhoneProducts1 and an empty file in it store.htm
 
 Taks 3. Add a title Smartphone Store Home and a top-level heading in the body <your name> Used Smart Phone Store. Go to the URL localhost:8080/SmartPhoneProducts1/store.text to view the page. 
 	---------What did you see in the console output? What do you see in the browsers address bar? Explain this! Why is the web page not rendering? (i.e. the HTML is shown, not the web page it is supposed to create). Change the filename extension from .text to .html, page-back, refresh the page , click the renamed link and check that the web page looks as expected. Explain this.
-			
+			The webpage was supposed to be interpretted from the code but due to it's format. Since it is in a .txt format, it does not give the browser the que to interpret what is on the .txt. If it were a .html file it could be interpretted. 
 Task 4. Create a new file in SmartPhoneProducts1 “products_display.html”, add an HTML document boilerplate (EMMET doc), title it “Smartphone Products”, add a top-level heading “ Used Smart Phone Store".
 
 Task 5. In your browser, page-back and click on the products_display.html link. Note the GET request in the console output and the address in the browser address box. Check that the page is as expected.
@@ -53,8 +53,6 @@ Exercise #3: A simple home page for a web application
 Task 1. Rename store.html “index.html”, page-back, refresh the page. Explain what happened and why this is expected and useful.
 
 Task 2: Create a folder “Images” in your SmartPhoneProducts1 folder and right-click on the following image and “save image as” into this new folder:
-
-
 
 Task 3: Display this image with height="50%" width="50%" after the top-level heading.
 
