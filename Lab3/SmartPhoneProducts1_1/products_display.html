@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="products-style.css">
+    <style id="localstyle"></style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,28 +10,32 @@
 </head>
 <body>
     <h1>"Much Better Used Smart Phone Store</h1>
+
+    <input id='speedSlider' type='range' min=".1" max="5" step=".1" style="direction: rtl;"
+    onchange= "localstyle.innerHTML = '.rotate img {animation-duration: ' + speedSlider.value + 's;}';"
+    >
 <div><main>
-    <section class="item">
+    <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
         <h2>HTC</h2>
         <p>&dollar; 40.00</p>
         <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg">
     </section>
-    <section class="item">
+    <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
         <h2>Apple</h2>
         <p>&dollar; 75.00</p>
         <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg">
     </section>
-    <section class="item">
+    <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
         <h2>Nokia</h2>
         <p>&dollar; 35.00</p>
         <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg">
     </section>
-    <section class="item">
+    <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
         <h2>Samsung</h2>
         <p>&dollar; 45.00</p>
         <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg">
     </section>
-    <section class="item">
+    <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
         <h2>Blackberry</h2>
         <p>&dollar; 10.00</p>
         <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg">
