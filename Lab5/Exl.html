@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exl</title>
+</head>
+<body>
+    
+    <script>
+        //Ex1
+        var MyFullName = "Peter Rivera-Concannon"; //String due to "".
+        var NumOfMonthsSinceLastBday = 5; // Integer because it is a whole number without decimal points.
+        var AgeInFractions = 100/5; //Floating Point because it is a fraction, and if inputed a certain way could include decimals.
+        var AmIOver21 = false; //Boolean because it is a true or false statement.
+        document.write(MyFullName + ', ' + NumOfMonthsSinceLastBday + ', ' + AgeInFractions + ', ' + AmIOver21);
+
+        //Ex2
+        var NumOfKids = 2;
+        document.write("<br>"+"I would like to have " + NumOfKids + " Kids");
+        document.write("<br>"+ "I would like to have " + NumOfKids*AgeInFractions + " Kids");
+        //document.write("<br>"+ "I would like to have " + NumOfKids*AgeInFractions*stupid + " Kids");
+        //The  var stupid = ; was not defined so it would not write out the desired strings of text.I did recieve an error message that is in the browser sites console/sources because it could not find/identify a variable called "stupid"
+
+        //Ex3
+        var firstName = "Peter";
+        var lastName = "Rivera-Concannon";
+        var middleName = "Kaleo"; //No, my middle name is not after the newspaper hah
+        InitialsFullName = firstName[0] + ' ' + middleName[0] + ' ' + lastName[0];
+        FullName = "<p>" + firstName.bold() + "</p>" + "<p>" + middleName.italics() + "</p>" + "<p>" + lastName.fontsize(56) + "</p>";
+        document.write("<br>" + InitialsFullName + "<br>" + FullName);
+
+        //Ex4
+        var subTotal = 256.79;
+        var taxRate = 0.04721;
+        var total = subTotal + (subTotal * taxRate);
+        document.write("<p> The tax on Peter's Bill makes the total equal to: $" + total.toFixed(2) + "</p>");
+
+
+    </script>
+</body>
+</html>                                                          
