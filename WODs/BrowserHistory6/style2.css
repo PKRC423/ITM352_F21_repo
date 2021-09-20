@@ -1,7 +1,3 @@
-img {
-    float: left;
-    margin-right: 10px;
-}
 body {
     font-family: 'Open sans', sans-serif;
     color: yellow;
@@ -12,3 +8,4 @@ body {
 h1, h2 {
     font-family: 'Oswald', sans-serif;
 }
+
