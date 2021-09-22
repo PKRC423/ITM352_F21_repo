@@ -11,6 +11,10 @@ body {
 /* block styling */
 h1, h2 {
     align-content: center;
+  }
+footer {
+  border: 5px solid black;
+
 }
 /* Form styling */
 main {
@@ -21,6 +25,7 @@ main {
     color: white;
     ;
 }
+
 /* Styling the products display */ 
 div {
     border: 5px solid black;

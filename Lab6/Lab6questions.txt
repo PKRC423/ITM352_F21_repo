@@ -22,11 +22,12 @@ age + fav_num / day_of_birth * month_of_birth
 (age + fav_num) / day_of_birth * month_of_birth
 b. Explain why you get different values for the two expressions even they are nearly identical.
 
-Exercise #2:     Implicit and Explicit Type Casting DNF > 3 minutes)
+Exercise #2:     Implicit and Explicit Type Casting DNF > 3 minute)
     a) Use the console to inspect the expression 1.2 + "34" + 01067 * true and explain the steps in the evaluation of this expression that lead to the value 1.234567. What data type is this expression?
-
+        Using precedence and casting rules, we see that 1.2 is a number, "34" is the string "3" "4", 01067 is a number but it represents the correct number in octal form (this is due to the '01' at the beginning), and then it is multiplied by the 'true' boolean statement.
+        When doing this problem out we have to remeer precendece, so we would start at the '01067*true' because it has a higher precedence than the other operators, and the new value for that data would be a number since numbers have a 'higher casting' than boolean statements. Next would would combine the number 1.2 and the string "34". This would turn into "1.234" but since the string has a 'higher casting' then the value becomes a string. And the last step would be to combine the "1.234" string with the '567' number value. And it would turn into "1.234567" as a string due to casting order.
     b) In the expression  1.2 + "34" + 01067 * true  explicitly cast the "34" to a number and also re-cast another value to fix the warning (if you got one). Explain why the expression now evaluates to 602.2. Did you get a warning? If so, explain why or why not.
-
+        It came out to this because ther is no longer a string so it would actually add thevalues together instead of addoing them onto each other in string form. Not that I remember from class.
 Exercise #3:     Autoincrement and Autodecrement, unary operators and precidence
 In SmartPhoneProducts1_3 let’s count the number of clicks (hits) and mouseovers (spins) and display these counts on the page:
 
@@ -34,17 +35,31 @@ In SmartPhoneProducts1_3 let’s count the number of clicks (hits) and mouseover
 
     Put your new code here:
 
+        var hits = 0;
+        var spins = 0;
+
+        Hits:<span id="hits_span">0</span>
+        Spins:<span id="spins_span">0</span>
+
+        className='item rotate'
+        spins = spins + 1;
+        spins_span.innerHTML = spins;" 
+        
+        onclick="className='item'
+        hits = hits + 1;
+        hits_span.innerHTML = hits;">
+
 
     b) Modify the above to use the ++ operator. Try using it before and after and explain why you get the same results:
-
+        This is because the code '++' also stands for adding '1' to the value.
 
     c) Now use the ++ operator directly in the assignments of hits and spins to the innerHTML of hit_span and spin_span. Try both pre-increment and post-increment and explain the difference and which one is probably desired:
-
+        When the ++ or -- is before the variable then the number is added first than returned This is when it i being assigned in a line of code.
 
 (note: the best thing to do in this exercise is to first try things and then explain the results)
 
     d) Now use the ++ operator on hit_span.innerHTML and spin_span.innerHTML. Does it matter if you pre- vs post-increment? Explain why this works and one benefit of this approach:
-
+        Yes it does. It can make it much cleaner but it can also be very confusing if the rules of precedence are remembered incorrectly.
 
 Exercise #4:     Assignment operators
 a. Use the += assignment operator on hit_span.innerHTML to increase the hits by 2 whenever there is an onclick. Explain why this doesn’t work and show how to fix it:
