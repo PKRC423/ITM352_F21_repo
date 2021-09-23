@@ -59,11 +59,11 @@ In SmartPhoneProducts1_3 let’s count the number of clicks (hits) and mouseover
 (note: the best thing to do in this exercise is to first try things and then explain the results)
 
     d) Now use the ++ operator on hit_span.innerHTML and spin_span.innerHTML. Does it matter if you pre- vs post-increment? Explain why this works and one benefit of this approach:
-        Yes it does. It can make it much cleaner but it can also be very confusing if the rules of precedence are remembered incorrectly.
+        Yes it does. It can make it much cleaner but it can also be very confusing if the rules of precedence are remembered incorrectly and then formatted incorrectly within the doc.
 
 Exercise #4:     Assignment operators
 a. Use the += assignment operator on hit_span.innerHTML to increase the hits by 2 whenever there is an onclick. Explain why this doesn’t work and show how to fix it:
-
+        This does not work because it is treating it as a string. so instead of being 0.264 its just 0.2222222. to fix this you must use the .toFixed code to make it only 2 decimal places. Or cast it to a number.
 
 Revert your code to use the variables hits and spins to keep track of the clicks and mouseovers.
 
@@ -73,6 +73,10 @@ Add the following spans to the Hits and Spins <p>:
 Hit/Spin:<span id="hit_spin_span">0</span>
     a) Write a Javascript statement that assigns the expression hits_span.innerHTML/spins_span.innerHTML to the innerHTML of the hit_spin_span whenever <section> is clicked or mouseover. Should you explicitly cast things to Number data? Would it be better to use the variables hits and spins? Reload the page and try clicking and mouseover the <sections> Put your new code here and explain what the data types are and discuss the questions:
 
+    If we just used the variable hits and spins whichc are already numbers, so we can avoid explicitly cast things.
+
+temp = Number(hits_span.innerHTML) / Number(spins_span.innerHTML);
+        hit_spin_span.innerHTML = temp.toFixed(2);
 
 Exercise 6:    String expressions
 a. Create variables first_name and last_name and assign your first and last name to these. Create a string expression via concatenation where your first name is Bold and your last name is in italics and both are in a VERY LARGE font. Use this expression where you display your name in the <header>. 
@@ -87,10 +91,22 @@ Above the document.write() add a variable now = new Date(). The now variable wil
 
 On the third table row, replace 11:15 AM with a string template expression using the appropiate methods to get the current hours and minutes from now (a Date object). For the hours, use the expression (hours + 11) % 12 + 1 to convert 25-hour time to 12-hour time. To get the AM/PM, use the ternary expression (hours < 12)?'AM':'PM'. Before you use this expression, test that this expression gives AM for hours < 12 and PM for hours > 12. Be careful to note that the ternary operator ? has lower precedence than the + operator which may cause the expression not to evaluate to what you expect. 
     Put your string template code here:
-
+                   
+                    <script>
+        var now = new Date();
+            document.write(`
+            <table border="1" style="margin-left: auto; margin-right: auto; text-align: center;">
+                <tr><th colspan="2"><h1>Your One Stop For Used Phones - ${first_name[0]}.${last_name[0]}.'s</h1></th></tr>
+                <tr><td>1.</td><td><br />Copyright @ ${first_name + ' ' + last_name}</td></tr>
+                <tr><td>2.</td><td>${now.getFullYear()}</td></tr>
+                <tr><td>3.</td><td>${(now.getHours() + 11) % 12 + 1 }:${now.getMinutes() + (now.getMinutes() <10?'0':'')}${(now.getHours() < 12)?'AM':'PM'} </td></tr>
+            </table>
+            `)
+        </script>
 
 
 Exercise 7: Formatting floats
 Use the toFixed() method for a Number to format the hits/spins for hit_spin_span to 2 decimal points. You can use this on the expression directly and do not need to create a new variable. Explain why the result is a String and 
     put your code here:
-
+        The result is a string because it is temporary and everchanging.
+hit_spin_span.innerHTML = temp.toFixed(2);

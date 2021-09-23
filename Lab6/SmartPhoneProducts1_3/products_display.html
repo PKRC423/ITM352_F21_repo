@@ -109,7 +109,7 @@
                 <tr><th colspan="2"><h1>Your One Stop For Used Phones - ${first_name[0]}.${last_name[0]}.'s</h1></th></tr>
                 <tr><td>1.</td><td><br />Copyright @ ${first_name + ' ' + last_name}</td></tr>
                 <tr><td>2.</td><td>${now.getFullYear()}</td></tr>
-                <tr><td>3.</td><td>11:15 AM</td></tr>
+                <tr><td>3.</td><td>${(now.getHours() + 11) % 12 + 1 }:${now.getMinutes() + (now.getMinutes() <10?'0':'')}${(now.getHours() < 12)?'AM':'PM'} </td></tr>
             </table>
             `)
         </script>
