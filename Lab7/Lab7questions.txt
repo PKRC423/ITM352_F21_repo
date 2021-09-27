@@ -1,0 +1,75 @@
+Start by creating a Lab7 directory in your repo and add a copy of your SmartPhoneProducts1_3 project from Lab3 and rename it SmartPhoneProducts1_4. Start your http-server and load the products_display.html page then open the JS console in your browser.
+
+Exercise #1: Conditional Expressions (total 6 minutes)
+Add the following spans to the Hits and Spins <p>:
+
+You win:<span id="win_span">pending...</span>
+    a) Write a Javascript statement that sets the innerHTML of the win_span whenever <section> is clicked or mouseover to true whenever there spins is less than twice the hits and false otherwise. Do you need to convert the value of the expression to a String? Reload the page and try clicking and mouseover the images. Put your new code here:
+
+No we do not need to convert the expression to a String.
+
+if (ratio < 0.5) {
+            win_span.innerHTML = true;
+        }else
+        {
+            win_span.innerHTML = false;
+        }
+
+    b. Modify the expression so that it is false unless hits is less than spins (use the && operator). New code here:
+
+
+    c. Declare a varible over_half and initialize it with false. Use an assignment operator expression that sets over_half to true once the hits and spins conditions are met as in (b) above and it never changes to false after (this is called a “flag” variable). Use over_half for the innerHTML of the win_span. New code here:
+
+
+Exercise #2: if statements (total 10 minutes)
+    a. Write an if-statement that will only increment spins and set the image spinning onmouseover only when the image is not already spinning. This is to avoid additional spin counts when mousing over an already spinning image. You know the image is spinning if className has rotate in it. New code here:
+
+
+    b. Now write an if-else statement that will only increment hits and stop the image spinning onclick only when the image is already spinning. If the image is not spinning when onclick set it spinning. Explain why the else is needed for this. Code and explanation here:
+
+
+    c. What is the problem if you use this.className='item' rather than if(this.className=='item') in exercise (a) above?
+
+
+Exercise #3: if-else if (5 minutes)
+A product that you are selling is discounted depending on the number purchased. Try out the following “nested if-statement” code that sets the win_span to indicate progress towards winning:
+
+ 
+
+// -- Winning progress depends on hits/spins
+hits_spins_ratio = hits/spins;
+if ( hits_spins_ratio > 0 ) {
+    progress = 'On your way!';
+    if ( hits_spins_ratio >= 0.25 ) {
+        progress = 'Almost there!';
+        if ( hits_spins_ratio >= 0.5 ) {
+            if( hits < spins) { 
+                progress = 'You win!';
+            }
+        }
+    }
+}
+else {
+    progress = 'Get going!' ;
+}
+
+Rewrite the above program using if-elseif-else statements to remove the nested if-statements. Hint: don’t just replace “if” statements with “if-else” in the above. You will have to move the end }’s too! Consider example hits_spins_ratio of 0, .1, .2, and .5 and make sure that the correct progress message is set for each.
+
+Paste source code here
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+Extra Credit:
+
+Create a switch statement that switches on the value of a variable called month.  The value of month will be a string containing the name of the month, e.g. “January”, “February”, etc.  Use the switch statement to set the value of the variable num_days, which should contain the correct number of days in the month.  Make sure that your switch contains a “default” branch, in case the value of month is not set correctly.  Output an error in the default branch and set the value of month to -1 (i.e., a value that indicates that an error has occurred).
+
+Paste source code here
