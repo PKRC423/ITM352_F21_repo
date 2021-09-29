@@ -27,49 +27,85 @@
             Hits:<span id="hits_span">0</span>
             Spins:<span id="spins_span">0</span>
             Hits/Spins:<span id="hit_spin_span">0</span>
-            You win:<span id="win_span">pending...</span>
+            You win:<span id="win_span"> pending...</span>
         </p>
 
         <input id='speedSlider' type='range' min=".1" max="5" step=".1" style="direction: rtl;"
             onchange="localstyle.innerHTML = '.rotate img {animation-duration: ' + speedSlider.value + 's;}';">
     </header>
+
+
+
     <div>
         <main>
-            <section class="item"
-            onmouseover="
-
-if (this.className.includes( 'rotate' )) {
-            this.className = 'item';
-        } else {
+            <section 
+            class="item"onmouseover="
+        if (this.className.includes( 'rotate' ) == false) {
+            spins++;
             this.className ='item rotate';
         }
 
-        className='item rotate'
-        spins++;
+    // -- Winning progress depends on hits/spins
+        hits_spins_ratio = hits/spins;
+        if ( hits_spins_ratio > 0 ) {
+            progress = 'On your way!';
+            if ( hits_spins_ratio >= 0.25 ) {
+                progress = 'Almost there!';
+                if ( hits_spins_ratio >= 0.5 ) {
+                    if( hits < spins) { 
+                        progress = 'You win!';
+                    }
+                }
+            }
+        }
+        else {
+            progress = 'Get going!' ;
+        }
+
         spins_span.innerHTML = spins;
         ratio= Number(hits_span.innerHTML) / Number(spins_span.innerHTML);
         hit_spin_span.innerHTML = ratio.toFixed(2);
-        /*if (ratio <= 0.5) {
-            over_half = false;
-            win_span.innerHTML = over_half;
-        }else
-        {
-            over_half = true;
-            win_span.innerHTML = over_half;
-        }*/
-
-        if (ratio > 0.5) {
+  
+        //Previous code for ratio and you win stuff.
+        /*     if (ratio > 0.5) {
             over_half= true;
-        {
-            win_span.innerHTML= over_half;
+        } else {
+            over_half = false;
         }
-    }
+        */
+        win_span.innerHTML= progress;
+
             "onclick="
         className='item'
         hits++;
+
+        // -- Winning progress depends on hits/spins
+        hits_spins_ratio = hits/spins;
+        if ( hits_spins_ratio > 0 ) {
+            progress = 'On your way!';
+            if ( hits_spins_ratio >= 0.25 ) {
+                progress = 'Almost there!';
+                if ( hits_spins_ratio >= 0.5 ) {
+                    if( hits < spins) { 
+                        progress = 'You win!';
+                    }
+                }
+            }
+        }
+        else {
+            progress = 'Get going!' ;
+        }
+
         hits_span.innerHTML = hits;
-        ratio= hits/spins;
-        hit_spin_span.innerHTML = ratio.toFixed(2);">
+        ratio= Number(hits_span.innerHTML) / Number(spins_span.innerHTML);
+        hit_spin_span.innerHTML = ratio.toFixed(2);
+       /* if (ratio > 0.5) {
+            over_half= true;
+        } else {
+            over_half = false;
+        }
+        */
+        win_span.innerHTML= progress;">
 
 
                 <h2>HTC</h2>

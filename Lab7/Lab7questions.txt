@@ -6,20 +6,31 @@ Add the following spans to the Hits and Spins <p>:
 You win:<span id="win_span">pending...</span>
     a) Write a Javascript statement that sets the innerHTML of the win_span whenever <section> is clicked or mouseover to true whenever there spins is less than twice the hits and false otherwise. Do you need to convert the value of the expression to a String? Reload the page and try clicking and mouseover the images. Put your new code here:
 
-No we do not need to convert the expression to a String.
+            No we do not need to convert the expression to a String.
 
-if (ratio < 0.5) {
-            win_span.innerHTML = true;
-        }else
-        {
-            win_span.innerHTML = false;
-        }
+                if (ratio < 0.5) {
+                            win_span.innerHTML = true;
+                        }else
+                        {
+                            win_span.innerHTML = false;
+                        }
 
     b. Modify the expression so that it is false unless hits is less than spins (use the && operator). New code here:
-
+        if (ratio < 0.5) {
+            over_half= false;
+        } else {
+            over_half = true;
+        }
+        win_span.innerHTML= over_half;
 
     c. Declare a varible over_half and initialize it with false. Use an assignment operator expression that sets over_half to true once the hits and spins conditions are met as in (b) above and it never changes to false after (this is called a “flag” variable). Use over_half for the innerHTML of the win_span. New code here:
 
+        if (ratio > 0.5) {
+            over_half= true;
+        } else {
+            over_half = false;
+        }
+        win_span.innerHTML= over_half;
 
 Exercise #2: if statements (total 10 minutes)
     a. Write an if-statement that will only increment spins and set the image spinning onmouseover only when the image is not already spinning. This is to avoid additional spin counts when mousing over an already spinning image. You know the image is spinning if className has rotate in it. New code here:
@@ -30,6 +41,7 @@ Exercise #2: if statements (total 10 minutes)
 
     c. What is the problem if you use this.className='item' rather than if(this.className=='item') in exercise (a) above?
 
+                A single = assigns something while == checks for equality***
 
 Exercise #3: if-else if (5 minutes)
 A product that you are selling is discounted depending on the number purchased. Try out the following “nested if-statement” code that sets the win_span to indicate progress towards winning:
