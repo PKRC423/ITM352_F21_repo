@@ -27,97 +27,60 @@
             Hits:<span id="hits_span">0</span>
             Spins:<span id="spins_span">0</span>
             Hits/Spins:<span id="hit_spin_span">0</span>
-            You win:<span id="win_span"> pending...</span>
+            Have you won yet:<span id="win_span"> ...pending</span>
         </p>
 
         <input id='speedSlider' type='range' min=".1" max="5" step=".1" style="direction: rtl;"
             onchange="localstyle.innerHTML = '.rotate img {animation-duration: ' + speedSlider.value + 's;}';">
     </header>
 
-
-
     <div>
         <main>
-            <section 
-            class="item"onmouseover="
-        if (this.className.includes( 'rotate' ) == false) {
-            this.className ='item rotate';
-            spins++;
-        }
-
-    // -- Winning progress depends on hits/spins
-        hits_spins_ratio = hits/spins;
-        if ( hits_spins_ratio > 0 ) {
-            progress = 'On your way!';
-        }else if ( hits_spins_ratio >= 0.25 ) {
-                progress = 'Almost there!';
-            }else if ( hits_spins_ratio >= 0.5 ) {
-            }else if( hits < spins) { 
-                        progress = 'You win!';
-                    }
-                }
+            <section class="item" onmouseover="
+            if (this.className.includes( 'rotate' ) == false) {
+                spins++;
+                this.className ='item rotate';
             }
-        }
-        else {
-            progress = 'Get going!' ;
-        }
-
-        spins_span.innerHTML = spins;
-        ratio= Number(hits_span.innerHTML) / Number(spins_span.innerHTML);
-        hit_spin_span.innerHTML = ratio.toFixed(2);
-  
-        //Previous code for ratio and you win stuff.
-        /*     if (ratio > 0.5) {
-            over_half= true;
-        } else {
-            over_half = false;
-        }
-        */
-        win_span.innerHTML= progress;
-
-            "onclick="
-        className='item'
-        ;
-
-        // -- Winning progress depends on hits/spins
-        hits_spins_ratio = hits/spins;
-        if ( hits_spins_ratio > 0 ) {
+            
+            // -- Winning progress depends on hits/spins
+            hit_spin_span = hits/spins;
+            if ( hit_spin_span > 0 ) {
             progress = 'On your way!';
-            if ( hits_spins_ratio >= 0.25 ) {
+            }else if ( hit_spin_span >= 0.25 ) {
                 progress = 'Almost there!';
-                if ( hits_spins_ratio >= 0.5 ) {
-                    if( hits < spins) { 
+                }else if ( hit_spin_span >= 0.5 ) {
+                    }else if( hits < spins) { 
                         progress = 'You win!';
-                    }
-                }
-            }
-        }
-        else {
-            progress = 'Get going!' ;
-        }
+                        }else {
+                            progress = 'Get going!' ;
+                        }
 
-        hits_span.innerHTML = hits;
-        ratio= Number(hits_span.innerHTML) / Number(spins_span.innerHTML);
-        hit_spin_span.innerHTML = ratio.toFixed(2);
-        if (this.classname.includes('rotate')) {
+            spins_span.innerHTML = spins;
+            hit_spin_span = hits/spins;
+            hit_spin_span.innerHTML = ratio.toFixed(2);
+            if (ratio > 0.5) {
+                over_half = true;
+            }
+            win_span.innerHTML = progress;
+            
+            " onclick="
+
+            if (this.classname.includes('rotate')) {
                 this.classname='item';
                 hits += 1;
         } else {
             this.classname='item rotate';
         }
 
-       /* if (ratio > 0.5) {
-            over_half= true;
-        } else {
-            over_half = false;
-        }
-        */
-        win_span.innerHTML= progress;">
-
-
+            hits++;
+            hits_span.innerHTML = hits;
+            hit_spin_span = hits/spins;
+            hit_spin_span.innerHTML = ratio.toFixed(2);
+            this.className='item' ;
+            ">
                 <h2>HTC</h2>
                 <p>&dollar; 40.00</p>
-                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg">
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg" alt="photo"></img>
             </section>
             <section class="item" onmouseover="
     
