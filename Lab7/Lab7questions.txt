@@ -16,28 +16,37 @@ You win:<span id="win_span">pending...</span>
                         }
 
     b. Modify the expression so that it is false unless hits is less than spins (use the && operator). New code here:
-        if (ratio < 0.5) {
-            over_half= false;
-        } else {
-            over_half = true;
+       if(hits/spins < 0.5 && hits < spins) {
+            win_span.innerHTML = true;
+        } else
+        {
+            win_span.innerHTML = false;
         }
-        win_span.innerHTML= over_half;
 
     c. Declare a varible over_half and initialize it with false. Use an assignment operator expression that sets over_half to true once the hits and spins conditions are met as in (b) above and it never changes to false after (this is called a “flag” variable). Use over_half for the innerHTML of the win_span. New code here:
 
-        if (ratio > 0.5) {
+       if (ratio > 0.5) {
             over_half= true;
         } else {
             over_half = false;
         }
-        win_span.innerHTML= over_half;
 
 Exercise #2: if statements (total 10 minutes)
     a. Write an if-statement that will only increment spins and set the image spinning onmouseover only when the image is not already spinning. This is to avoid additional spin counts when mousing over an already spinning image. You know the image is spinning if className has rotate in it. New code here:
 
+        if (this.className.includes( 'rotate' ) == false) {
+            spins++;
+            this.className ='item rotate';
+        }
 
     b. Now write an if-else statement that will only increment hits and stop the image spinning onclick only when the image is already spinning. If the image is not spinning when onclick set it spinning. Explain why the else is needed for this. Code and explanation here:
 
+        if (this.classname.includes("rotate")) {
+                this.classname='item';
+                hits += 1;
+        } else {
+            this.classname='item rotate';
+        }
 
     c. What is the problem if you use this.className='item' rather than if(this.className=='item') in exercise (a) above?
 
@@ -70,13 +79,22 @@ Rewrite the above program using if-elseif-else statements to remove the nested i
 Paste source code here
 
 
-
-
- 
-
- 
-
- 
+    // -- Winning progress depends on hits/spins
+        hits_spins_ratio = hits/spins;
+        if ( hits_spins_ratio > 0 ) {
+            progress = 'On your way!';
+        }else if ( hits_spins_ratio >= 0.25 ) {
+                progress = 'Almost there!';
+            }else if ( hits_spins_ratio >= 0.5 ) {
+            }else if( hits < spins) { 
+                        progress = 'You win!';
+                    }
+                }
+            }
+        }
+        else {
+            progress = 'Get going!' ;
+        } 
 
  
 
