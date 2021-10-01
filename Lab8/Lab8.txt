@@ -1,0 +1,135 @@
+Submission
+When we are done, submit work before the next class. If you cannot submit by this time, try to do so as soon as possible after class. Copy this lab with your answers and paste your into the Laulima assignment submission box to Laulima Assignments. If you do not submit something to Laulima you will not get credit.
+
+Do all your code in Node.js unless otherwise specified
+Start by creating a Lab8 directory in your repo and create a file products_data.js and add the following variables:
+
+ name1 = "HTC";
+ price1 = 40.00;
+ image1 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg";
+
+ name2 = "Apple";
+ price2 = 75.00;
+ image2 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg";
+
+ name3 = "Nokia";
+ price3 = 35.00;
+ image3 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg";
+
+ name4 = "Samsung";
+ price4 = 45.00;
+ image4 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg";
+
+ name5 = "Blackberry";
+ price5 = 10.00;
+ image5 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg";
+
+console.log("Product variables loaded...");
+Save the file. Open a terminal in the same directory and try node products_data.js and verify that you get the output Product variables loaded... on the Terminal window.
+
+Exercise 1: While
+Create a file Ex1.js and add the code require("./products_data.js"); and save the file. Use Node to execute the code in Ex1.js and verify that you get the output Product variables loaded... on the Terminal window. You will want to become familiar with Node’s require command as it enables you to load code and data from external files.
+
+a. Define a variable num_products equalling the number of items in products_data.js. Use a while loop to write a program that prints out (use console.log())numbers until num_products is reached. You will need to use a ‘counter’ variable such as number and increment it, e.g. number++. Use a better variable name for this counter! Make sure that you initialize this counter BEFORE the loop starts! Start counting at number 1.
+
+Hints : you want to test that a variable number is NOT equal to num_products and keep looping while this is TRUE. You may need to add 1 to the condition. The entire program should be around 5 lines of code.
+
+Paste source code here:
+                    var num_products = 5;
+
+                        var count = 1;
+                        while (count <= 5){
+                        console.log(count);
+                        count++;
+                    }
+
+
+b. Make a string template and use the expression eval('name' + number) to output the product name variables e.g. name1. Now add the number in front with a . after. After the loop, have it output That's all we have!
+
+                var num_products = 5;
+
+                    var count = 1;
+                    while (count <= 5){
+                    console.log(`${count}. ${eval('name' + count)}`);
+                    count++;
+                }
+                console.log("That's all we have!");
+
+c. Change the first line in products_data.js to var name1 = "HTC"; and re-run Ex1.js. Explain what error you get and why you get it. The more general concept here is Namespacing. It’s a bit complicated, but when a file is imported the code is executed in its own namespace. Variables defined in one namespace are not accessible in another (except globals, which are not variables). This is to avoid possible confusion on which variables are used in particular places (e.g. if the same variable name is used in different namespaces). If you want to transfer variables from an imported module, you will need to put the data into the exports object. For now, you can just use globals for everything. As your code gets more complicated and you start using many imported files (“modules”), you will need to use exports. Remove the var in front of name1 now.
+
+This is because it is trying to be accessed on a different Namespace than it was set on. And since it is not global than it cannot be used in different nameSpaces. It comes with an error that states the names are undefined.
+
+
+d. Rewrite your program in (b) to exit the loop if the number is greater than half num_products. Why do you need to change the conditional operator?
+
+        var num_products = 5;
+
+            var count = 5;
+            while (count <= num_products/2){
+            if (count > num_products/2) {
+                console.log("That's Enough!");
+                break;
+        }
+            console.log(`${count}. ${eval('name' + count)}`);
+            count++;
+        }
+console.log("That's all we have!"); 
+
+Hint: Take care to note that half num_products may not be a whole number. Counter values are whole numbers only.
+
+
+
+Exercise 2: break, continue, terminating (3 minutes)
+a) Rewrite your program in #1a (not 1b) to break the loop if number is greater than half num_products. When the program exits, output the line “That’s enough!”. Make the loop continue up to num_products rather than half as in (c).
+
+Hint: Create a single if-statement to break at the specified condition.
+
+Paste source code here:
+
+
+b) Rewrite your program in #2a to skip items greater than 25% of num_products age up to 75% of num_products. When the program skips these values it should output the line “<item name> is sold out!”.Your output should look like this:
+
+1. HTC
+Apple is sold out!
+Nokia is sold out!
+4. Samsung
+5. Blackberry
+Hint : Modify the if-statement with two boolean expressions connected by an &&. Before continuing the loop print out the skipped value message. Move the counter increment inside the while conditional and change the counter to start at 0.
+
+Paste source code here
+
+
+c) Rewrite your program in #2b to stop executing the program entirely (exit the process) if number is greater than half. When terminating it should output the line “Don’t ask for anything else!” and you should not see “That’s all we have!”
+
+Hint : this will require a single if-statement to throw an error or do a process.exit() call.
+
+Paste source code here
+
+
+Exercise 3: for-loop (5 minutes)
+a. Rewrite your program in #2 using a for-loop instead of a while-loop.
+
+Paste source code here
+
+
+
+b. Rewrite the program from part (a) using the condition eval("typeof name"+i) != 'undefined' to enable outputting products so long as there is a sequence of variables name1, name2, name3, .... Try adding a new product. Did it display? Try removing the last two products. Explain the benefits of this loop over setting the condition on num_products/
+
+Paste source code here:
+
+
+Exercise 5: Using loops to repeat code
+For this Exercise you will do everything in a web page. Create a file products_display.html add the following to the <head>:
+
+<script src="./products_data.js"></script>
+Start http-server and verify that there is a GET products_data.js in the terminal window when products_display.html is loaded. Inspect the page and verify that the product data variables are defined and the Product variables loaded... message appears in the console. Make sure you understand why this message appears here and not in the terminal window.
+
+a. Make an <table border="1"> and a header row with Number and use a loop and a string template with document.write() to output rows of product names and number. Your table should look like this:
+
+Number	Item
+1	HTC
+2	Apple
+3	Nokia
+4	Samsung
+5	Blackberry
+Explain why this is probably a better way to generate the table this way rather than repeated copies of the table rows:
