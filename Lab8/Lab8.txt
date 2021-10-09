@@ -85,7 +85,20 @@ a) Rewrite your program in #1a (not 1b) to break the loop if number is greater t
 Hint: Create a single if-statement to break at the specified condition.
 
 Paste source code here:
+                require("./products_data.js");
 
+                var num_products = 5;
+
+                var count = 5;
+                while (count <= num_products){
+                    if (count > num_products/2) {
+                        console.log("That's Enough!");
+                        break;
+                    }
+                    console.log(`${count}. ${eval('name' + count)}`);
+                    count++;
+                }
+                console.log("That's all we have!");
 
 b) Rewrite your program in #2a to skip items greater than 25% of num_products age up to 75% of num_products. When the program skips these values it should output the line “<item name> is sold out!”.Your output should look like this:
 
@@ -97,6 +110,24 @@ Nokia is sold out!
 Hint : Modify the if-statement with two boolean expressions connected by an &&. Before continuing the loop print out the skipped value message. Move the counter increment inside the while conditional and change the counter to start at 0.
 
 Paste source code here
+                   require("./products_data.js");
+
+                    var num_products = 5;
+                    var count = 0;
+
+                    var count = 5;
+                    while (count < num_products){
+                        count++;
+                        if (count > num_products/4 && count <(num_products * 0.75)) {
+                            console.log(`${eval('name' + count)} + is sold out.`);
+
+                        }
+                        else {
+                        console.log(`${count}. ${eval('name' + count)}`);
+                        }
+                    }
+                    console.log("That's all we have!");
+
 
 
 c) Rewrite your program in #2b to stop executing the program entirely (exit the process) if number is greater than half. When terminating it should output the line “Don’t ask for anything else!” and you should not see “That’s all we have!”
@@ -104,19 +135,50 @@ c) Rewrite your program in #2b to stop executing the program entirely (exit the 
 Hint : this will require a single if-statement to throw an error or do a process.exit() call.
 
 Paste source code here
+                   require("./products_data.js");
 
+                    var num_products = 5;
+                    var count = 0;
+
+                    var count = 5;
+                    while (count < num_products){
+                        count++;
+                        if (count > num_products/4 && count <(num_products * 0.75)) {
+                            console.log(`${eval('name' + count)} + is sold out.`);
+                            process.exit();
+                        }
+                        else {
+                        console.log(`${count}. ${eval('name' + count)}`);
+                        }
+                    }
+                    console.log("That's all we have!");
 
 Exercise 3: for-loop (5 minutes)
 a. Rewrite your program in #2 using a for-loop instead of a while-loop.
 
 Paste source code here
+                    require("./products_data.js");
 
+                    var num_products = 5;
+                    var count = 0;
 
+                    for (var count = 1; count <= num_products; count++) {
+                        console.log(`${count}. ${eval('name' + count)}`);
+                    }
 
 b. Rewrite the program from part (a) using the condition eval("typeof name"+i) != 'undefined' to enable outputting products so long as there is a sequence of variables name1, name2, name3, .... Try adding a new product. Did it display? Try removing the last two products. Explain the benefits of this loop over setting the condition on num_products/
 
-Paste source code here:
+                    It does not display because those names, prices, and images, are not defined and the program thinks it is done with the for loop. And once we switch to arrays  we won't have this issue possibly.
 
+Paste source code here:
+                    require("./products_data.js");
+
+                    var num_products = 5;
+                    var count = 0;
+
+                    for (var count = 1; eval("typeof name"+count) != 'undefined'; count++) {
+                        console.log(`${count}. ${eval('name' + count)}`);
+                    }
 
 Exercise 5: Using loops to repeat code
 For this Exercise you will do everything in a web page. Create a file products_display.html add the following to the <head>:
@@ -133,3 +195,33 @@ Number	Item
 4	Samsung
 5	Blackberry
 Explain why this is probably a better way to generate the table this way rather than repeated copies of the table rows:
+
+                It is better because then the variables are not hard-coded and the system is dynamic rather than static.
+                It is much easier to read (2 lines of code vs 5 line of html but imagine with 5million products, we could still use just those 2 lines instead of repeating them)
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Display</title>
+
+    <script src="./products_data.js"></script>
+</head>
+
+<body>
+    <table border="1">
+        <tr><th>Number</th><th>Item</th></tr>
+        
+        <script>
+            for (var count = 1; count <= num_products; count++) {
+                document.write(`<tr><td>${count}</td><td>${eval('name' + count)}</td></tr>`);
+            }
+        </script>
+
+    </table>
+</body>
+
+</html>

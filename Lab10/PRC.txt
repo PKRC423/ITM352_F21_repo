@@ -1,0 +1,120 @@
+Exercise 1. (total 10 minutes)
+a. (5 minutes) Make a copy of the Invoice1 WOD. In the area where you define the product variables, create a Javascript object called product1 with attributes appropriate for the information that is used to display the invoice for the first product listed in the invoice. Set the properties for this product e.g. set productName to iPhone 7, set price to $47.95 etc. Put your product1 object code here:
+
+//Object for Product 1
+  var product1 = {
+      "name": "Gillette Sensor 3 Razor",
+      "quantity": 2,
+      "price": 1.23
+    }
+
+
+b. Where ever you used variables for the product represented by product1, replace them with the corresponding object property. e.g. price1 may be product1.price or product['price']. You will need to make changes in the calculations and in the place the table is displayed. Put your code changes here:
+
+    //Compute Extended Prices
+    var exPrice1 = quantity1.quantity*price1.price;
+
+    //Product 1 Row
+    document.write(`
+    <tr>
+      <td width="43%">${product1.name}</td>
+      <td align="center" width="11%">${quantity1.quantity}</td>
+      <td width="13%">\$${price1.price}</td>
+      <td width="54%">\$${exPrice1}</td>
+    </tr>
+    `)
+
+
+c. (2 minutes) Show how you would change the quantity property in the product1 object to 0. Add this after the object definition and check that the invoice changes as expected. Put your new invoice output here:
+
+product1.quantity = 0;
+
+
+
+d. (2 minutes) Show how you would add a new property to product1 called SKU# with value 1234. Put your example code here:
+
+
+ product1['SKU#'] = "1234";
+
+
+e. (2 minutes) Show how you would remove the SKU# property from product1. Put your example code here:
+
+
+
+
+
+------------------Exercise 2. (total 14 minutes)
+a. (3 minutes) Declare a simple indexed array called product_quantities of quantities for the products listed in Invoice1 and put it above the product variable definitions. Put your array code here:
+
+
+
+b. (3 minutes) Given the array specified in 1a above, use it to assign the quantity values for all the products rather than directly in the quantity variables and quantity property for product1. Put your code changed here:
+
+
+
+
+
+c. (2 minutes) Show how you would print out the size (i.e. number of elements) of the array in 1a. Put your code example here:
+
+
+
+
+
+d. (1 minute) Add a new element (another product quantity) to the end of product_quantities. Put your code here:
+
+
+
+
+
+e. (1 minute) Show how you would delete the just added element in product_quantities. Put your code here:
+
+
+
+
+
+f. (1 minute) Given your array in product_quantities above, explain what is wrong with the statement, and what the statement will, in fact, print:
+
+document.write(product_quantities[20]);
+Exercise 3. (8 minutes)
+a. Given your array in product_quantities above, use a for loop to iterate through the array, printing each element in its own row of a table. The result should look something like:
+
+Product #	Quantity
+1	0
+2	4
+3	2
+⋮	⋮
+b. Copy the following code:
+
+// array of all products
+// corresponds to product_quantities array
+// product_quantities[i] is the quantity for products[i]
+products = [
+ { 'name': 'small gumball', 'price': 0.02 },
+ { 'name': 'medium gumball', 'price': 0.05 },
+ { 'name': 'large gumball', 'price': 0.07 },
+ { 'name': 'small jawbreaker', 'price': 0.06 },
+ { 'name': 'large jawbreaker', 'price': 0.10 }
+];
+Modify your program in (a) to add name, prices, and extended costs columns to the table for products objects given the products array.
+
+Put your code or a link to the code in your repo here:
+
+
+
+----------------Exercise 3. Using DOM objects dynamically
+Sometime you will need to create and add DOM objects after the page is loaded. When you create a DOM object it will need to be added to the document node by inserting or appending (which is the same as adding it to the HTML hierarchy)
+
+a. Modify your problem in Exercise 3 to append a new row to the table when the table is clicked on. Start by getting the <tbody> object of the table. Then use document.createElement('tr') to create a new table row object which you will use the appendChild() method of the <tbody> object to add to the table. After this, use a loop to add the same number of<td> objects to the new row object as the first row in the table (use can get this number from the table object using .rows[0].cells.length).
+
+b. Now add <input type="button" value="Delete Last Row"> after the table. Write code in the onclick event attribute for this to delete
+
+Put your code or a link to the code in your repo here:
+
+
+
+EXTRA CREDIT EXERCISE:
+Create an indexed array called TicTacToe and assign either “X” or “O” to each of the 9 elements. Now print out an HTML table that displays the contents of TicTacToe. You must use a “for” loop (or loops) to traverse the array. The final product should look like:
+
+x	o	x
+o	x	o
+x	o	o
