@@ -56,25 +56,22 @@ b. (3 minutes) Given the array specified in 1a above, use it to assign the quant
 
 c. (2 minutes) Show how you would print out the size (i.e. number of elements) of the array in 1a. Put your code example here:
 
-
-
+document.write("Number of elements present in given array: " + product_quantities.length);
 
 
 d. (1 minute) Add a new element (another product quantity) to the end of product_quantities. Put your code here:
 
-
-
-
+product_quantities.push(6);
 
 e. (1 minute) Show how you would delete the just added element in product_quantities. Put your code here:
 
-
-
-
+product_quantities.pop(6);
 
 f. (1 minute) Given your array in product_quantities above, explain what is wrong with the statement, and what the statement will, in fact, print:
 
 document.write(product_quantities[20]);
+                //This is because there are not 21 values in this array.
+
 Exercise 3. (8 minutes)
 a. Given your array in product_quantities above, use a for loop to iterate through the array, printing each element in its own row of a table. The result should look something like:
 
@@ -99,7 +96,12 @@ Modify your program in (a) to add name, prices, and extended costs columns to th
 
 Put your code or a link to the code in your repo here:
 
+        var product_quantities = [2, 1, 1, 3, 12];
 
+        for (i=0; i<product_quantities.length; i++) {
+            index = i+1;
+            console.log(`${index}: ${product_quantities[i]}`);
+        }
 
 ----------------Exercise 3. Using DOM objects dynamically
 Sometime you will need to create and add DOM objects after the page is loaded. When you create a DOM object it will need to be added to the document node by inserting or appending (which is the same as adding it to the HTML hierarchy)
