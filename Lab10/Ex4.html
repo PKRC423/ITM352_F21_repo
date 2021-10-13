@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <script>
         var product_quantities = [2, 1, 1, 3, 12];
 
@@ -21,7 +22,7 @@
             { 'name': 'large jawbreaker', 'price': 0.10 }
         ];
 
-        document.write("<table border=1><tr><th>Name</th><th>Price</th><th>Quantity</th><th>Extended</th></tr>");
+        document.write("<table style='border: 1px solid black; text-align: center;'onclick='new_row = this.appendChild(document.createElement('tr'));><tr><th>Name</th><th>Price</th><th>Quantity</th><th>Extended</th></tr>");
 
         for (i = 0; i < product_quantities.length; i++) {
             document.write(`<tr>`);
@@ -36,6 +37,11 @@
 
         
     </script>
+        <input type="button" value="Delete Last Row"
+        onclick="
+            tbody = document.getElementsByTagName('table')[0];
+            tbody.deleteRow(tbody.rows.length -1);
+        ">
 
 </body>
 

@@ -103,7 +103,7 @@ Put your code or a link to the code in your repo here:
             console.log(`${index}: ${product_quantities[i]}`);
         }
 
-----------------Exercise 3. Using DOM objects dynamically
+----------------Exercise 4. Using DOM objects dynamically
 Sometime you will need to create and add DOM objects after the page is loaded. When you create a DOM object it will need to be added to the document node by inserting or appending (which is the same as adding it to the HTML hierarchy)
 
 a. Modify your problem in Exercise 3 to append a new row to the table when the table is clicked on. Start by getting the <tbody> object of the table. Then use document.createElement('tr') to create a new table row object which you will use the appendChild() method of the <tbody> object to add to the table. After this, use a loop to add the same number of<td> objects to the new row object as the first row in the table (use can get this number from the table object using .rows[0].cells.length).
@@ -112,7 +112,53 @@ b. Now add <input type="button" value="Delete Last Row"> after the table. Write 
 
 Put your code or a link to the code in your repo here:
 
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX3</title>
+</head>
+
+<body>
+
+    <script>
+        var product_quantities = [2, 1, 1, 3, 12];
+
+        products = [
+            { 'name': 'small gumball', 'price': 0.02 },
+            { 'name': 'medium gumball', 'price': 0.05 },
+            { 'name': 'large gumball', 'price': 0.07 },
+            { 'name': 'small jawbreaker', 'price': 0.06 },
+            { 'name': 'large jawbreaker', 'price': 0.10 }
+        ];
+
+        document.write("<table style='border: 1px solid black; text-align: center;'onclick='new_row = this.appendChild(document.createElement('tr'));><tr><th>Name</th><th>Price</th><th>Quantity</th><th>Extended</th></tr>");
+
+        for (i = 0; i < product_quantities.length; i++) {
+            document.write(`<tr>`);
+            document.write(`<td>${products[i].name}</td>`);
+            document.write(`<td>${products[i].price.toFixed}</td>`);
+            document.write(`<td>${product_quantities[i]}</td>`);
+            extended = products[i].price * product_quantities[i];
+            document.write(`<td>${extended.toFixed}</td>`);
+            document.write(`</tr>`);
+        }
+        document.write("</table>");
+
+        
+    </script>
+        <input type="button" value="Delete Last Row"
+        onclick="
+            tbody = document.getElementsByTagName('table')[0];
+            tbody.deleteRow(tbody.rows.length -1);
+        ">
+
+</body>
+
+</html>
 
 EXTRA CREDIT EXERCISE:
 Create an indexed array called TicTacToe and assign either “X” or “O” to each of the 9 elements. Now print out an HTML table that displays the contents of TicTacToe. You must use a “for” loop (or loops) to traverse the array. The final product should look like:

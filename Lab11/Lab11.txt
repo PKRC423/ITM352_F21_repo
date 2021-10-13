@@ -1,0 +1,122 @@
+Exercise 1: Functions (5 minutes)
+a. Name three functions that we have used in class thus far and give an example of how each of them may be used. Note that conditionals such as while() and if() are not functions.
+
+1) 
+
+2) 
+
+3) 
+
+b. For your example function (1) above, in the browser consol or using node -i, just type the function name and explain what output you get and why. Assign the function to the variable xxx and show how you would use this variable in your example for (1) rather than the function name. Why does this work and explain what the () operator does.
+
+
+
+Exercise 2: Using a function and function documentation (13 minutes)
+a. (5 minutes) Define the variable attributes  =  "<name>;<age>;<major>". Using W3 schools find and read the documentation for an appropriate function that might be used to cut up a string into an array of parts that were separated by a given character in that string. e.g. “a;b;c” would give an array of parts [“a”,”b”,”c”] if asked to separate by “;”. Give an example of calling this function and the resulting output if any to get the name, age, and major substrings in attributes:
+
+
+
+b. (3 minutes) How many parameters does this function take?  How do you know what the parameters are and what values they expect? Is it necessary to place the parameters in a certain order? Why/why not?
+
+1- 2, one serparator and one limit. And both are not required.
+2- sparator is optionsal and specifies the character, or the regular expression.
+3- Order matters because it is set to be read in a certain way.
+
+c.  (4 minutes) What parameters are required? What are optional? How did you know? Give an example of using an optional parameter for this function.
+
+Neither separator or limit are required. On W3 it says so.
+
+d. (2 minutes) Is the function named appropriately? Explain why or why not.
+
+I would say no becuase it does not give a good description of what it is executing.
+
+e. (5 minutes) Explain why it is not necessary to give the string in attributes as a parameter to the function. How does this work and why this is better than putting the string directly in the function call. Why is this different than parseInt() where you do have to put the string in as an argument?
+
+It is nnot necessary because it is already a method within the string, It already has the string so we do not need to give this function the string.
+
+Exercise 3: return values (5 minutes)
+attributes  =  "<name>;<age>;<age + 0.5>;<0.5 - age>" ;
+Use the function you found in (2) and assign the return value to pieces and use this and a loop to print out the parts you get when separating by “;” and the data type of each part (use typeof).
+
+a. (5 minutes) Use typeof to find out what data type pieces is. Explain where the value stored in pieces came from. Explain why the data type of pieces is different than the data type of the parts in attributes. What problem might you have if you try to use these parts as the data types they are intended to be?
+
+There will be a problem because they are seen as elements of an object.
+
+b. (5 minutes) Lookup (or guess) a function that would “invert” pieces back into a string. Use this function to invert the array pieces into a string of the elements separated with “,” rather than “;”.
+
+
+
+Exercise 4: Defining a Function (total 7 minutes)
+a. (4 minutes) One of the challenges with splitting a string into parts is that the parts will be strings. This kind of thing happens frequently and if those parts are intended to be other data types we will have to check (“validate”) that they are the data type intended.
+
+Put the following code into a function called isNonNegInt that takes a string parameter q and validates that the value of this string is a non-negative integer.
+
+errors = []; // assume no errors at first
+if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+This code will collect any validation errors in the errors array. Have the function return true if after checking everything the array is empty and false if not (Hint: use the expression (errors.length == 0) ). Write a loop to test this function using the pieces array. This program should be very short, about 5 lines, if you have defined the function properly. Be sure you know the difference between defining a function and using it.
+
+
+
+b. Add an optional boolean parameter returnErrors that when true returns the array of all the errors rather than a boolean. Rewrite your test to use this and have the same output. Hint: use the ternary expression returnErrors ? errors : (errors.length == 0). Why is it better to return an array rather than just a boolean?
+
+
+
+ 
+
+c. Following good function naming conventions, rename the function you created in (a) and explain briefly why it is or is not an appropriate name that follows the conventions. Rename the parameter and add comments to the top of the function that explains what the function does and how to use it.
+
+
+
+d. (3 minutes) You need to check that the quantities of 10 kinds of products the user selected in your store are valid. Explain the benefit of creating and using the function you created rather than repeating the code to do the validation 10 times.
+
+
+
+Exercise 5: Functions and variable scope
+Define the following functions in the console or node -i :
+
+function junk1() {
+    for(i1=1; i1<=2; i1++){console.log(i1);}
+    return `i1 is ${i1}`;
+}
+
+
+function junk2() {
+    for(var i2=1; i2<=2; i2++){console.log(i2);}
+    return `i2 is ${i2}`;
+}
+
+function junk3() {
+    for(let i3=1; i3<=2; i3++){console.log(i3);}
+    return `i3 is ${i3}`;
+}
+a. Execute junk1() then i1 explain why i1 is defined outside the function.
+
+
+
+b. Execute junk2() then i2 explain why you get Uncaught ReferenceError: i2 is not defined when you try to use i2 outside the function.
+
+
+
+c. Execute junk3() then i3 explain why you get Uncaught ReferenceError: i3 is not defined for each of these and why the return value i3 is 3 does not appear as it does for the previous examples (that is, you cannot use i3 outside the function or outside the for-loop).
+
+
+
+Exercise 6: Callback functions, anonymous functions
+A callback function is when you give a function as a parameter to a function call. The idea here is that the function being called will use (invoke) this function inside itself to perform some action or routine and then “call back” to the caller when it’s done (although in some situations this is not done). In Javascript functions are “asynchronous” meaning that when they are called they There are a number of situations where a callback function is useful, particularly in Javascript:
+
+You want to ensure that some code runs only after something else happened DOM events are a good example of this. e.g. onclick
+You want to generalize the behavior of a function. For example, you have a sort function but you want it to be able to set the way it compares values such as reversing the order or rules for comparing things that are not numerical or alphabetical.
+Define a function checkIt with 1st parameter item and 2nd parameter index
+
+console.log(`part ${index} is ${(isNonNegInt(item)?'a':'not a')} quantity`);
+a. Use checkIt as a callback function in the .forEeach() method for the array pieces you defined in Exercise 3. Put your code and output here:
+
+
+b. Do the same as above but define an anonymous function for the callback directly in the .forEeach(). Start with pieces.forEeach((item,index) => {} ) then copy the code block for checkIt and paste it inside the {}. Do not add an additional {}. NOTE: this is very simple. There is not much to do here. Explain the benefit of using an anonymous function rather than defining checkIt in this example:
+
+
+
+BONUS:
+Create a function that takes an array of numbers, called monthly_sales (a list of monthly sales amounts), and a tax rate (tax_rate) as inputs. The function must return an array called tax_owing, which consists of one entry for every entry in monthly_sales indicating the tax owing for that entry.
