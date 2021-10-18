@@ -61,9 +61,8 @@ This code will collect any validation errors in the errors array. Have the funct
 
 b. Add an optional boolean parameter returnErrors that when true returns the array of all the errors rather than a boolean. Rewrite your test to use this and have the same output. Hint: use the ternary expression returnErrors ? errors : (errors.length == 0). Why is it better to return an array rather than just a boolean?
 
+It is better to return an Array rather than aboolean because 
 
-
- 
 
 c. Following good function naming conventions, rename the function you created in (a) and explain briefly why it is or is not an appropriate name that follows the conventions. Rename the parameter and add comments to the top of the function that explains what the function does and how to use it.
 
@@ -71,7 +70,7 @@ c. Following good function naming conventions, rename the function you created i
 
 d. (3 minutes) You need to check that the quantities of 10 kinds of products the user selected in your store are valid. Explain the benefit of creating and using the function you created rather than repeating the code to do the validation 10 times.
 
-
+Because you can reuse the same one instead of wasting time creating 10 validations
 
 Exercise 5: Functions and variable scope
 Define the following functions in the console or node -i :
@@ -93,15 +92,21 @@ function junk3() {
 }
 a. Execute junk1() then i1 explain why i1 is defined outside the function.
 
+*No special thing done for the variable* (i1=1)
 
+It is because it has "Global Scope" which means it can be seen by all functions. And when we execute the jnk1 function it is outside so it can be seen.
 
-b. Execute junk2() then i2 explain why you get Uncaught ReferenceError: i2 is not defined when you try to use i2 outside the function.
+b. Execute junk2() then i2 explain why you get Uncaught ReferenceError: 
 
+*Variable declared with var
 
+It is because i2 is not defined when you try to use i2 outside the function.
 
 c. Execute junk3() then i3 explain why you get Uncaught ReferenceError: i3 is not defined for each of these and why the return value i3 is 3 does not appear as it does for the previous examples (that is, you cannot use i3 outside the function or outside the for-loop).
 
+*Variable declared by let
 
+When using let, it creates a variable within the scope of the block of code {}
 
 Exercise 6: Callback functions, anonymous functions
 A callback function is when you give a function as a parameter to a function call. The idea here is that the function being called will use (invoke) this function inside itself to perform some action or routine and then “call back” to the caller when it’s done (although in some situations this is not done). In Javascript functions are “asynchronous” meaning that when they are called they There are a number of situations where a callback function is useful, particularly in Javascript:
