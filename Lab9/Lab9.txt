@@ -1,0 +1,111 @@
+Try to do as many of the exercises as possible, in the order listed. You may skip an exercise if it is impossible to accomplish the task described (for technical reasons). If you have trouble with an exercise, contact the instructor for help – do not just skip the exercise! You may work with a partner, but each of you must submit your individual work. Work should be done electronically on this document (cut and paste as needed but be careful of incorrect characters). Anything that involves code should be tried out in VS Code before submitting (you may cut and paste directly from VS Code). Submit work before the next class. If you cannot submit by this time, try to do so as soon as possible.
+
+You may wish to open the presentation slides for convenience of viewing and copy-paste. When asked by the instructor do the lab exercises indicated. If you get done early, feel free to go on. If you are not done before the instructor indicates the next exercise, raise your hand and explain where you are at. Later parts often depend on completing previous parts so do not let yourself get behind and expect to catch up!
+
+Note: Whenever you see something like <Your Name> and it’s not obviously an HTML tag, it means replace this with you own information as indicated inside. e.g. replace <Your Name> with Joe (or whatever your name is).
+
+For exercises that do not ask specific questions but have you perform tasks, copy any code you created and the output as your answer to the exercise. Some exercises ask for explanations. Make notes for your answer and complete these after class before submitting. Do not try to make complete answers if it keeps you from progressing!
+
+Do all your code work in VS Code. Copy and paste from there. Please ask the instructor for help if you get stuck this is NOT a test.
+
+Submission
+When we are done, submit work before the next class. If you cannot submit by this time, try to do so as soon as possible after class. Copy this lab with your answers and paste your into the Laulima assignment submission box to Laulima Assignments. If you do not submit something to Laulima you will not get credit.
+
+///////Exercise 1: Algorithms (DNF 30+ minutes)///////////////
+Let’s try seeing an algorithm from the computer’s perspective to get a better idea of the challenge of programming to solve a problem. The following is a “flowchart” that describes an algorithm to determine a day of the week from a date with year between 1000-9999. You likely will not immediately see how this process will result in solving the problem!
+
+
+
+  
+/////////////a. (6 minutes) Implement the above algorithm using expressions and operators to determine the day of the week you were born on and list that day here. Implement each step and the calculations you used as a series of variables $step1, $step2, etc. Use node -i to perform the calculations and print out the results you need along the way. For example, using the date 8/3/2013 in the flowchart you might perform the following steps in node:
+
+step1=13;
+step2=parseInt(step1/4);
+step3 = step2 + step1;
+step4 = 1; // Not Jan, so look at month before on table
+step6 = step4 + step3;
+... 
+Hint: parseInt() will take a float and drop the decimal part which would be dropping the remainder of division. Alternatively you can use Math.floor() to round-down to the nearest integer value. You can get the remainder and forget the quotient after dividing by using the modulus operator %.
+
+///////////Put your calculation steps and day your were born on (last step) here:
+
+month = 4;
+day = 23; 
+year = 2001;
+yes = string(y);
+no = string(n);
+
+$step1 = Number(year[2]+year[3]);
+$step2 = parseInt(step1/4);
+$step3 = step2 + step1;
+$step4 = step3 + 1;
+$step6 = step4 + step3;
+$step7 = step6 + day;
+$step8 = step7 - 1;
+$step8%7;
+
+Exercise #2: Algorithmic Logic (DNF 20+ minutes)
+a. Create a flowchart or pseudocode similar to what you saw in the lecture for an algorithm that will keep a robot moving around in a closed room with obstructions. Make sure you do not assume the robot has intelligence or any capability beyond the basic commands for movement, successful execution of movement, repeating commands, and reporting if a command was successful. You have two problems to solve:
+
+1) the robot should never get stuck
+
+(2) keep the robot moving forever
+
+//////////Put your chart here:
+
+$num_turns_360 = 4; // 4 turns to make a 360
+$turns = 0;
+$robot -> move();
+while( $robot -> isFacingWall() && $turns ++ < $num_turns_360) {
+        $robot -> turn_left();
+}
+$robot -> move();
+
+///////////////b. Write out in robot commands the algorithm you specified. The robot only understands the commands forward and turn_right. If the command is successful, the command returns the boolean value you can use while(x) { } to repeat everything inside the {}’s so long as x is true and stops when x is false. You can negate a boolean value by placing a ! in front. For example, !true will result in false. Hint: you can do this very simply using either two while() loops or one while() and one if() statement. Write out a small test to check your algorithm works.
+
+You can try out your algorithm using the RobotSim emulation. There is also a fancy online robot simulation you can use if you wish. If you use this, it is suggested you modify the existing program that make a sound when the robot hits something. You may also have to deal the the edges of the room as they are not walls and the robot doesn’t bounce off them! There is a condition “if on edge bounce” you can use.
+
+Put your commands or screenshot of your Scratch code here:
+
+
+    $num_turns_360 = 4; // 4 turns to make a 360
+    $turns = 0;
+$robot -> move();
+while( $robot -> isFacingWall() && $turns ++ < $num_turns_360) {
+        $robot -> turn_left();
+}
+$robot -> move();
+
+
+///////////////c) Even though your algorithm solves the problems (1) and (2), there are conditions that can cause *undesirable results. Can you think of what some of these might be and how you might deal with them? Hint: consider that the algorithm does not solve the problem of moving around the entire room.  
+
+        If it were a sqaure room with no obstructions than no, but if the landsace that the robot was on changed then there would be many issues like obstacles and possible slanted angles and such. This can be changed by setting the robot to keep turning until it is no longer facing the wall or object.
+
+///////////////////////Exercise #3: Program Logic and Problem Solving (DNF 8+ minutes)////////////////////////
+Try the following code in your browser. Replace the contents of firstname and lastname with your name:
+
+<span id="firstname">Rick</span>, <span id="lastname">Port</span>
+<br>
+<input type="button" value="Swap" 
+    onclick="
+    firstname.innerHTML = lastname.innerHTML;
+    lastname.innerHTML = firstname.innerHTML;
+    ">
+The above algorithm tries to swap the HTML inside the firstname and lastname span elements when the button is pressed. It will not work!
+
+//////////////Explain what’s wrong with the above algorithm and fix it. Hint: it does not require more than a few new lines of code and no conditional statements (if- and loops). Put your new code and explanation here:
+
+The issue is that it is trying to set lastname.innerHTML to firstname.innerHTML but firstname.innerHTML was prevously changed to lastname.innerHTML. So to do this correctly we would have to create a var to "hold" the value of firstname.innerHTML so the lastname.innerHTML can be set to that.
+
+
+<span id="firstname">Rick</span>, <span id="lastname">Port</span> , <span id="firstnameHLD"> firstname </span>
+<br>
+<input type="button" value="Swap" 
+    onclick="
+    firstname.innerHTML = lastname.innerHTML;
+    lastname.innerHTML = firstnameHLD;
+    ">
+
+
+Extra Credit Exercise:
+Design an algorithm that algorithm that will get the robot to move around the entire room. It’s doesn’t have to do the efficiently (like in using the fewest moves). Implement your algorithm in the Robot Emulator as in Exercise 2d. Hint: think or a pattern that would cover the entire room and how you can get the robot to implement this pattern. Think carefully about what it means to turn 4 times but not in the same place.

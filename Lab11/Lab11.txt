@@ -70,7 +70,7 @@ c. Following good function naming conventions, rename the function you created i
 
 d. (3 minutes) You need to check that the quantities of 10 kinds of products the user selected in your store are valid. Explain the benefit of creating and using the function you created rather than repeating the code to do the validation 10 times.
 
-Because you can reuse the same one instead of wasting time creating 10 validations
+Because you can reuse the same one instead of wasting time creating 10 validations.
 
 Exercise 5: Functions and variable scope
 Define the following functions in the console or node -i :
@@ -116,12 +116,23 @@ You want to generalize the behavior of a function. For example, you have a sort 
 Define a function checkIt with 1st parameter item and 2nd parameter index
 
 console.log(`part ${index} is ${(isNonNegInt(item)?'a':'not a')} quantity`);
-a. Use checkIt as a callback function in the .forEeach() method for the array pieces you defined in Exercise 3. Put your code and output here:
+a. Use checkIt as a callback function in the .forEeach() method for the array pieces you defined in Exercise 3. 
 
+            Put your code and output here:
+//creates a callback function to check whether array elements are non-negative integers
+function checkIt(elem, index) {
+    console.log(`${index}: ${elem} is ${(checkIfNegative(elem) ? 'a' : 'not a')}valid quantity`);
+}
+// Apply checkIt to pieces array.
+pieces.forEach(checkIt);
 
-b. Do the same as above but define an anonymous function for the callback directly in the .forEeach(). Start with pieces.forEeach((item,index) => {} ) then copy the code block for checkIt and paste it inside the {}. Do not add an additional {}. NOTE: this is very simple. There is not much to do here. Explain the benefit of using an anonymous function rather than defining checkIt in this example:
+b. Do the same as above but define an anonymous function for the callback directly in the .forEeach(). Start with pieces.forEeach((item,index) => {} ) then copy the code block for checkIt and paste it inside the {}. Do not add an additional {}. NOTE: this is very simple. There is not much to do here. 
 
+            Explain the benefit of using an anonymous function rather than defining checkIt in this example:
 
+pieces.forEach( (elem, index) => {console.log(`${index}: ${elem} is ${(checkIfNegative(elem) ? 'a' : 'not a')}valid quantity`);})
+
+One is named and the other is anonymous meaning it would be eassier to call it since its in-line rather than called alater on.
 
 BONUS:
 Create a function that takes an array of numbers, called monthly_sales (a list of monthly sales amounts), and a tax rate (tax_rate) as inputs. The function must return an array called tax_owing, which consists of one entry for every entry in monthly_sales indicating the tax owing for that entry.
