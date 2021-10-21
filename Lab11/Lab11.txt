@@ -1,9 +1,9 @@
 Exercise 1: Functions (5 minutes)
 a. Name three functions that we have used in class thus far and give an example of how each of them may be used. Note that conditionals such as while() and if() are not functions.
 
-1) 
+1) onClick- used to assign a program of code to when a var is clicked within the page. Like if an image has this and is clicked it could send the user to an external page.
 
-2) 
+2) <body> sets the body of an html page
 
 3) 
 
@@ -14,7 +14,17 @@ b. For your example function (1) above, in the browser consol or using node -i, 
 Exercise 2: Using a function and function documentation (13 minutes)
 a. (5 minutes) Define the variable attributes  =  "<name>;<age>;<major>". Using W3 schools find and read the documentation for an appropriate function that might be used to cut up a string into an array of parts that were separated by a given character in that string. e.g. “a;b;c” would give an array of parts [“a”,”b”,”c”] if asked to separate by “;”. Give an example of calling this function and the resulting output if any to get the name, age, and major substrings in attributes:
 
+The tag is split() which takes a certain string and using a certain character to spearate the values, it can make that string into an array with each value in it's own bin as long as it is formatted correctly. 
 
+let str = "How are you doing today?";
+const myArr = str.split(" ");
+
+//myArr would then have the values of 
+How
+are
+you
+doing
+today?
 
 b. (3 minutes) How many parameters does this function take?  How do you know what the parameters are and what values they expect? Is it necessary to place the parameters in a certain order? Why/why not?
 
@@ -65,7 +75,6 @@ It is better to return an Array rather than aboolean because
 
 
 c. Following good function naming conventions, rename the function you created in (a) and explain briefly why it is or is not an appropriate name that follows the conventions. Rename the parameter and add comments to the top of the function that explains what the function does and how to use it.
-
 
 
 d. (3 minutes) You need to check that the quantities of 10 kinds of products the user selected in your store are valid. Explain the benefit of creating and using the function you created rather than repeating the code to do the validation 10 times.
