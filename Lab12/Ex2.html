@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Page 2</title>
+</head>
+
+<body>
+
+    <script>
+
+        function checkIfNegative(inString, returnErrors = false) {
+            //Validate that an input is a non-negative integer
+            //inString represents the input string for the function checkIfNegative
+
+            errors = []; // assume no errors at first
+            if (Number(inString) != inString){
+                errors.push('Not a number!'); // Check if string is a number value
+            }else {
+            if (inString < 0) errors.push('Negative value!'); // Check if it is non-negative
+            if (parseInt(inString) != inString) errors.push('Not an integer!'); // Check that it is an integer
+            }
+            return returnErrors ? errors : (errors.length == 0);
+
+        }
+
+        function checkQuantityTextBox() {
+            //Displays textbox for user to write how many things they purchased
+            var errors = checkIfNegative(document.getElementById('quantity_textbox'), true);
+            qty_textbox_message.innerHTML = errors.join(", ");
+
+        }
+
+        function displayPurchase() {
+            //Displays a new page with a thank you note and the number of items purchased
+            var num_products = quantity_textbox.value;
+            if (checkIfNegative(num_products)) {
+            document.write(`Thank you for purchasing ${num_products} things!`);
+            }
+        }
+    </script>
+
+
+
+<label>Quantity Desired</label>
+<input id="quantity_textbox" type="text" onkeyup="checkQuantityTextBox();">
+<br>
+<span id='qty_textbox_message'>Enter a quantity</span>
+<br>
+<input type="button" value="Purchase" onclick="displayPurchase();">
+
+</body>
+</html>
