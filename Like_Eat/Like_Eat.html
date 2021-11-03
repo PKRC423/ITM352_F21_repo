@@ -1,4 +1,5 @@
 <script src= "Like_Eat.js" ></script>
+<link rel="stylesheet" href="Like_Eat.css">
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +20,17 @@
         <p>
             This mobile app was created to help people decide where to go eat since most of us are indecisive on where to grab you're next bite.
             <br>
+
+            <div class="yelp_price_div">
+                Expensive or cheap? <br />
+                <div class="establishmentChoice">
+                <label class="type_of_food"><input type="radio" name="typeOfFood" value="Fast-Food"/>Fast-Food</label>
+                <label class="type_of_food"><input type="radio" name="typeOfFood" value="Restaurant" />Restaurant</label>
+                </div>
+                </div>
+                <input type="submit" value="Generate">
+
+            <script>document.write(randomizer(choice));</script>
             
         </p>
 
