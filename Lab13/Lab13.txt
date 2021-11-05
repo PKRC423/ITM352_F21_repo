@@ -46,6 +46,8 @@ Terminate the previously running server (with ctrl-C) and run info_server_Ex2c.j
 
 d. Copy your order_page.html from Exercise 4 in Lab 12 to the public directory. Change the action attribute of the form to localhost:8080/process_form. Make sure method="POST" in the form tag. Try http://localhost:8080/order_page.html in your browser and submit the form. Look at the console.log output and the response you get and explain.
 
+We get a Cannot get because it is a static page and if we move the order_page into the public folder than it will be shown correctly.
+
 ///////////Exercise 3: Server Side Processing of Form Action
 a. Make a copy of info_server_Ex2c.js and name it info_server_Ex3.js and add the following code after the app.all() statement:
 
