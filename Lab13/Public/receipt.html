@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="./product_data.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+</head>
+<body>
+    <script>
+    function isNonNegativeInteger(inputString, returnErrors = false) {
+    // Validate that an input value is a non-negative integer
+    // inputString is the input string; returnErrors indicates how the function returns: true means return the
+    // array and false means return a boolean.
+
+    errors = []; // assume no errors at first
+    if (Number(inputString) != inputString) {
+        errors.push('Not a number!'); // Check if string is a number value
+    }
+    else {
+        if (inputString < 0) errors.push('Negative value!'); // Check if it is non-negative
+        if (parseInt(inputString) != inputString) errors.push('Not an integer!'); // Check that it is an integer
+    }
+    return returnErrors ? errors : (errors.length == 0);
+}
+
+    let params = (new URL(document.location)).searchParams;
+        var quantity = params.get('quantity');
+        let brand = product[0]['brand'];
+        let brand_price = product[0]['price'];
+
+        if (typeof POST['quantity_textbox'] != 'undefined')
+   {
+        let quantity = POST['quantity_textbox'];
+        if (isNonNegativeInteger(quantity)) {
+           document.write(`<h2>Thank you for purchasing ${quantity} ${brand}! Your total is \$${quantity * brand_price}!</h2>`);
+        } else {
+            response.send(`<B>${quantity} is not a valid quantity!</B>`);
+        }
+   }
+    </script>
+</body>
+</html>

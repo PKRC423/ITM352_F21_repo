@@ -55,6 +55,7 @@ app.use(myParser.urlencoded({ extended: true }));
 app.post("/process_form", function (request, response) {
    response.send(request.body); 
 });
+
 Unfortunately Express does not provide functions to decode the body of an HTTP request so you will need to write this yourself or add one. Fortunately there’s a good one available! In your terminal (and be sure you are in the directory where info_server_Ex3.js is located), type npm install body-parser. After the installation is complete, in info_server_Ex3.js add the statement var myParser = require("body-parser"); after the var app = express(); statement. Now run info_server_Ex3.js. Try localhost:8080/order_page.html and verify that that you get the post data from the what you typed into the textbox after submitting the form. If this works, you have just done server-side processing of a POST from a web form. Congratulations!
 
 b. In order_page.html cut the code that checks query string for quantity_textbox into info_server_Ex3.js (the if (typeof GET['quantity_textbox'] != 'undefined')) statement) and paste it over the response.send(POST); statement (i.e. delete the statement) in app.post() and change GET to POST. Copy the function isNonNegInt() from order_page.html and paste it into the top or bottom of app.post(). Change the document.write(`Thank you for purchasing ${q} things!`) to response.send(`Thank you for purchasing ${q} things!`); and delete window.stop(); and an else response.send(`${q} is not a quantity! Press the back button and try again.`); to the if-statement. Try localhost:8080/order_page.html with valid and invalid quantites and verify that it works as expected.
@@ -92,20 +93,40 @@ let model = products[0]['model'];
 let model_price = products[0]['price'];
 Replace the response with <h2>Thank you for purchasing ${q} ${model}. Your total is \$${q * model_price}!</h2> and now try out different quantities.
 
-In the head tag of order_page.html add the line <script src="./product_data.js"></script>. Note that the path does NOT include the public directory. Why is this? Before the form (or in the top of the form) add
+In the head tag of order_page.html add the line <script src="./product_data.js"></script>. Note that the path does NOT include the public directory. Why is this? 
+        Because it is in the head so it is public to all the code within that document.
+
+Before the form (or in the top of the form) add
 
 document.write(`<h3>${products[0]["model"]} at \$${products[0]["price"]}</h3>`);
+
 Reload order_page.html and verify that the Apple iPhone XS product is used in both the form and response to processing that form. Now change some of the information for the 0th element in product_data.json and verify that both order_page.html and info_server_Ex4.js use the updated information. How would you change the product being used here?
 
-Extra Credit Exercise 5: Processing multiple inputs
-Let’s make it possible to select quantities of a product from the shared products data. Copy info_server_Ex4.js and name it info_server_Ex5.js. Copy order_page.html and rename it order_page_Ex5.html.
+Exercise 5: Passing data to client from a server
+There are often times you will want to pass data from the server to a client. Unfortunately, HTTP does not support “push” data from the server (at least HTTP/1 does not). That is, you cannot just send data to the client, even if you have an open connection from the server to the client. Because of this, data can only be passed from the server to the client in response to a request. There are generally two ways to do this. One way is to put the data into a query string and have the server re-direct to the page that needs the data adding this query string. Another way is to have the page fetch the data from a micro-service. The difference is that the first way will leave the page (the current document will be overwritten) while the second will stay on the page (the current document remains). We will try the query-string approach since it is simpler.
 
-Task 1: Make order_page_Ex5.html display inputs for all products in product_data.js. Replace the <form> element with
+Make a copy of info_server_Ex4.js and name it info_server_Ex5.js. Start by copying the code in the route for process_form on your server that generates the receipt (including the isNonNegInt function) into a new file receipt.html and put this in the public directory. At the top of this file load the products data as done in order_page.html and also add the code:
+
+        let params = (new URL(document.location)).searchParams;
+        var q = params.get('quantity');
+        
+This code will read the query string and place the keys and values into a URLSearchParams object (params) for easy access to the data in the query string. Now remove any use of request (you are on the client now so this is not defined) and replace all uses of response with document.write (again, you are on the client which is the receiver of a response). Remove the code that increases the total_sold (yup, this is a server side thing and cannot be done in the client).
+
+On your server, replace the response.send() with response.redirect('receipt.html?quantity=' + q);. This will tell the browser (the client) to do a GET request for the file receipt.html with a query string with key quantity and value whatever is in the variable q (which is the quantity purchased). Quit and restart the server, reload order_page.html to test.
+
+d. Modify the response on the server to redirect back to order_page.html when there is an error with the query string ?error=Invalid%20Quantity&quantity_textbox=' + q. In order_page.html where you check if the query string has quantity_textbox, also check if the query string has key error and put its value in an alert panel (i.e. “Invalid Quantity”).
+
+(Extra Credit) Create a micro-service to validate a quantity and respond an invoice. Have order_page.html fetch the invoice and display it after the purchase button is pressed. This should be done without leaving (or reloading) order_page.html. Hint: do not have an action for the the form or change it so that it does the fetch to the micro-service rather than POST to the server.
+
+Extra Credit: Processing multiple inputs
+Let’s make it possible to select quantities of a product from the shared products data. Copy info_server_Ex5.js and name it info_server_EC.js. Copy order_page.html and rename it order_page_multiple.html.
+
+Task 1: Make order_page_multiple.html display inputs for all products in product_data.json. Replace the <form> element with
 
     <form name='quantity_form' action="process_form" method="POST">
         <script>
             for (i in products) {
-                document.write(`<h3>${products[i]["model"]} at \$${products[i]["price"]}</h3>`);
+                document.write(`<h3>${products[i]["brand"]} at \$${products[i]["price"]} (${products[i]["total_sold"]} sold)</h3>`);
                 document.write(`
         <label for="quantity_textbox">quantity desired:</label>
         <input type="text" name="quantity_textbox[${i}]" onkeyup="checkQuantityTextbox(this);">
@@ -114,7 +135,7 @@ Task 1: Make order_page_Ex5.html display inputs for all products in product_data
             }
         </script>
         <br>
-        <input type="submit" value='Purchase' name="purchase_submit_button">
+        <input type="submit" value='Purchase'>
     </form>
 Now replace the checkQuantityTextbox() with
 
@@ -122,26 +143,27 @@ Now replace the checkQuantityTextbox() with
             errs = isNonNegInt(theTextbox.value, true);
             document.getElementById(theTextbox.name + '_message').innerHTML = errs.join(", ");
         }
-Make sure you understand what changes were made and why!
+Run info_server_EC.js and request order_page_multiple.html and verify that all the products in products.json display. Test the checkQuantityTextbox function by trying vaid and invalid quantities. Review the changes made in the code and make sure you understand why were made and how they work!
 
-Task 2: Process multiple quantities of products from the submitted form. In info_server_Ex5.js replace process_quantity_form() with
+Task 2: Process multiple quantities of products from the submitted form. In info_server_EC.js replace the code in the callback function in the route for post to /process_form (i.e. in the {}’s for app.post("/process_form", function (request, response) with
 
-function process_quantity_form(POST, response) {
-    if (typeof POST['purchase_submit_button'] != 'undefined') {
-        receipt = '';
-        let qtys = POST[`quantity_textbox`];
-        for (i in qtys) {
-            q=qtys[i];
-            let model = products[i]['model'];
-            let model_price = products[i]['price'];
-            if (isNonNegInt(q)) {
-                receipt += `<h3>Thank you for purchasing: ${q} ${model}. Your total is \$${q * model_price}!</h3>`; // render template string
-            } else {
-                receipt += `<h3><font color="red">${q} is not a valid quantity for ${model}!</font></h3>`;
-            }
+    receipt = '';
+    let qtys = request.body[`quantity_textbox`];
+    for (i in qtys) {
+        q = qtys[i];
+        let brand = products[i]['brand'];
+        let brand_price = products[i]['price'];
+        if (isNonNegInt(q)) {
+            products[i]['total_sold'] += Number(q);
+            receipt += `<h3>Thank you for purchasing: ${q} ${brand}. Your total is \$${q * brand_price}!</h3>`; // render template string
+        } else {
+            receipt += `<h3><font color="red">${q} is not a valid quantity for ${brand}!</font></h3>`;
         }
-        response.send(receipt);
-        response.end();
     }
-}
-Run info_server_Ex5.js and try entering quantities for the products displayed! Do you see how things are connected through the shared data in product_data.json? Did you see how naming your form elements with []’s puts all the form data into an array? By the way, you can use this to create objects. Just use strings rather than numbers in [].
+    response.send(receipt);
+    response.end();
+Note: do not delete the isNonNegInt function definition if you put it here.
+
+Run info_server_EC.js and try entering quantities for the products displayed! Do you see how things are connected through the shared data in product_data.json? Did you see how naming your form elements with []’s puts all the form data into an array? By the way, you can use this to create objects. Just use strings rather than numbers in [].
+
+More extra credit When there are errors, see if you can pass the data and errors back to order_page_multiple.html to display problems and allow the user to fix and resubmit the form. You can do this by making a copy of the products array, adding an errors property for each product with values the errors (if any), then generating a query string from this new array (you can use a URLSearchParams to conveniently create a query string from the new array).
