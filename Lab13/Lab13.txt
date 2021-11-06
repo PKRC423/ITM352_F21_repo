@@ -15,11 +15,12 @@ http.createServer(function (req, res) {
 console.log('Hello world HTTP server listening on localhost port 8080');
 Open a terminal and run it using node.js. Open a browser and make a request to localhost:8080
 
-a) Why is this a “dynamic” web page? //Because  | What is processed on the client and what is processed on the server? | Why are the dates different even though they are obtained from the same clock (on the same machine)? | What would happen if the server was run on a different machine than the browser?
+            a) Why is this a “dynamic” web page? //Because it 'automatically' updates what is in the response giving us new responses. In this cae that is the time, so each person who used this would see the Date for when they were there.| What is processed on the client and what is processed on the server? One request is ran on the server and a few milliseconds later the client processes the date. | Why are the dates different even though they are obtained from the same clock (on the same machine)? Because it is based off where the client's request is coming from and where the servers request is coming from.| What would happen if the server was run on a different machine than the browser? It could take longer than wanted, which we call "lag".
 
-b) Does the request matter? How is the route for the HTTP request handled?
-
-c) When you do a “view source” in the browser, where did the Javascript code executed on the server go ? Why isn’t it inside a <script> tag?
+            b) Does the request matter? How is the route for the HTTP request handled?
+                Yes, but we can use different requests for different ones.
+            c) When you do a “view source” in the browser, where did the Javascript code executed on the server go ? Why isn’t it inside a <script> tag?
+                It was interpretted by the server and made into a number while the the other one was processed to still be in a sript tag.
 
 NOTE You may wish to install and use the npm application nodemon to automatically restart node after changes are saved in a file.
 
@@ -42,13 +43,16 @@ Before the app.listen add the following add the following:
 
 app.use(express.static('./public'));
 
-Terminate the previously running server (with ctrl-C) and run info_server_Ex2c.js. Create a simple html file hello.html that outputs <h1>Hello from <your name>!<h1> and save it in the public directory. Use a browser with the following URL http://localhost:8080/hello.html and see what response you get. Try localhost:8080/xxx and explain what response you get. Make a copy of hello.html and rename it hello.txt. Now try localhost:8080/hello.txt and explain the response. Do you think the app.use() middleweare must be placed at the bottom of the routing functions?
+Terminate the previously running server (with ctrl-C) and run info_server_Ex2c.js. Create a simple html file hello.html that outputs <h1>Hello from <your name>!<h1> and save it in the public directory. Use a browser with the following URL http://localhost:8080/hello.html and see what response you get. Try localhost:8080/xxx and explain what response you get. Make a copy of hello.html and rename it hello.txt. Now try localhost:8080/hello.txt and 
+
+                explain the response. Do you think the app.use() middleweare must be placed at the bottom of the routing functions?
+                    Because it would not execute properly since it needs the others to be  executed first.
 
 d. Copy your order_page.html from Exercise 4 in Lab 12 to the public directory. Change the action attribute of the form to localhost:8080/process_form. Make sure method="POST" in the form tag. Try http://localhost:8080/order_page.html in your browser and submit the form. Look at the console.log output and the response you get and explain.
 
-We get a Cannot get because it is a static page and if we move the order_page into the public folder than it will be shown correctly.
+                    We get a Cannot get because it is a static page and if we move the order_page into the public folder than it will be shown correctly.
 
-///////////Exercise 3: Server Side Processing of Form Action
+/////////////////////////////////Exercise 3: Server Side Processing of Form Action
 a. Make a copy of info_server_Ex2c.js and name it info_server_Ex3.js and add the following code after the app.all() statement:
 
 app.use(myParser.urlencoded({ extended: true }));
@@ -60,7 +64,7 @@ Unfortunately Express does not provide functions to decode the body of an HTTP r
 
 b. In order_page.html cut the code that checks query string for quantity_textbox into info_server_Ex3.js (the if (typeof GET['quantity_textbox'] != 'undefined')) statement) and paste it over the response.send(POST); statement (i.e. delete the statement) in app.post() and change GET to POST. Copy the function isNonNegInt() from order_page.html and paste it into the top or bottom of app.post(). Change the document.write(`Thank you for purchasing ${q} things!`) to response.send(`Thank you for purchasing ${q} things!`); and delete window.stop(); and an else response.send(`${q} is not a quantity! Press the back button and try again.`); to the if-statement. Try localhost:8080/order_page.html with valid and invalid quantites and verify that it works as expected.
 
-/////Exercise 4: Managing server-side
+///////////////////////////////Exercise 4: Managing server-side
 Often you need to do complex processing and responses on the server. A good design practice to help manage this is to separate out functionality and provide micro-services.
 
 Make a copy of info_server_Ex3.js and name it info_server_Ex4.js.
@@ -93,14 +97,19 @@ let model = products[0]['model'];
 let model_price = products[0]['price'];
 Replace the response with <h2>Thank you for purchasing ${q} ${model}. Your total is \$${q * model_price}!</h2> and now try out different quantities.
 
-In the head tag of order_page.html add the line <script src="./product_data.js"></script>. Note that the path does NOT include the public directory. Why is this? 
-        Because it is in the head so it is public to all the code within that document.
+            ////In the head tag of order_page.html add the line <script src="./product_data.js"></script>. Note that the path does NOT include the public directory. Why is this? 
+                    Because it is in the head so it is public to all the code within that document.
 
 Before the form (or in the top of the form) add
 
 document.write(`<h3>${products[0]["model"]} at \$${products[0]["price"]}</h3>`);
 
-Reload order_page.html and verify that the Apple iPhone XS product is used in both the form and response to processing that form. Now change some of the information for the 0th element in product_data.json and verify that both order_page.html and info_server_Ex4.js use the updated information. How would you change the product being used here?
+Reload order_page.html and verify that the Apple iPhone XS product is used in both the form and response to processing that form. Now change some of the information for the 0th element in product_data.json and verify that both order_page.html and info_server_Ex4.js use the updated information. 
+
+            ////How would you change the product being used here?
+                    you would change the data within the product_data.json
+
+
 
 Exercise 5: Passing data to client from a server
 There are often times you will want to pass data from the server to a client. Unfortunately, HTTP does not support “push” data from the server (at least HTTP/1 does not). That is, you cannot just send data to the client, even if you have an open connection from the server to the client. Because of this, data can only be passed from the server to the client in response to a request. There are generally two ways to do this. One way is to put the data into a query string and have the server re-direct to the page that needs the data adding this query string. Another way is to have the page fetch the data from a micro-service. The difference is that the first way will leave the page (the current document will be overwritten) while the second will stay on the page (the current document remains). We will try the query-string approach since it is simpler.
@@ -109,7 +118,7 @@ Make a copy of info_server_Ex4.js and name it info_server_Ex5.js. Start by copyi
 
         let params = (new URL(document.location)).searchParams;
         var q = params.get('quantity');
-        
+
 This code will read the query string and place the keys and values into a URLSearchParams object (params) for easy access to the data in the query string. Now remove any use of request (you are on the client now so this is not defined) and replace all uses of response with document.write (again, you are on the client which is the receiver of a response). Remove the code that increases the total_sold (yup, this is a server side thing and cannot be done in the client).
 
 On your server, replace the response.send() with response.redirect('receipt.html?quantity=' + q);. This will tell the browser (the client) to do a GET request for the file receipt.html with a query string with key quantity and value whatever is in the variable q (which is the quantity purchased). Quit and restart the server, reload order_page.html to test.
