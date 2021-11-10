@@ -1,0 +1,159 @@
+Assignment 1: Creating an e-Commerce Web-site
+    Scenario:
+        The marketing director of a company selling «you choose the product>> approaches you to help her design an e-commerce website for his company. She asks you to design a website that will display at least 5 different products or services to the user, from which they can choose multiple quantities of any combination of the products or services. She asks you to perform a check to make sure that the user has entered valid quantities and to then calculate the sales total, including tax and shipping/handling costs.
+
+After completing this assignment, you should have learned the following:
+
+        Inventing and implementing a complete information system
+        Building a reasonable user interface
+        Processing user input and generating responses on a server
+        Using the service as a dynamic information service
+        Interpreting and following development requirements
+        Note: You will not need to provide the actual products/services. However, you should build your application as if it will be used for this!
+
+The main requirements for this assignment are the following:
+
+    Use arrays (of objects) to display items and quantities available in a table.
+    Use forms to process information. 
+    Allow users to select and process multiple products/services.
+
+Getting Started: You can either choose to create a project on your own that meets the above requirements or you can follow the step-by-step guide below to help you create the project.
+
+/////////////VERY IMPORTANT: You must comment all of your code! You may even want to create a comment on what you are trying to do before you code. The comments are for explaining what your code is used for in the program. This way when we help you, we will know what is going on. Not only because this is required, it will also help you later on when working in group projects. It may be hard for others to understand your code without clear, detailed comments. Also remember to include your name (as author), date, and a brief description of what the code does at the top of the file.
+
+///Part (A)
+
+    (0) Create a directory for your application. You MUST name it <your lastname>_<your firstname>_Assignment1. This is needed for when you deploy your application on the ITM-VM server.
+
+    (1) Make a JSON object for each of your products and include the relevant details for the product such as name, price, description, etc. You must include a quantity_available attribute to each product. You will need to identify each item you are offering by a unique name or number.  
+
+_ Example_ :
+
+            If you were selling cell phones, for each phone you would make an array containing all that particular product’s information such as name/”model” number, maker (e.g. Huawei, Samsung, Apple), description, “price”, “image”, etc. Such as
+
+            {  
+            "model":"Apple iPhone XS",  
+            "price": 990.00,  
+            "image": 'AppleXS.jpg',
+            "quantity_available": 4
+            } 
+    (2) Then you should make a “master” products array to hold all of the products you created in step (1).  In other words, you will create an array of objects.
+
+Example :
+
+            Continuing with cell phone example, you would make a JSON array that holds all of the individual cell phone objects.
+
+            [
+            {  
+            "model":"Apple iPhone XS",  
+            "price": 990.00,  
+            "image": 'AppleXS.jpg',
+            "quantity_available": 4
+            },
+            {  
+            "model":"Samsung Galaxy",  
+            "price": 240.00,  
+            "image": 'Samsung_Galaxy.jpg',
+            "quantity_available": 5
+            }
+            ]
+            Save the JSON array in a file, say products.json and then load it at the top of server.js using var products_array = require('./product_data.json');
+
+            This will load your products information into the server memory and you can use it in your client requests for validating data and sharing products information between pages.
+
+            In the client pages, you will get the product information dynamically with aGET request for products.js from the server with the following:
+
+            <script src="./product_data.js" type="text/javascript"></script>
+            After this server request, the product information will be in the variable products_array.
+
+            As in the labs, you can then loop through it with either for(), while(), or .foreach() to display the information about the items in a table.
+
+    (3) Create a server to serve your application. This includes serving your products data (in whatever manner you choose), display products page, validating purchase data, and providing an invoice for a purchase. Your server MUST be named server.js. This is needed for when you deploy your application on the ITM-VM server.
+
+        Use this for a start on your server.js file:
+
+            var express = require('express');
+            var app = express();
+
+            // Routing 
+
+            // monitor all requests
+            app.all('*', function (request, response, next) {
+            console.log(request.method + ' to ' + request.path);
+            next();
+            });
+
+            // process purchase request (validate quantities, check quantity available)
+            <** your code here ***>
+
+            // route all other GET requests to files in public 
+            app.use(express.static('./public'));
+
+            // start server
+            app.listen(8080, () => console.log(`listening on port 8080`));
+Note: this means that all of your HTML files must live in a folder called “public” in your assignment directory.
+
+Example :
+
+            The cell phone display may look something like this (you should always include “image”s of each product but you do not need to have any product filtering as is shown here):
+
+
+            See SmartPhoneProducts3 or right-click on the above frame and view it’s source for an example of generating a page from a JSON array of product data.
+
+            See Lab 13 Exercise 3c for an example.
+
+Part (B)
+
+(1) Create an HTML form to ask customers which items they wish to purchase and use the POST method with action ./purchase to request that the server process the form data.   
+
+(2) The form displayed will allow customers to select the item that they want and the quantity they want in an <input type="text"> with no HTML validations or other client side data guards or validation. You will also need a submit button on this form.
+
+(4) The form must be submitted to the server as a POST. While it is possible, and maybe even convenient to use a GET, for this assignment, you must process the form data on the server though a POST request to ./purchase.
+
+Example :
+
+For the cell phone example, we might change the display to allow for customer input as shown below:
+
+
+See Lab 13 Ex. 4 for an example of multiple form inputs and processing or right-click on the above frame and view it’s source for an example of getting and processing form data.
+
+(5) You must use data validation on the server to ensure the customer entered valid data.  Note: if valid data is not entered, display a specific error message and direct the user to enter valid data. And you must do this validation in your Javascript code on the server. For this assignment you can not, for example, use a drop-down list to constrain a user to enter only integer quantities. The data must be validated before it is used for the invoice. You cannot just validate the data on the client unless you can guarantee your data comes from that client.
+
+Example :
+
+For the cell phone example, you should make sure that the customer entered valid quantities in the quantity boxes for each item # (1 to 5) or anything at all. If the customer entered -2.3 for item #1, you might display “Please input a non-negative integer” and enable the customer to re-enter number.
+
+(6) Once you have ensured the customer has entered valid data on the server, you then display the purchase information in an invoice. Don’t forget to include tax and shipping if necessary. But specify that the tax and/or shipping are unique to the order (don’t just use a fixed shipping cost for any purchase). All output should be properly formatted (e.g. if there was a dollar amount such as $125.39 it should have two decimal points and a dollar sign).
+
+Example :
+
+
+See SmartPhoneProducts3t for an example of processing an invoice from an array of products and quantities or right-click on the above frame and view it’s source for an example. You do not have to generate the invoice exactly in this way. You may generate the invoice page on the server (either directly or from a template), or generate it on the client (but you still must collect and validate the form POST data on the server).
+
+IMPORTANT NOTE You *may use code from the above examples providing that you clearly specify a reference as code comments in the places where the code is used in your application. You must not use the same design for the interface and you do not want to copy the design for processing the form as it will not meet the requirements for this assignment. If you use code without providing a clear reference from any source, including code provided in class examples and labs, your assignment score will be severely penalized. If you copy the Assignment1 examples and just change the data and the images you will receive 0 points for the assignment.
+
+(7) When you have a fully functional store (products page and invoice), choose a site template and re-design your website. It is suggested you use a W3 Schools template, however you may use any template you wish (such as Bootstrap Templates).
+
+NOTE You may not just copy the design in the Assignment1 examples or WODs and substitute your products/services. These do not use templates! Also the design is awful.
+
+Checklist:
+
+After completing the assignment make sure that you have addressed all of the below. Note: Having all of these does not guarantee an ‘A’ but you must have them.
+
+Meets all functional requirements (displays products, allows user to select product, allows user to select quantities, displays invoice with sensible tax and shipping charges along with totals, uses server to share products data and validate purchase data)
+Commented–get in the habit now!  Put author’s name and program description as comments in files. Credit given to original author when using “borrowed” code.
+Used descriptive file names and meaningful variable names.
+Employs good code formatting.
+Defined and used arrays and objects for your item inventory.
+Created tables via array data and loops.
+Good data validation (does not allow invalid choices, responds appropriately to invalid data). Be sure to test with invalid data.
+Good user interface design (easy to use and intuitive)
+No extra files or redundant data.
+Correct output. No parse errors or warnings.
+Tested on the class server, using the itm352student account, saved in a folder with your name in the Assignment1 sub-folder
+Use a website HTML template to make your site look attractive and flexible.
+Does not allow purchases of more than is available.
+ONE LAST TIME: You must comment all of your code (you may even want to create a comment on what you are trying to do before you code). The comments are for explaining what your code is used for in the program. That way when we help you, we will know what is going on. Not only because this is required, this will also help you later on when working in group projects because it may be hard for others to understand your code. Also remember to put your name (as the author of the code) and program description in the first part of your comments.
+
+Submission:
+See the Assignment 1 instructions on Laulima. Note that you will need to make your code available and deploy it on ITM-VM for the grader.
