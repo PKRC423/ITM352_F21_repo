@@ -6,7 +6,6 @@ var products = require('./products.json');
 var fs = require('fs');
 var express = require('express');
 var app = express();
-var myParser = require("body-parser");
 // Routing 
 
 // monitor all requests
