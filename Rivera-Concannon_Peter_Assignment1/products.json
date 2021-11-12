@@ -2,60 +2,60 @@
     {
         "Mauka" :[
             
-            {"section":"100-199", 
+            {"section":"100, 106, 200, 204", 
                 "price": 15.00, 
                     "qty_available": 100},
 
-            {"section":"200-299", 
-                "price": 15.00, 
+            {"section":"101, 102, 104, 105, 201, 203", 
+                "price": 20.00, 
                     "qty_available": 100},
 
-            {"section":"300-399", 
+            {"section":"103 & 202", 
                 "price": 15.00, 
                     "qty_available": 100}
         ]
     },
     {
         "Makai" :[
-            {"section":"400-499", 
+            {"section":"140, 141, 148, 149", 
                 "price": 15.00, 
                     "qty_available": 100},
 
-            {"section":"500-599", 
+            {"section":"142, 143, 146, 147", 
                 "price": 15.00, 
                     "qty_available": 100},
 
-            {"section":"600-699", 
+            {"section":"144 & 145", 
                 "price": 15.00, 
                     "qty_available": 100}
         ]
     },
     {
         "Ewa" :[
-            {"section":"700-799", 
+            {"section":"160 & 161", 
                 "price": 15.00, 
                     "qty_available": 100},
 
-            {"section":"800-899", 
+            {"section":"162 & 163", 
                 "price": 15.00,
                     "qty_available": 100},
 
-            {"section":"900-999", 
+            {"section":"164 & 165", 
                 "price": 15.00, 
                     "qty_available": 100}
         ]
     },
     {
         "Diamond Head" :[
-            {"section":"1000-1099", 
+            {"section":"120 & 121", 
                 "price": 15.00, 
                     "qty_available": 100},
 
-            {"section":"1100-1199", 
+            {"section":"122", 
                 "price": 15.00, 
                     "qty_available": 100},
 
-            {"section":"1200-1299", 
+            {"section":"123 & 124", 
                 "price": 15.00, 
                     "qty_available": 100}
         ]
