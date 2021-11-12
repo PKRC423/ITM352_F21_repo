@@ -1,32 +1,63 @@
 [
     {
-        "section": "",
-        "price": 15.00,
-        "image": ""
+        "Mauka" :[
+            
+            {"section":"100-199", 
+                "price": 15.00, 
+                    "qty_available": 100},
+
+            {"section":"200-299", 
+                "price": 15.00, 
+                    "qty_available": 100},
+
+            {"section":"300-399", 
+                "price": 15.00, 
+                    "qty_available": 100}
+        ]
     },
     {
-        "section": "",
-        "price": 20.00,
-        "image": ""
+        "Makai" :[
+            {"section":"400-499", 
+                "price": 15.00, 
+                    "qty_available": 100},
+
+            {"section":"500-599", 
+                "price": 15.00, 
+                    "qty_available": 100},
+
+            {"section":"600-699", 
+                "price": 15.00, 
+                    "qty_available": 100}
+        ]
     },
     {
-        "section": "",
-        "price": 30.00,
-        "image": ""
+        "Ewa" :[
+            {"section":"700-799", 
+                "price": 15.00, 
+                    "qty_available": 100},
+
+            {"section":"800-899", 
+                "price": 15.00,
+                    "qty_available": 100},
+
+            {"section":"900-999", 
+                "price": 15.00, 
+                    "qty_available": 100}
+        ]
     },
     {
-        "section": "",
-        "price": "Enter Season Ticket Code Below",/*any number in between 0000 & 4444*/
-        "image": ""
-    },
-    {
-        "section": "",
-        "price": "Enter Student Id Below",/*any number between 01111111 & 50000000*/
-        "image": ""
-    },
-    {
-        "section": "",
-        "price": "Enter Work Code Below", /*Mauka Side: 6785 / Makai Side: 5876 / Diamond Head: 1432 / Ewa 2341*/
-        "image": ""
+        "Diamond Head" :[
+            {"section":"1000-1099", 
+                "price": 15.00, 
+                    "qty_available": 100},
+
+            {"section":"1100-1199", 
+                "price": 15.00, 
+                    "qty_available": 100},
+
+            {"section":"1200-1299", 
+                "price": 15.00, 
+                    "qty_available": 100}
+        ]
     }
 ]

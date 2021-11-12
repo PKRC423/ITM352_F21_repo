@@ -1,0 +1,7 @@
+
+/*Refrenced from W3 school "Responsive Pricing Tables" example*/
+h1{padding-top:32px!important;padding-bottom:32px!important}
+
+h2{padding-top:16px!important;padding-bottom:16px!important}
+
+ul{list-style-type:none;padding:0;margin:0;border:1px solid #ccc!important; box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)}

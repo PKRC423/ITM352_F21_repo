@@ -5,7 +5,7 @@ var myParser = require("body-parser");
 var products = require('./product_data.json');
 products.forEach( (prod,i) => {prod.total_sold = 0});
 
-app.get("/product_data.js", function (request, response, next) {
+app.get("/products_data.json", function (request, response, next) {
     var products_str = `var products = ${JSON.stringify(products)};`;
     response.send(products_str);
  });
