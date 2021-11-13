@@ -22,12 +22,10 @@
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
         </header>
 
-        <div>
             <main>
             ${display_tickets()}
                  <!--calls function display_tickets-->
             </main>
-        </div>
         
         <footer>
             <input type="submit" value="Purchase Tickets" name="submit_purchase">
