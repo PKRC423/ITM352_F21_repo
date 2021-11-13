@@ -1,32 +1,8 @@
 <!--Statement about what this page is and giving credit to me for making it-->
 
 <!--To generate the products.json data-->
-    <script src="./products.json" type="text/javascript"></script>
+    <script src="/views/products.json" type="text/javascript"></script>
 
-<!--Referenced from Invoice4-->
-<script>
-
-    function gen_item_rows(products) {
-  for(i=0; products[i].price; i++) {
-    if(products[i] ==0) continue;
-    errors = checkIfNegative(products[i], true);
-    if (errors.length == 0) {
-      exPrice = products[i].price * products[i];
-      subtotal += exPrice;
-    } else{
-      exPrice = "";
-    }
-        document.write(`
-    <tr>
-      <td width="43%">${products[i].brand}</td>
-      <td align="center" width="11%">${products[i]}<br><font color ="red">${errors.join('<br>')}</font></td>
-      <td width="13%">\$${products[i].price}</td>
-      <td width="54%">\$${exPrice}</td>
-    </tr>
-    `)
-  }
-}
-</script>
 <!DOCTYPE html>
 <html>
 

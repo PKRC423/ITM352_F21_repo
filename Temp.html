@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -9,6 +10,7 @@
 
     <link href="uhFB.css" rel="stylesheet">
 
+
 </head>
 
 <body>
@@ -16,21 +18,20 @@
     <form name="product_purchase_form" action="/process_invoice" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
-                <h3> On <script>{Date()}</script> <h3>
         </header>
 
-        <div id="productDisplay">
+        <div>
             <main>
-            <script>
-                display_tickets()
-            </script>
+              <script>${display_tickets()}</script><!--calls function display_tickets-->
             </main>
         </div>
         
         <footer>
-            <input type="submit" value="Purchase Tickets" name="purchase_button">
-            <h2> If you have any troubles or need special assistance, please contact the office at <br> 888-888-8889 or uhFB@gmail.com</h2>
+            <input type="submit" value="Purchase Tickets" name="submit_purchase">
+            <h2> If you have any troubles or need special assistance, please contact the office at <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
     </form>
 
 </body>
+
+</html>

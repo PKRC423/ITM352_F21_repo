@@ -1,7 +1,6 @@
-[
-    {
-        "Mauka" :[
-            
+{    
+    
+        "Mauka": [
             {"section":"100, 106, 200, 204", 
                 "price": 15.00, 
                     "qty_available": 100},
@@ -13,10 +12,8 @@
             {"section":"103 & 202", 
                 "price": 15.00, 
                     "qty_available": 100}
-        ]
-    },
-    {
-        "Makai" :[
+        ],    
+        "Makai" : [
             {"section":"140, 141, 148, 149", 
                 "price": 15.00, 
                     "qty_available": 100},
@@ -28,9 +25,7 @@
             {"section":"144 & 145", 
                 "price": 15.00, 
                     "qty_available": 100}
-        ]
-    },
-    {
+        ],
         "Ewa" :[
             {"section":"160 & 161", 
                 "price": 15.00, 
@@ -43,9 +38,7 @@
             {"section":"164 & 165", 
                 "price": 15.00, 
                     "qty_available": 100}
-        ]
-    },
-    {
+        ],
         "Diamond Head" :[
             {"section":"120 & 121", 
                 "price": 15.00, 
@@ -59,5 +52,4 @@
                 "price": 15.00, 
                     "qty_available": 100}
         ]
-    }
-]
+}

@@ -23,7 +23,28 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
+/*
+//Refrenced from the Assignment1 MVC EX
+app.post("/process_invoice", function (request, response, next) {
+    let POST = request.body;
+    if(typeof POST['purchase_submit'] == 'undefined') {
+        console.log('Error, no data, undefined');
+        next();
+    } 
 
+    console.log(Date.now() + ': Purchase made from ip ' + request.ip + ' data: ' + JSON.stringify(POST));
+
+    var contents = fs.readFileSync('./views/invoice.template', 'utf8');
+    response.send(eval('`' + contents + '`')); // render template string
+*/
+
+//Referenced from Invoice 4
+//Function used to generate the item rows for the invoice
+/*
+function gen_invoice_rows(products) {
+    for(i=0; product[i][])
+}
+*/
 //Refrenced from the Assignment1 MVC EX
 
 app.get("/UHManoaFootballTickets", function (request, response) {
@@ -32,20 +53,24 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 
 //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
     function display_tickets() {
-        str = '';
             for (i = 0; i < products.length; i++) {
-                str += `
+                console.log(`Sub-array ${i}: ${products[i]}`);
+                for(j=0; j<products[i].length; j++) {
+                    console.log(`Element ${j}: ${products[i][j]}`)
+                }
+                window.alert(`
                 <ul>
-                <li><h1>${products[i]} Side Stands</h1></li>
+                <li><h1>${products[i]} Side Stands</h1></li><!--maybe move before the for [j] loop-->
 
-                <li><h2>Seat Section: <br> ${products[i][0]}</h2></li>
+                <li><h2>Seat Section: <br> ${products[i][j].section}</h2></li>
 
-                <li><p>Ticket price: <br> $${products[i][1]}</p></li>
+                <li><p>Ticket price: <br> $${products[i][j].price}</p></li>
 
-                <li><h2>There are: ${products[i][2]} Seats Available</h2></li>
+                <li><h2
+
+                <li><h2>There are: ${products[i][j].qty_available} Seats Available</h2></li>
                 <ul>
-                `;
+                `);
             }
-            return str;
         }
     });
