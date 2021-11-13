@@ -2,7 +2,7 @@
 Statement about what this page is and giving credit to me for making it
 */
 
-var products = require('./products.json');
+var products = require('./products');
 var fs = require('fs');
 var express = require('express');
 var app = express();
@@ -33,11 +33,16 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
+//Referenced from Lab13 Ex5
+app.get("/products.json", function (request, response, next) {
+    var products_string = `${JSON.stringify(products)};`;
+    response.send(products_string);
+});
     
         //Refrenced from the Assignment1 MVC EX
         app.post("/process_invoice_form", function (request, response, next) {
             let POST = request.body;
-            if(typeof POST['purchase_submit'] == 'undefined') {
+            if(typeof POST['submit_purchase'] == 'undefined') {
                 console.log('Error, no data, undefined');
                 next();
             } 
@@ -65,6 +70,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 
 //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
     function display_tickets() {
+        str = '';
             for (i = 0; i < products.length; i++) {
                 console.log(`Sub-array ${i}: ${products[i]}`);
                 for(j=0; j<products[i].length; j++) {

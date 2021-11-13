@@ -1,7 +1,7 @@
 <!--Statement about what this page is and giving credit to me for making it-->
 
 <!--To generate the products.json data-->
-    <script src="../products.json" type="text/javascript"></script>
+    <script src="./products.json"></script>
 
 <!DOCTYPE html>
 <html>
