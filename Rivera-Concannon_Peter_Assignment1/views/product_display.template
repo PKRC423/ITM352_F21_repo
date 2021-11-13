@@ -1,5 +1,5 @@
     <!--To generate the products.json data-->
-    <script src="~/Rivera-Concannon_Peter_Assignment1/products.json" type="text/javascript"></script>
+    <script src="../products.json" type="text/javascript"></script>
 
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
 
         <div>
             <main>
-            <script src="/display_tickets()"></script>
+            
                  <!--calls function display_tickets-->
             </main>
         </div>

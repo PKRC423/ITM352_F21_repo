@@ -15,7 +15,14 @@ app.all('*', function (request, response, next) {
 });
 
 // process purchase request (validate quantities, check quantity available)
-        //referenced the Lab13 examples to structure my thing.
+        //
+    /*function checkInt(x,return_errors = false) {
+        erros=[] ; 
+        if(x== '') x = 0
+    }
+    
+    function 
+    */
 
 // route all other GET requests to files in public 
 app.use(express.static('./public'));
@@ -57,7 +64,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 console.log(`Sub-array ${i}: ${products[i]}`);
                 for(j=0; j<products[i].length; j++) {
                     console.log(`Element ${j}: ${products[i][j]}`)
-                }
+                
                 window.alert(`
                 <ul>
                 <li><h1>${products[i]} Side Stands</h1></li><!--maybe move before the for [j] loop-->
@@ -71,6 +78,8 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <li><h2>There are: ${products[i][j].qty_available} Seats Available</h2></li>
                 <ul>
                 `);
+                }
             }
         }
-    });
+    }
+);
