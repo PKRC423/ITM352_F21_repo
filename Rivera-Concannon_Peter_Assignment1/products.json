@@ -1,5 +1,5 @@
 {    
-    
+    "products": {
         "Mauka": [
             {"section":"100, 106, 200, 204", 
                 "price": 15.00, 
@@ -52,4 +52,5 @@
                 "price": 15.00, 
                     "qty_available": 100}
         ]
+    }
 }
