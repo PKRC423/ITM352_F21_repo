@@ -14,6 +14,9 @@ app.all('*', function (request, response, next) {
    next();
 });
 
+//So Express can decode the body of an HTTP request since by default Express cannot do that.
+app.use(express.urlencoded({extended: true}));
+
 // process purchase request (validate quantities, check quantity available)
         //
     /*function checkInt(x,return_errors = false) {
@@ -30,33 +33,35 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
-/*
-//Refrenced from the Assignment1 MVC EX
-app.post("/process_invoice", function (request, response, next) {
-    let POST = request.body;
-    if(typeof POST['purchase_submit'] == 'undefined') {
-        console.log('Error, no data, undefined');
-        next();
-    } 
+    
+        //Refrenced from the Assignment1 MVC EX
+        app.post("/process_invoice_form", function (request, response, next) {
+            let POST = request.body;
+            if(typeof POST['purchase_submit'] == 'undefined') {
+                console.log('Error, no data, undefined');
+                next();
+            } 
 
-    console.log(Date.now() + ': Purchase made from ip ' + request.ip + ' data: ' + JSON.stringify(POST));
+            console.log(Date.now() + ': Purchase made from ip ' + request.ip + ' data: ' + JSON.stringify(POST));
 
-    var contents = fs.readFileSync('./views/invoice.template', 'utf8');
-    response.send(eval('`' + contents + '`')); // render template string
-*/
-
-//Referenced from Invoice 4
-//Function used to generate the item rows for the invoice
-/*
-function gen_invoice_rows(products) {
-    for(i=0; product[i][])
-}
-*/
+            var body = fs.readFileSync('./views/invoice.template', 'utf8');
+            response.send(eval('`' + body + '`')); // render template string from invoice.template
+    
+        
+    //Referenced from Invoice 4
+    //Function used to generate the item rows for the invoice
+    /*
+        function gen_invoice_rows(products) {
+            for(i=0; product[i][])
+        }
+    */
+    }
+);
 //Refrenced from the Assignment1 MVC EX
 
 app.get("/UHManoaFootballTickets", function (request, response) {
-    var contents = fs.readFileSync('./views/product_display.template', 'utf8');
-    response.send(eval('`' + contents + '`')); // render template string
+    var body = fs.readFileSync('./views/product_display.template', 'utf8');
+    response.send(eval('`' + body + '`')); // render template string
 
 //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
     function display_tickets() {
@@ -65,7 +70,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 for(j=0; j<products[i].length; j++) {
                     console.log(`Element ${j}: ${products[i][j]}`)
                 
-                window.alert(`
+                str= `
                 <ul>
                 <li><h1>${products[i]} Side Stands</h1></li><!--maybe move before the for [j] loop-->
 
@@ -77,9 +82,10 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 
                 <li><h2>There are: ${products[i][j].qty_available} Seats Available</h2></li>
                 <ul>
-                `);
+                `;
                 }
             }
+        return str;
         }
     }
 );

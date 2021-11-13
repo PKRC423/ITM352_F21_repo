@@ -17,7 +17,7 @@
 
 <body>
             <!--A form so the user -->
-    <form name="product_purchase_form" action="/process_form" method="POST">
+    <form name="product_purchase_form" action="/process_invoice_form" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
         </header>
