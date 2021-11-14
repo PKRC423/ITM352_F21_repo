@@ -80,7 +80,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <ul>
                 <li><h1>${products[i]} Side Stands</h1></li><!--maybe move before the for [j] loop-->
 
-                <li><h2>Seat Section: <br> ${products[i][j].section}</h2></li>
+                <li><h2>Seat Section: <br> ${products[i][j].section_num}</h2></li>
 
                 <li><p>Ticket price: <br> $${products[i][j].price}</p></li>
 
