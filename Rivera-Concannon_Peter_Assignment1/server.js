@@ -3,8 +3,10 @@ Statement about what this page is and giving credit to me for making it
 */
 
 var products = require('./products');
+products.forEach( (prod,i) => {prod.total_sold = 0});
 var fs = require('fs');
 var express = require('express');
+const { checkServerIdentity } = require('tls');
 var app = express();
 // Routing 
 
@@ -18,14 +20,19 @@ app.all('*', function (request, response, next) {
 app.use(express.urlencoded({extended: true}));
 
 // process purchase request (validate quantities, check quantity available)
-        //
-    /*function checkInt(x,return_errors = false) {
-        erros=[] ; 
-        if(x== '') x = 0
-    }
-    
-    function 
-    */
+        //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same typ are 
+    function checkInt(inputStr, returnErr = false) {
+       errors = []; //No errors yet hopefully
+        if (Number(inputStr) != inputStr) {
+            errors.push("Not a Valid Quantity")
+        } else if(inputStr < 0) {
+            errors.push('Not a Valid Quantity')
+            } else {
+                if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity');
+                if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party');
+            }
+        return returnErr ? errors : (errors.length == 0);
+        }
 
 // route all other GET requests to files in public 
 app.use(express.static('./public'));
@@ -33,24 +40,28 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
-//Referenced from Lab13 Ex5
-app.get("/products.json", function (request, response, next) {
-    var products_string = `${JSON.stringify(products)};`;
-    response.send(products_string);
+//Referenced from Lab13 Ex5, this is used to process products.JSON's products[]
+
+app.get("/products.js", function (request, response, next) {
+    var products = `${JSON.stringify(products)};`;
+    response.send(products);
 });
     
-        //Refrenced from the Assignment1 MVC EX
-        app.post("/process_invoice_form", function (request, response, next) {
-            let POST = request.body;
-            if(typeof POST['submit_purchase'] == 'undefined') {
-                console.log('Error, no data, undefined');
-                next();
-            } 
+       //Refrenced from the Lab13 Ex5
+app.post("/process_invoice_form", function (request, response, next) {
+    let POST = request.body;
+    let section =products[0]['section_num'];
+    let section_price=products[0]['price'];
 
-            console.log(Date.now() + ': Purchase made from ip ' + request.ip + ' data: ' + JSON.stringify(POST));
-
-            var body = fs.readFileSync('./views/invoice.template', 'utf8');
-            response.send(eval('`' + body + '`')); // render template string from invoice.template
+        if(typeof POST['quantity_textbox'] != 'undefined') {
+            let quantity = POST['quantity_textbox'];
+            if (checkInt(quantity)) {
+                products[0]['total_sold'] += Number(quantity);
+                response.redirect('/______' + quantity);
+            } else {
+                response.redirect('/______' +quantity);
+            }
+        }
     
         
     //Referenced from Invoice 4
@@ -71,27 +82,23 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
     function display_tickets() {
         str = '';
-            for (i = 0; i < products.length; i++) {
-                console.log(`Sub-array ${i}: ${products[i]}`);
-                for(j=0; j<products[i].length; j++) {
-                    console.log(`Element ${j}: ${products[i][j]}`)
-                
-                str= `
-                <ul>
-                <li><h1>${products[i]} Side Stands</h1></li><!--maybe move before the for [j] loop-->
+            for (i = 0; i < products.length; i++) {            
+                str += `
+                <section style="text-align: center">
+                <hr/>
+                <h1>Sections: ${products[i].section_num}</h1>
 
-                <li><h2>Seat Section: <br> ${products[i][j].section_num}</h2></li>
+                <h2>Ticket price: <br> $${products[i].price}</h2>
 
-                <li><p>Ticket price: <br> $${products[i][j].price}</p></li>
+                <h3> Quantity </h3>
 
-                <li><h2
+                <input type"text" placeholder="0" name = "quantity" onkeyup = "checkInt(this);'>
 
-                <li><h2>There are: ${products[i][j].qty_available} Seats Available</h2></li>
-                <ul>
+                <h2>There are: ${products[i].qty_available} Seats Available</h2>
+                </section>
                 `;
                 }
+                return str;
             }
-        return str;
         }
-    }
 );

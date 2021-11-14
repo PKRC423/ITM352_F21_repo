@@ -1,5 +1,5 @@
     <!--To generate the products.json data-->
-    <script src="./products.json"></script>
+    <script src="./products.js"></script>
 
 <!DOCTYPE html>
 <html>
@@ -16,10 +16,12 @@
 </head>
 
 <body>
+    <div>
             <!--A form so the user -->
     <form name="product_purchase_form" action="/process_invoice_form" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
+        
         </header>
 
             <main>
@@ -32,7 +34,7 @@
             <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
     </form>
-
+    </div>
 </body>
 
 </html>
