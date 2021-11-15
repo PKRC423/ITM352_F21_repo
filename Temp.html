@@ -18,6 +18,8 @@
     <form name="product_purchase_form" action="/process_invoice" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
+            <img src="images/Seating_Map.jpg" style="border-style: inset; position: fixed; height : 50%; width : 50%; align-content: center;">
+            
         </header>
 
         <div>
@@ -32,7 +34,16 @@
             <h2> If you have any troubles or need special assistance, please contact the office at <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
     </form>
-
+<style>
+    
+</style>
 </body>
 
 </html>
+
+
+//Refrenced from the Assignment1 MVC EX
+
+app.get("/UHManoaFootballTickets", function (request, response) {
+    var body = fs.readFileSync('./product_display.template', 'utf8');
+    response.send(eval('`' + body + '`')); // render template string

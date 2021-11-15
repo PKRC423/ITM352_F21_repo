@@ -16,6 +16,13 @@
 </head>
 
 <body>
+<a href="https://hawaiiathletics.com/documents/2021/10/19//Ching_Complex_Map_10_19_21.pdf?id=12135" target="_blank">
+            <figure>
+            <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;">
+            <br>
+            <figcaption>Click here to view the stadium map-</figcaption>
+            </figure>
+            </a>
     <div>
             <!--A form so the user -->
     <form name="product_purchase_form" action="/process_invoice_form" method="POST">
@@ -30,6 +37,7 @@
             </main>
         
         <footer>
+        <hr>
             <input type="submit" value="Purchase Tickets" name="submit_purchase">
             <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
