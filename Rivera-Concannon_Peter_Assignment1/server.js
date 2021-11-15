@@ -50,8 +50,13 @@ function checkInt(inputStr, returnErr = false) {
 
 };
        //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
-app.post("/Receipt", function (request, response) {
+app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
+if (typeof POST['submit_purchase'] == 'undefined') {
+    console.log('No Data for Invoice');
+    next();
+}
+
     var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.    
         

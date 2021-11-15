@@ -15,13 +15,17 @@
     <link href="uhFB.css" rel="stylesheet">
 
 </head>
-<body>
-<div>
-<h1> PAGE LOADED</h1>
-<main>
-  ${gen_invoice()} //generates the Invoice for the purchase.
-</main>
-</div>
+  <body>
+  <div>
+    <h1> PAGE LOADED</h1>
+    <main>
+      <table>
+        <tbody>
+          ${gen_invoice()} <!--generates the Invoice for the purchase.-->
+        </tbody>
+      </table>
+    </main>
+  </div>
 </body>
 
 </html>
