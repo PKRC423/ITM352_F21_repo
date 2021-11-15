@@ -12,7 +12,23 @@
 
     <link href="uhFB.css" rel="stylesheet">
 
+    <script>
+        //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
+function checkInt(inputStr, returnErr = false) {
+    errors = []; //No errors yet hopefully
+    if (Number(inputStr) != inputStr) {        //Checks if it is a number
+        errors.push("Not a Valid Quantity")
+    } else {
+        if(inputStr < 0) {                  //Checks if it's a negative value
+        errors.push('Not a Valid Quantity')
+        if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
+        if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
+        }
+    return returnErr ? errors : (errors.length == 0);
+    }
 
+};
+    </script>
 </head>
 
 <body>
@@ -23,9 +39,9 @@
             <figcaption>Click here to view the stadium map-</figcaption>
             </figure>
             </a>
-    <div>
+    <div style="float: right;">
             <!--A form so the user -->
-    <form name="product_purchase_form" action="/process_invoice_form" method="POST">
+    <form name="product_purchase_form" action="/Receipt" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
         

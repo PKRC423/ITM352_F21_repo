@@ -39,28 +39,52 @@ function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if it is a number
         errors.push("Not a Valid Quantity")
-    } else if(inputStr < 0) {                  //Checks if it's a negative value
+    } else {
+        if(inputStr < 0) {                  //Checks if it's a negative value
         errors.push('Not a Valid Quantity')
-        } else {
-             if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
-            if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
+        if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
+        if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
         }
     return returnErr ? errors : (errors.length == 0);
     }
 
-
-       //Referenced from the Lab13 Ex5 to process the invoice form.
-app.post("/process_invoice_form", function (request, response, next) {
-    
-    
+};
+       //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
+app.post("/Receipt", function (request, response, next) {
+    let POST = request.body;
+    var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
+    response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.    
         
     //Referenced from Invoice 4
     //Function used to generate the item rows for the invoice
-    /*
-        function gen_invoice_rows(products) {
-            for(i=0; product[i][])
+    function gen_invoice() {
+        str = '';
+        subtotal = 0;
+        for (i=0 ; i< products.length; i++) {
+            qty_available = 0;
+            if (typeof POST[`quantity${i}`] != 'undefined') {
+                qty_available = POST[`quantity${i}`];
+            }
+            if (qty_available > 0) {
+                exPrice = qty_available * products[i].price;
+                subtotal += exPrice;
+                str += (`
+                    <tr>
+                        <td width= 50%> Thank you for Purchasing ${qty_available} tickets for Sections: </td>
+                        <td width = "40%">${products[i].section_num}</td>
+                        <td width ="30%"> ${products[i].price}</td>
+                        <td width = "30%"> ${exPrice} </td>
+                    </tr>
+                `);
+                }
+            }
+            //To Compute Tax and the Grand total.
+            tax_rate = 0.0575
+            tax = tax_rate * subtotal;
+        grandTotal = subtotal + tax;
+
+        return str;
         }
-    */
     }
 );
 //Refrenced from the Assignment1 MVC EX

@@ -18,6 +18,9 @@
 <body>
 <div>
 <h1> PAGE LOADED</h1>
+<main>
+  ${gen_invoice()} //generates the Invoice for the purchase.
+</main>
 </div>
 </body>
 
