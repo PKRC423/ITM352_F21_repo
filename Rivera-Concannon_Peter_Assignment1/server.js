@@ -57,7 +57,7 @@ function checkQtyTxt(){
        //Referenced from the Lab13 Ex5 to process the invoice form
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
-if (typeof POST[`quantity${i}`] == 'undefined') {
+if (typeof POST[`quantity${i}`] != 'undefined') {
     let qty = POST[`quantity${i}`];
     if(checkInt(qty)) {
         products[0]['total_purchases'] += Number(qty);
