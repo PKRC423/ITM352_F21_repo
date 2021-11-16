@@ -1,49 +1,49 @@
 [        
             {"section_num": "100, 106, 200, 204", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0},
         
             {"section_num":"101, 102, 104, 105, 201, 203", 
-                "price": 20.00, 
+                "price": 20.00, "image": "/public/images/UHVC.jpg",
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"103 & 202", 
-                "price": 15.00, 
-                    "qty_available": 100, "total_sold": 0},    
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
+                        "qty_available": 100, "total_sold": 0},    
 
             {"section_num":"140, 141, 148, 149", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg",
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"142, 143, 146, 147", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"144 & 145", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"160 & 161", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"162 & 163", 
-                "price": 15.00,
+                "price": 15.00, "image": "/public/images/UHVC.jpg",
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"164 & 165", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"120 & 121", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"122", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0},
 
             {"section_num":"123 & 124", 
-                "price": 15.00, 
+                "price": 15.00, "image": "/public/images/UHVC.jpg", 
                     "qty_available": 100, "total_sold": 0}
 ]

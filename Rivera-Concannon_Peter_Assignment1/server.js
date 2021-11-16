@@ -8,6 +8,8 @@ var express = require('express');
 const { checkServerIdentity } = require('tls');
 const { application } = require('express');
 var app = express();
+var myParser = require("body-parser");
+const { url } = require('inspector');
 // Routing 
 
 // monitor all requests
@@ -33,28 +35,36 @@ app.get("/products.js", function (request, response, next) {
     response.send(products);
 });
 
-    // process purchase request (validate quantities, check quantity available)
+//Checks for a Valid interger and ifthe quantity is Valid
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
 function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if it is a number
         errors.push("Not a Valid Quantity")
     } else {
-        if(inputStr < 0) {                  //Checks if it's a negative value
-        errors.push('Not a Valid Quantity')
+        if(inputStr < 0) errors.push('Not a Valid Quantity');//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
         if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
         }
     return returnErr ? errors : (errors.length == 0);
-    }
+    };
+//Checks if the quantity of the 
+function checkQtyTxt(){
+    var errors = (document.getElementById(`quantity${i}`).value, true);
+        qty_check_message.innerHTML = errors.join(" / ");
+}
 
-};
-       //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
+       //Referenced from the Lab13 Ex5 to process the invoice form
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
-if (typeof POST['submit_purchase'] == 'undefined') {
-    console.log('No Data for Invoice');
-    next();
+if (typeof POST[`quantity${i}`] == 'undefined') {
+    let qty = POST[`quantity${i}`];
+    if(checkInt(qty)) {
+        products[0]['total_purchases'] += Number(qty);
+        response.redirect('./views/invoice.template');
+    }else {
+        response.redirect('./views/product_display.template')
+    }
 }
 
     var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
@@ -118,11 +128,19 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <hr>
                 <h1>Sections: ${products[i].section_num}</h1>
 
+                <img src="${products[i].image}" style="height: 30%; width: 30%;">
+
                 <h2>Ticket price: <br> $${products[i].price}</h2>
-
-                <h3> Quantity </h3>
-
-                <input type"text" placeholder="0" name = "quantity${i}" onkeyup = "checkInt(this);"'>
+                
+                <input type="text" placeholder="0" name = "quantity${i}" onChange= "checkQtyTxt(this);">
+                <span id='qty_check_message'>Enter a quantity</span>
+                    <br>
+                    <script>
+                        if (params.has('quantity${i}')) {
+                            quantity_form.quantity${i}'.value = params.get('quantity${i}'');
+                            checkInt(product_purchase_form["quantity${i}'"]);
+                        }
+                    </script>
 
                 <h2>There are: ${products[i].qty_available - products[i].total_sold} Seats Available</h2>
                 </section>
