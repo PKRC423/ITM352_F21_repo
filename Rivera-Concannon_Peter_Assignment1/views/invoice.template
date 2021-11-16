@@ -16,16 +16,31 @@
 
 </head>
   <body>
-  <div>
-    <h1> PAGE LOADED</h1>
-    <main>
-      <table>
-        <tbody>
-          ${gen_invoice()} <!--generates the Invoice for the purchase.-->
-        </tbody>
-      </table>
+        <img src="images/Seating_Map.jpg" style="float: right; border-style: inset; height : 55%; width : 55%;">
+  <div style="float: left;">
+    <h1> Thank you for Your Purchase!</h1>
+      <h3>See you at the Game!</h3>
+        <main>
+          <table border="1.5">
+            <tbody>
+              <tr>
+                ${gen_invoice()} <!--generates the Invoice for the purchase.-->
+              </tr>
+              <tr stlye="text-align: center;" colspan="1">
+                <td class="alignright" width="80%"> Total</td>
+                <td class="aligntight" width="80%"> \$ ${subtotal}</td>
+              </tr><tr>
+                <td>Tax Rate: ${tax_rate.toFixed(2)}</td>
+                <td class="alignright" width="80%">Grand Total: \$ ${grandTotal.toFixed(2)}</td>
+              </tr>
+            </tbody>
+          </table>
     </main>
+    <footer>
+        <hr>
+            <input type="submit" value="Buy More Tickets" name="to_display_tickets">
+            <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
+        </footer>
   </div>
 </body>
-
 </html>

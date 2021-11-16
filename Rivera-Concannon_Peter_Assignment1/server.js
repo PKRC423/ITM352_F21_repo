@@ -3,10 +3,10 @@ Statement about what this page is and giving credit to me for making it
 */
 
 var products = require('./products');
-products.forEach( (prod,i) => {prod.total_sold = 0}); //so each time a "bin" is created it is assigned a number.
 var fs = require('fs');
 var express = require('express');
 const { checkServerIdentity } = require('tls');
+const { application } = require('express');
 var app = express();
 // Routing 
 
@@ -66,19 +66,30 @@ if (typeof POST['submit_purchase'] == 'undefined') {
         str = '';
         subtotal = 0;
         for (i=0 ; i< products.length; i++) {
-            qty_available = 0;
+            qty_purchased = 0;
             if (typeof POST[`quantity${i}`] != 'undefined') {
-                qty_available = POST[`quantity${i}`];
+                qty_purchased = POST[`quantity${i}`];
             }
-            if (qty_available > 0) {
-                exPrice = qty_available * products[i].price;
+            if (qty_purchased > 0) {
+                exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
+                qty_purchased += products[i].total_sold;
                 str += (`
                     <tr>
-                        <td width= 50%> Thank you for Purchasing ${qty_available} tickets for Sections: </td>
-                        <td width = "40%">${products[i].section_num}</td>
-                        <td width ="30%"> ${products[i].price}</td>
-                        <td width = "30%"> ${exPrice} </td>
+                        <td> <b><i>Section: </b></i></td>
+                        <td>${products[i].section_num}</td>
+                    </tr>
+                    <tr>
+                        <td>Tickets: </td>
+                        <td>${qty_purchased}</td>
+                    </tr>
+                    <tr>
+                        <td>Price per Ticket: </td>
+                        <td>\$${products[i].price}</td>
+                    </tr>
+                    <tr>
+                        <td>Extended Price: </td>
+                        <td>\$${exPrice}</td>
                     </tr>
                 `);
                 }
@@ -113,7 +124,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 
                 <input type"text" placeholder="0" name = "quantity${i}" onkeyup = "checkInt(this);"'>
 
-                <h2>There are: ${products[i].qty_available} Seats Available</h2>
+                <h2>There are: ${products[i].qty_available - products[i].total_sold} Seats Available</h2>
                 </section>
                 `;
                 }
@@ -121,3 +132,4 @@ app.get("/UHManoaFootballTickets", function (request, response) {
             }
         }
 );
+
