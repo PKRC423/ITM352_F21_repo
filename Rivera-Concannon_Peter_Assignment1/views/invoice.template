@@ -26,12 +26,12 @@
               <tr>
                 ${gen_invoice()} <!--generates the Invoice for the purchase.-->
               </tr>
-              <tr stlye="text-align: center;" colspan="1">
-                <td class="alignright" width="80%"> Total</td>
-                <td class="aligntight" width="80%"> \$ ${subtotal}</td>
+              <tr>
+                <td style="text-align: center;" width="80%;"> Total</td>
+                <td style="text-align: center;" width="80%;"> \$ ${subtotal}</td>
               </tr><tr>
+                <td style="text-align: center; width="80%;">Grand Total: \$ ${grandTotal.toFixed(2)}</td>
                 <td>Tax Rate: ${tax_rate.toFixed(2)}</td>
-                <td class="alignright" width="80%">Grand Total: \$ ${grandTotal.toFixed(2)}</td>
               </tr>
             </tbody>
           </table>

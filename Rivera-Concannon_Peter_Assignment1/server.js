@@ -73,25 +73,25 @@ if (typeof POST['submit_purchase'] == 'undefined') {
             if (qty_purchased > 0) {
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
-                qty_purchased += products[i].total_sold;
                 str += (`
                     <tr>
                         <td> <b><i>Section: </b></i></td>
-                        <td>${products[i].section_num}</td>
+                        <td style="text-align: center;">${products[i].section_num}</td>
                     </tr>
                     <tr>
                         <td>Tickets: </td>
-                        <td>${qty_purchased}</td>
+                        <td style="text-align: center;">${qty_purchased}</td>
                     </tr>
                     <tr>
                         <td>Price per Ticket: </td>
-                        <td>\$${products[i].price}</td>
+                        <td style="text-align: center;">\$${products[i].price}</td>
                     </tr>
                     <tr>
                         <td>Extended Price: </td>
-                        <td>\$${exPrice}</td>
+                        <td style="text-align: center;">\$${exPrice}</td>
                     </tr>
                 `);
+                qty_purchased += products[i].total_sold;
                 }
             }
             //To Compute Tax and the Grand total.
