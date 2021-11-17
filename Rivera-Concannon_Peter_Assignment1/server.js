@@ -61,9 +61,9 @@ if (typeof POST[`quantity${i}`] != 'undefined') {
     let qty = POST[`quantity${i}`];
     if(checkInt(qty)) {
         products[0]['total_purchases'] += Number(qty);
-        response.redirect('./views/invoice.template');
+        response.redirect(url('./views/invoice.template'));
     }else {
-        response.redirect('./views/product_display.template')
+        response.redirect(url('./views/product_display.template'));
     }
 }
 
@@ -132,7 +132,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 
                 <h2>Ticket price: <br> $${products[i].price}</h2>
                 
-                <input type="text" placeholder="0" name = "quantity${i}" onChange= "checkQtyTxt(this);">
+                <input type="text" placeholder="0" name = "quantity${i}" onkeyup= "checkQtyTxt(this);">
                 <span id='qty_check_message'>Enter a quantity</span>
                     <br>
                     <script>
