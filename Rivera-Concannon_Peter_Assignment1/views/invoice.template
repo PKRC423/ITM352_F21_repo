@@ -1,12 +1,13 @@
 <!--Statement about what this page is and giving credit to me for making it-->
 
-<!--To generate the products.json data-->
-    <script src="./products.js"></script>
-
 <!DOCTYPE html>
 <html>
 
 <head>
+
+<!--To generate the products.json data-->
+    <script src="./products.js"></script>
+
     <meta charset="utf-8">
     <title>Smart Phone Store</title>
 
@@ -16,21 +17,22 @@
 
 </head>
   <body>
-        <img src="images/Seating_Map.jpg" style="float: right; border-style: inset; height : 55%; width : 55%;">
+        <img src="./images/Seating_Map.jpg" alt="Click here to view the Stadium Map!" height= "500" width= "500">
   <div style="float: left;">
     <h1> Thank you for Your Purchase!</h1>
       <h3>See you at the Game!</h3>
         <main>
-          <table border="1.5">
+          <table style="border: black; border-width: 2%;">
             <tbody>
               <tr>
-                ${gen_invoice()} <!--generates the Invoice for the purchase.-->
+                ${gen_invoice()} 
+                <!--generates the Invoice for the purchase.-->
               </tr>
               <tr>
                 <td style="text-align: center;" width="80%;"> Total</td>
                 <td style="text-align: center;" width="80%;"> \$ ${subtotal}</td>
               </tr><tr>
-                <td style="text-align: center; width="80%;">Grand Total: \$ ${grandTotal.toFixed(2)}</td>
+                <td style="text-align: center;">Grand Total: \$ ${grandTotal.toFixed(2)}</td>
                 <td>Tax Rate: ${tax_rate.toFixed(2)}</td>
               </tr>
             </tbody>

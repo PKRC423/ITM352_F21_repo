@@ -1,8 +1,13 @@
-<script src="./products.json"></script>
+<!--Statement about what this page is and giving credit to me for making it-->
+
 <!DOCTYPE html>
 <html>
 
 <head>
+
+<!--To generate the products.json data-->
+    <script src="./products.js"></script>
+
     <meta charset="utf-8">
     <title>Smart Phone Store</title>
 
@@ -10,40 +15,33 @@
 
     <link href="uhFB.css" rel="stylesheet">
 
-
 </head>
-
-<body>
-            <!--A form so the user -->
-    <form name="product_purchase_form" action="/process_invoice" method="POST">
-        <header>
-            <h1>University of Hawaii at Manoa, Football Tickets</h1>
-            <img src="images/Seating_Map.jpg" style="border-style: inset; position: fixed; height : 50%; width : 50%; align-content: center;">
-            
-        </header>
-
-        <div>
-            <main>
-              <script>display_tickets()</script>
-              <!--calls function display_tickets-->
-            </main>
-        </div>
-        
-        <footer>
-            <input type="submit" value="Purchase Tickets" name="submit_purchase">
-            <h2> If you have any troubles or need special assistance, please contact the office at <br> 888-888-8889 or uhFB@hawaii.edu</h2>
+  <body>
+        <img src="images/Seating_Map.jpg" style="float: right; border-style: inset; height : 55%; width : 55%;">
+  <div style="float: left;">
+    <h1> Thank you for Your Purchase!</h1>
+      <h3>See you at the Game!</h3>
+        <main>
+          <table style="border: black; border-width: 2%;">
+            <tbody>
+              <tr>
+                ${gen_invoice()} <!--generates the Invoice for the purchase.-->
+              </tr>
+              <tr>
+                <td style="text-align: center;" width="80%;"> Total</td>
+                <td style="text-align: center;" width="80%;"> \$ ${subtotal}</td>
+              </tr><tr>
+                <td style="text-align: center;">Grand Total: \$ ${grandTotal.toFixed(2)}</td>
+                <td>Tax Rate: ${tax_rate.toFixed(2)}</td>
+              </tr>
+            </tbody>
+          </table>
+    </main>
+    <footer>
+        <hr>
+            <input type="submit" value="Buy More Tickets" name="to_display_tickets">
+            <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
-    </form>
-<style>
-    
-</style>
+  </div>
 </body>
-
 </html>
-
-
-//Refrenced from the Assignment1 MVC EX
-
-app.get("/UHManoaFootballTickets", function (request, response) {
-    var body = fs.readFileSync('./product_display.template', 'utf8');
-    response.send(eval('`' + body + '`')); // render template string

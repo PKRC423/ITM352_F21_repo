@@ -40,14 +40,14 @@ app.get("/products.js", function (request, response, next) {
 function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if it is a number
-        errors.push("Not a Valid Quantity")
+        errors.push("Not a Valid Quantity");
     } else {
         if(inputStr < 0) errors.push('Not a Valid Quantity');//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
         if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
         }
     return returnErr ? errors : (errors.length == 0);
-    };
+    }
 //Checks if the quantity of the 
 function checkQtyTxt(){
     var errors = (document.getElementById(`quantity${i}`).value, true);
@@ -60,7 +60,7 @@ app.post("/Receipt", function (request, response, next) {
 if (typeof POST[`quantity${i}`] != 'undefined') {
     let qty = POST[`quantity${i}`];
     if(checkInt(qty)) {
-        products[0]['total_purchases'] += Number(qty);
+        products[0].total_purchases += Number(qty);
         response.redirect(url('./views/invoice.template'));
     }else {
         response.redirect(url('./views/product_display.template'));
@@ -105,7 +105,7 @@ if (typeof POST[`quantity${i}`] != 'undefined') {
                 }
             }
             //To Compute Tax and the Grand total.
-            tax_rate = 0.0575
+            tax_rate = 0.0575;
             tax = tax_rate * subtotal;
         grandTotal = subtotal + tax;
 
