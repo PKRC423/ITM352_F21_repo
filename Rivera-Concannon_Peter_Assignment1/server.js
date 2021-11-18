@@ -72,7 +72,7 @@ app.post("/Receipt", function (request, response, next) {
         str = '';
         subtotal = 0;
         for (i = 0; i < products.length; i++) {
-            qty_purchased = 0;
+
             if (typeof POST[`quantity${i}`] != 'undefined') {
                 qty_purchased = POST[`quantity${i}`];
             }
@@ -128,6 +128,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <hr>
                 <h1>Sections: ${products[i].section_num}</h1>
                 <h2>Ticket price: <br> $${products[i].price}</h2>
+                <h2>${products[i].image}</h2>
                 <h3><label id="quantity${i}_label"> Tickets: </label> </h3>
                 <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkQtyTxt(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
