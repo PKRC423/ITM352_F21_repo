@@ -28,18 +28,17 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
 function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
-    if (Number(inputStr) != inputStr) {        //Checks if it is a number
-        errors.push("Not a Valid Quantity")
+    if (Number(inputStr) != inputStr) {        //Checks if string is a number value
+        errors.push("Enter a Valid Number")
     } else {
-        if (inputStr < 0) {                  //Checks if it's a negative value
-            errors.push('Not a Valid Quantity')
-            if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
-            if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
+        if(inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
+        if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
+        if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
+
         }
-        return returnErr ? errors : (errors.length == 0);
+    return returnErr ? errors : (errors.length == 0);
     }
 
-}
 
 
 //Check te validity of the quantity entered.
