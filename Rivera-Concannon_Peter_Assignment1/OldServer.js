@@ -5,11 +5,8 @@ Statement about what this page is and giving credit to me for making it
 var products = require('./products');
 var fs = require('fs');
 var express = require('express');
-const { checkServerIdentity } = require('tls');
-const { application } = require('express');
 var app = express();
 var myParser = require("body-parser");
-const {url} = require ('inspector');
 // Routing 
 
 // monitor all requests
@@ -38,6 +35,7 @@ app.get("/products.js", function (request, response, next) {
     // process purchase request (validate quantities, check quantity available)
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
 function checkInt(inputStr, returnErr = false) {
+    inputStr = `quantity{i}`;
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if it is a number
         errors.push("Not a Valid Quantity")

@@ -1,10 +1,11 @@
-<!--To generate the products.json data-->
-    <script src="./products.js"></script>
-
 <!DOCTYPE html>
 <html>
 
 <head>
+
+<!--To generate the products.json data-->
+    <script src="./products.js"></script>
+
     <meta charset="utf-8">
     <title>UH Manoa Football Tickets</title>
 
@@ -13,7 +14,7 @@
     <link href="uhFB.css" rel="stylesheet">
 
     <script>
-        //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
+     //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
 function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if it is a number
@@ -27,7 +28,19 @@ function checkInt(inputStr, returnErr = false) {
     return returnErr ? errors : (errors.length == 0);
     }
 
-};
+}
+
+//Check te validity of the quantity entered.
+function checkQtyTxt(entry) {
+    errors = checkInt(entry.value,true); 
+    if(entry.value.trim() == '') {
+        errors = ['Enter Number of Tickets Wanted: ']
+    }
+    if(errors.length == 0) {
+        errors = ['Desired Amount:']
+    }
+    document.getElementById(entry.name + '_label').innerHTML = errors.join;
+}
     </script>
 </head>
 

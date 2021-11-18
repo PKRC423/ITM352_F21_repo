@@ -9,7 +9,7 @@
     <script src="./products.js"></script>
 
     <meta charset="utf-8">
-    <title>Smart Phone Store</title>
+    <title>Receipt</title>
 
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 
@@ -17,7 +17,7 @@
 
 </head>
   <body>
-        <img src="./images/Seating_Map.jpg" alt="Click here to view the Stadium Map!" height= "500" width= "500">
+        <img src="./images/Seating_Map.jpg" alt="Click here to view the Stadium Map!" height= "1000" width= "1000">
   <div style="float: left;">
     <h1> Thank you for Your Purchase!</h1>
       <h3>See you at the Game!</h3>
