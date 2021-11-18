@@ -23,12 +23,11 @@ Created by: Peter Rivera-Concannon
 function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if string is a number value
-        errors.push("Not a Valid Quantity")
+        errors.push("Enter a Valid Number")
     } else {
-        if(inputStr == 0) errors.push('<font color="red"> Not a Valid Quantity </font>') //Checks if it is equal to 0
-        if(inputStr < 0) errors.push('Not a Valid Quantity')//Checks if it's a negative value
-        if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
-        if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
+        if(inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
+        if (parseInt(inputStr) != inputStr) errors.push('Not a non-decimal and Valid Quantity'); //Checks if it has decimal values
+        if (inputStr >= 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
 
         }
     return returnErr ? errors : (errors.length == 0);
