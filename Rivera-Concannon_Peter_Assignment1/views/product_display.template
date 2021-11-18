@@ -27,6 +27,7 @@ function checkInt(inputStr, returnErr = false) {
     } else {
         if(inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
+         if (inputStr > 100) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
 
         }
@@ -39,10 +40,10 @@ function checkInt(inputStr, returnErr = false) {
     function checkQtyTxt(entry) {
         errors = checkInt(entry.value,true); 
     if(errors.length == '') {
-        errors = ['Enter Number of Tickets Wanted: ']
+        errors = ['Desired Amount: ']
     }
     if(errors.length == 0) {
-        errors = ['Desired Amount:']
+        errors = ['TahDah:']
     }
     document.getElementById(entry.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
     }

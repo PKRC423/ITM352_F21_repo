@@ -33,31 +33,35 @@ function checkInt(inputStr, returnErr = false) {
     } else {
         if(inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
+        if (inputStr > 100) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
 
         }
     return returnErr ? errors : (errors.length == 0);
     }
 
+//errors.push('Not Enough Tickets Available for Transaction');
 
-
-//Check te validity of the quantity entered.
-function checkQtyTxt(entry) {
-    errors = checkInt(entry.value, true);
-    if (entry.value.trim() == '') {
+//Check the validity of the quantity entered and applies the checkInt() function to this as well.
+    function checkQtyTxt(entry) {
+        errors = checkInt(entry.value,true); 
+    if(errors.length == '') {
         errors = ['Enter Number of Tickets Wanted: ']
     }
-    if (errors.length == 0) {
+    if(errors.length == 0) {
         errors = ['Desired Amount:']
     }
-    document.getElementById(entry.name + '_label').innerHTML = errors.join;
-}
+    document.getElementById(entry.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
+    }
 
 
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
+
+//CODE FOR VALIDATING THAT THERE ARE NO INVALID
+
     if (typeof POST['submit_purchase'] == 'undefined') {
         response.send(`<h1> Invalid purchase, Return to HomePage </h1>`);
         next();
