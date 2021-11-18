@@ -143,4 +143,3 @@ app.get("/UHManoaFootballTickets", function (request, response) {
             }
         }
 );
-

@@ -1,3 +1,8 @@
+<!--
+This page is used to display the UHManoaFootballTickets purchase page and check if any values entered by the customer are invalid so they can make a purchase fluidly and sytaxically correcy. 
+Created by: Peter Rivera-Concannon
+-->
+
 <!DOCTYPE html>
 <html>
 
@@ -17,30 +22,31 @@
      //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
 function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
-    if (Number(inputStr) != inputStr) {        //Checks if it is a number
+    if (Number(inputStr) != inputStr) {        //Checks if string is a number value
         errors.push("Not a Valid Quantity")
     } else {
-        if(inputStr < 0) {                  //Checks if it's a negative value
-        errors.push('Not a Valid Quantity')
+        if(inputStr == 0) errors.push('<font color="red"> Not a Valid Quantity </font>') //Checks if it is equal to 0
+        if(inputStr < 0) errors.push('Not a Valid Quantity')//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
         if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
+
         }
     return returnErr ? errors : (errors.length == 0);
     }
 
-}
 
-//Check te validity of the quantity entered.
-function checkQtyTxt(entry) {
-    errors = checkInt(entry.value,true); 
-    if(entry.value.trim() == '') {
+
+//Check te validity of the quantity entered and applies the checkInt() function to this as well.
+    function checkQtyTxt(entry) {
+        errors = checkInt(entry.value,true); 
+    if(errors.length == '') {
         errors = ['Enter Number of Tickets Wanted: ']
     }
     if(errors.length == 0) {
         errors = ['Desired Amount:']
     }
-    document.getElementById(entry.name + '_label').innerHTML = errors.join;
-}
+    document.getElementById(entry.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
+    }
     </script>
 </head>
 
