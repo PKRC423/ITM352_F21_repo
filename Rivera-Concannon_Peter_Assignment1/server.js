@@ -88,19 +88,19 @@ if (typeof POST['submit_purchase'] == 'undefined') {
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
                 str += (`
-                    <tr>
+                    <tr style="text-align: center; border: 4px solid black">
                         <td> <b><i>Section: </b></i></td>
                         <td style="text-align: center;">${products[i].section_num}</td>
                     </tr>
-                    <tr>
+                    <tr style="border: 2px solid black">
                         <td>Tickets: </td>
                         <td style="text-align: center;">${qty_purchased}</td>
                     </tr>
-                    <tr>
+                    <tr style="border: 2px solid black">
                         <td>Price per Ticket: </td>
                         <td style="text-align: center;">\$${products[i].price}</td>
                     </tr>
-                    <tr>
+                    <tr style="border: 2px solid black">
                         <td>Extended Price: </td>
                         <td style="text-align: center;">\$${exPrice}</td>
                     </tr>
