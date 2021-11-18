@@ -77,6 +77,11 @@ app.post("/Receipt", function (request, response, next) {
                 qty_purchased = POST[`quantity${i}`];
             }
             if (qty_purchased > 0) {
+
+                //takes the value of the amount purchased and subtracts it from the amount available
+                products[i].total_sold += qty_purchased;
+                products[i].qty_available -= products[i].total_sold;
+
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
                 str += (`
@@ -97,7 +102,6 @@ app.post("/Receipt", function (request, response, next) {
                         <td style="text-align: center;">\$${exPrice}</td>
                     </tr>
                 `);
-                qty_purchased += products[i].total_sold;
             }
         }
         //To Compute Tax and the Grand total.

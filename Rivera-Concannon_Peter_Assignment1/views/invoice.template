@@ -42,7 +42,9 @@ Created by: Peter Rivera-Concannon
     </main>
     <footer>
         <hr>
-            <input type="submit" value="Buy More Tickets" name="to_display_tickets">
+            <a href="./UHManoaFootballTickets">
+            <input type="submit" value="Buy More Tickets" name="to_redisplay_tickets">
+            </a>
             <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
   </div>
