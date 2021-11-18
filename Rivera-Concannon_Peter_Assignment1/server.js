@@ -67,7 +67,7 @@ function checkQtyTxt(entry) {
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
 if (typeof POST['submit_purchase'] == 'undefined') {
-    console.log('No Data for Invoice');
+    response.send(`<h1> Invalid purchase, Return to HomePage </h1>`);
     next();
 }
 
@@ -133,9 +133,8 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <h1>Sections: ${products[i].section_num}</h1>
                 <h2>Ticket price: <br> $${products[i].price}</h2>
                 <h3><label id="quantity${i}_label"> Tickets: </label> </h3>
-                <input type"text" placeholder="0" name = "quantity${i}" onkeyup = "checkInt(this);"'>
+                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkQtyTxt(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
-
                 </section>
                 `;
 
