@@ -24,7 +24,7 @@
         <main>
           <table style="border: black; border-width: 2%;">
             <tbody>
-              ${gen_invoice()} 
+              $${gen_invoice()} 
                 <!--generates the Invoice for the purchase.-->
               <tr>
                 <td style="text-align: center;" width="80%;"> Total</td>
