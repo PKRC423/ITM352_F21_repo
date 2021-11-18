@@ -9,10 +9,10 @@ app.use(myParser.urlencoded({ extended: true }));
 
 app.post("/process_invoice", function (request, response, next) {
     let POST = request.body;
-    if(typeof POST['purchase_submit'] == 'undefined') {
+    if (typeof POST['purchase_submit'] == 'undefined') {
         console.log('No purchase form data');
         next();
-    } 
+    }
 
     console.log(Date.now() + ': Purchase made from ip ' + request.ip + ' data: ' + JSON.stringify(POST));
 
@@ -24,12 +24,12 @@ app.post("/process_invoice", function (request, response, next) {
         str = '';
         for (i = 0; i < products.length; i++) {
             a_qty = 0;
-            if(typeof POST[`quantity${i}`] != 'undefined') {
+            if (typeof POST[`quantity${i}`] != 'undefined') {
                 a_qty = POST[`quantity${i}`];
             }
             if (a_qty > 0) {
                 // product row
-                extended_price =a_qty * products[i].price
+                extended_price = a_qty * products[i].price
                 subtotal += extended_price;
                 str += (`
       <tr>
@@ -58,7 +58,7 @@ app.post("/process_invoice", function (request, response, next) {
 
         // Compute grand total
         total = subtotal + tax + shipping;
-        
+
         return str;
     }
 
