@@ -25,13 +25,6 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
-//Referenced from Lab13 Ex5, this is used to process products.JSON's products[]
-
-app.get("/products.js", function (request, response, next) {
-    var products = `${JSON.stringify(products)};`;
-    response.send(products);
-});
-
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
 function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully

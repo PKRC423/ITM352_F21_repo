@@ -26,7 +26,7 @@ function checkInt(inputStr, returnErr = false) {
         errors.push("Enter a Valid Number")
     } else {
         if(inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
-        if (parseInt(inputStr) != inputStr) errors.push('Not a non-decimal and Valid Quantity'); //Checks if it has decimal values
+        if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
         if (inputStr >= 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
 
         }
