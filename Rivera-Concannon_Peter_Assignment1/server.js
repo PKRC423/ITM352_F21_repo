@@ -61,33 +61,23 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
 
-    //Validating the quantities and checking the availability of the tickets, help from Prof.Kazman
-var error = {};
-error['null'] = "Please enter some tickets";
-
+    //Validating the quantities and checking the availability of the tickets, help from Nate Moylan
+if (typeof request.query['submit_purchase'] != 'undefined') {
     for (i=0; i < products.length; i++) {
+    if (URLSearchParams.has(`quantity${i}`)) {
         qty = POST[`quantity${i}`];
-        if( checkInt(qty) == false) { //If false, send the message to show the error
-            error[`quantity${i}`] = `Please enter a valid amount of tickets for section(s): ${products[i].section_num}.`;
-            
+        product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
+        qty_purchased += qty;
+    if( !checkInt(qty)) {
+            has_errors = true;
+            checkQtyTxt(product_purchase_form[`quanity${i}`]);
         }
-
-        if (qty > products[i].qty_available) {
-            error[`quantity${i}`] = `${qty} of ${products[i].section_num} tickets are not available.`;
         }
-        //takes the value of the amount purchased and subtracts it from the amount available
-        products[i].total_sold += qty;
-        products[i].qty_available -= products[i].total_sold;
     }
-
-    Qstring = querystring.stringify(POST);
-    if (JSON.stringify(error) === '{}') {
-        
-    }
-
+}
     var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.    
-
+});
     //Referenced from Invoice 4
     //Function used to generate the item rows for the invoice
     function gen_invoice() {
@@ -129,8 +119,6 @@ error['null'] = "Please enter some tickets";
 
         return str;
     }
-}
-);
 //Refrenced from the Assignment1 MVC EX
 
 app.get("/UHManoaFootballTickets", function (request, response) {
