@@ -61,7 +61,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
 
-    //Validating the quantities and checking the availability of the tickets, help from Nate Moylan
+    //Validating the quantities and checking the availability of the tickets
 if (typeof POST['submit_purchase'] != 'undefined') {
     for (i=0; i < products.length; i++) {
     if (parameters.has(`quantity${i}`)) {
@@ -69,7 +69,6 @@ if (typeof POST['submit_purchase'] != 'undefined') {
         product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
         qty_purchased += qty;
     if( !checkInt(qty)) {
-            has_errors = true;
             checkQtyTxt(product_purchase_form[`quanity${i}`]);
         }
         }
