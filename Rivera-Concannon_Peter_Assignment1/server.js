@@ -9,6 +9,7 @@ var express = require('express');
 var myParser = require("body-parser");
 var app = express();
 const qs = require('querystring');
+const QueryString = require('qs');
 
 // Routing 
 
@@ -60,6 +61,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
 
+    //Validating the quantities and checking the availability of the tickets, help from Prof.Kazman
 var error = {};
 error['null'] = "Please enter some tickets";
 
@@ -75,6 +77,11 @@ error['null'] = "Please enter some tickets";
         //takes the value of the amount purchased and subtracts it from the amount available
         products[i].total_sold += qty;
         products[i].qty_available -= products[i].total_sold;
+    }
+
+    Qstring = querystring.stringify(POST);
+    if (JSON.stringify(error) === '{}') {
+        
     }
 
     var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
@@ -138,7 +145,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <hr>
                 <h1>Sections: ${products[i].section_num}</h1>
                 <h2>Ticket price: <br> $${products[i].price}</h2>
-                <h2>${products[i].image}</h2>
+                <h2><img src=${products[i].image} alt="Image><img></h2> 
                 <h3><label id="quantity${i}_label"> Tickets: </label> </h3>
                 <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkQtyTxt(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
