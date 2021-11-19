@@ -10,6 +10,7 @@ var myParser = require("body-parser");
 var app = express();
 const qs = require('querystring');
 const QueryString = require('qs');
+const { send } = require('process');
 
 // Routing 
 
@@ -52,9 +53,9 @@ app.listen(8080, () => console.log(`listening on port 8080`));
         errors = ['Desired Amount: ']
     }
     if(errors.length == 0) {
-        errors = ['Desired Amount:']
+        errors = ['Zero Tickets:']
     }
-    document.getElementById(entry.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
+    document.getElementById(entry.name + '_label') = errors.join('<font color="red">, </font>');
     }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
@@ -65,12 +66,15 @@ app.post("/Receipt", function (request, response, next) {
 if (typeof POST['submit_purchase'] != 'undefined') {
     for (i=0; i < products.length; i++) {
     if (parameters.has(`quantity${i}`)) {
-        qty = parameters.get(`quantity${i}`);
+        qty = POST[`quantity${i}`];
         product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
         qty_purchased += qty;
     if( checkQtyTxt(qty)) {
-            checkInt(product_purchase_form[`quantity${i}`]);
+            if (checkInt(returnErr) == false) {
+                response.status(404).send(`Invalid Quantity for tickets selected from Section: ${products[i].section_num}. Please return to HomePage and Check Values Entered`)
+            }
         }
+
         }
     }
 }
