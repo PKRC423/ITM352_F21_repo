@@ -62,10 +62,10 @@ app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
 
     //Validating the quantities and checking the availability of the tickets, help from Nate Moylan
-if (typeof request.query['submit_purchase'] != 'undefined') {
+if (typeof POST['submit_purchase'] != 'undefined') {
     for (i=0; i < products.length; i++) {
-    if (URLSearchParams.has(`quantity${i}`)) {
-        qty = POST[`quantity${i}`];
+    if (parameters.has(`quantity${i}`)) {
+        qty = parameters.get(`quantity${i}`);
         product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
         qty_purchased += qty;
     if( !checkInt(qty)) {
