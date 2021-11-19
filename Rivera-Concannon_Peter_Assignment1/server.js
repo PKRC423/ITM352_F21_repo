@@ -69,7 +69,7 @@ if (typeof POST['submit_purchase'] != 'undefined') {
         product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
         qty_purchased += qty;
     if( !checkInt(qty)) {
-            checkQtyTxt(product_purchase_form[`quanity${i}`]);
+            checkQtyTxt(product_purchase_form[`quantity${i}`]);
         }
         }
     }
