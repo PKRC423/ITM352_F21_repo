@@ -8,6 +8,7 @@ var fs = require('fs');
 var express = require('express');
 var myParser = require("body-parser");
 var app = express();
+const qs = require('querystring');
 
 // Routing 
 
@@ -26,46 +27,54 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
-//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
-function checkInt(inputStr, returnErr = false) {
+ //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
+ function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if string is a number value
         errors.push("Enter a Valid Number")
     } else {
         if(inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
-        if (inputStr > 100) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
+         if (inputStr > 100) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
 
         }
     return returnErr ? errors : (errors.length == 0);
     }
 
-//errors.push('Not Enough Tickets Available for Transaction');
 
-//Check the validity of the quantity entered and applies the checkInt() function to this as well.
+
+//Check te validity of the quantity entered and applies the checkInt() function to this as well.
     function checkQtyTxt(entry) {
         errors = checkInt(entry.value,true); 
     if(errors.length == '') {
-        errors = ['Enter Number of Tickets Wanted: ']
+        errors = ['Desired Amount: ']
     }
     if(errors.length == 0) {
-        errors = ['Desired Amount:']
+        errors = ['TahDah:']
     }
     document.getElementById(entry.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
     }
-
-
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
 
-//CODE FOR VALIDATING THAT THERE ARE NO INVALID
+var error = {};
+error['null'] = "Please enter some tickets";
 
-    if (typeof POST['submit_purchase'] == 'undefined') {
-        response.send(`<h1> Invalid purchase, Return to HomePage </h1>`);
-        next();
+    for (i=0; i < products.length; i++) {
+        qty = POST[`quantity${i}`];
+        if( checkInt(qty) == false) { //If false, send the message to show the error
+            error[`quantity${i}`] = `Please enter a valid amount of tickets for section(s): ${products[i].section_num}.`;
+        }
+
+        if (qty > products[i].qty_available) {
+            error[`quantity${i}`] = `${qty} of ${products[i].section_num} tickets are not available.`;
+        }
+        //takes the value of the amount purchased and subtracts it from the amount available
+        products[i].total_sold += qty;
+        products[i].qty_available -= products[i].total_sold;
     }
 
     var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
@@ -82,10 +91,6 @@ app.post("/Receipt", function (request, response, next) {
                 qty_purchased = POST[`quantity${i}`];
             }
             if (qty_purchased > 0) {
-
-                //takes the value of the amount purchased and subtracts it from the amount available
-                products[i].total_sold += qty_purchased;
-                products[i].qty_available -= products[i].total_sold;
 
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
