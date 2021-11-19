@@ -65,7 +65,7 @@ app.post("/Receipt", function (request, response, next) {
     //Validating the quantities and checking the availability of the tickets
 if (typeof POST['submit_purchase'] != 'undefined') {
     for (i=0; i < products.length; i++) {
-    if (parameters.has(`quantity${i}`)) {
+    if ((`quantity${i}`) != undefined) {
         qty = POST[`quantity${i}`];
         product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
         qty_purchased += qty;

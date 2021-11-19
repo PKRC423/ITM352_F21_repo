@@ -1,12 +1,11 @@
 var fs = require('fs');
 
-var filename= "./user_data.json";
+var filename = "./user_data.json";
 
 data = fs.readFileSync(filename, 'utf-8');
 
 user_data = JSON.parse(data);
-console.log("user_data=", user_data);
+console.log("User_data=", user_data);
 
 user_data2 = require(filename);
-
-console.log("User data 2=", user_data2);
+console.log("User data2=", user_data2);
