@@ -1,6 +1,6 @@
 /*
 Created by: Peter Rivera-Concannon
-Referenced code from many labs and external sources
+Referenced code from many labs and WODS, mainly LAB13 and Inovice 4, as well as help from external sources
 */
 
 var products = require('./products.json');
@@ -52,7 +52,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
         errors = ['Desired Amount: ']
     }
     if(errors.length == 0) {
-        errors = ['TahDah:']
+        errors = ['Desired Amount:']
     }
     document.getElementById(entry.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
     }
@@ -69,6 +69,7 @@ error['null'] = "Please enter some tickets";
         qty = POST[`quantity${i}`];
         if( checkInt(qty) == false) { //If false, send the message to show the error
             error[`quantity${i}`] = `Please enter a valid amount of tickets for section(s): ${products[i].section_num}.`;
+            
         }
 
         if (qty > products[i].qty_available) {

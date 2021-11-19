@@ -43,7 +43,7 @@ function checkInt(inputStr, returnErr = false) {
         errors = ['Desired Amount: ']
     }
     if(errors.length == 0) {
-        errors = ['TahDah:']
+        errors = ['Desired Amount:']
     }
     document.getElementById(entry.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
     }
