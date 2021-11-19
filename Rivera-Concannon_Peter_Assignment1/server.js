@@ -68,8 +68,8 @@ if (typeof POST['submit_purchase'] != 'undefined') {
         qty = parameters.get(`quantity${i}`);
         product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
         qty_purchased += qty;
-    if( !checkInt(qty)) {
-            checkQtyTxt(product_purchase_form[`quantity${i}`]);
+    if( checkQtyTxt(qty)) {
+            checkInt(product_purchase_form[`quantity${i}`]);
         }
         }
     }
@@ -88,6 +88,10 @@ if (typeof POST['submit_purchase'] != 'undefined') {
                 qty_purchased = POST[`quantity${i}`];
             }
             if (qty_purchased > 0) {
+
+                //takes the value of the amount purchased and subtracts it from the amount available
+                products[i].total_sold += qty_purchased;
+                products[i].qty_available -= products[i].total_sold;
 
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
