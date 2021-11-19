@@ -65,17 +65,16 @@ app.post("/Receipt", function (request, response, next) {
     //Validating the quantities and checking the availability of the tickets
     if (typeof POST['submit_purchase'] != 'undefined') {
         for (i = 0; i < products.length; i++) {
-            if ((`quantity${i}`) != undefined) {
+            if ((`quantity${i}`) != 'undefined') {
                 qty = POST[`quantity${i}`];
                 product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
-                qty_purchased += qty;
                 if (checkQtyTxt(qty)) {
                     if (checkInt(returnErr) == true) {
-                        response.status(404).send(`Invalid Quantity for tickets selected from Section: ${products[i].section_num}. Please return to HomePage and Check Values Entered`)
-                        response.redirect("UHManoaFootballTickets");
+                    response.status(404).send(`Invalid Quantity for tickets selected from Section: ${products[i].section_num}. Please return to HomePage and Check Values Entered`)
+                    response.redirect("UHManoaFootballTickets");
                     } else {
                         var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
-    response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.    
+                    response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.    
                     }
                 }
 

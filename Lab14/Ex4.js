@@ -49,6 +49,7 @@ app.post("/login", function (request, response) {
         if (user_data[user_name].password == user_pass) {
             // Good login
             response.send("Got a good login");
+            //response.redirect("product_page.html");
         } else {
             // Bad login, redirect
             response.send("Sorry bud");
@@ -83,6 +84,9 @@ app.post("/register", function (request, response) {
     user_name = POST["username"];
     user_pass = POST["password"];
     user_email = POST["email"];
+
+    //Checking if username exists
+if (user_data[user_name] == undefined) 
 
     console.log("User name=" + user_name + " password=" + user_pass);
 

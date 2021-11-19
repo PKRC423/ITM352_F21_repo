@@ -13,15 +13,65 @@ Create a text file using notepad (or your favorite text editor) with a few bits 
 }
 b) Use require() rather than readFileSync() to load and parse user_data.json into an object and assign it to users_reg_data and output this object to the console. Show how would you get the password information for a particular username.
 
+user_data = JSON.parse(data);
+console.log("User_data=", user_data);
+
+user_data2 = require(filename);
+console.log("User data2=", user_data2);
+
 a) Write a small program that uses readFileSync(filename, 'utf-8') to open and read this file and assign the return value to data use JSON.parse() to convert it into an object and assign it to users_reg_data and output this object to the console. Explain why you might use this was to load the data rather than require(). Don’t forget to remove the require() statement used in (a). Hint: what if the data is not JSON?
 
 If the data is not a JSON then we cannot read the file.
 
+var fs = require('fs');
+
+var filename = "./user_data.json";
+
+data = fs.readFileSync(filename, 'utf-8');
+
+user_data = JSON.parse(data);
+console.log("User_data=", user_data);
+
+user_data2 = require(filename);
+console.log("User data2=", user_data2);
+
 Exercise 2: Existence and Filesize (total 6 minutes)
 a) (4 minutes) Modify your program in #1 to only open the file if it exists using fs.existsSync(filename)
+var fs = require('fs');
+const { exit } = require('process');
 
+var filename = "./user_data.json";
+
+if (fs.existsSync(filename)) {
+    data = fs.readFileSync(filename, 'utf-8');
+
+    user_data = JSON.parse(data);
+    console.log("User_data=", user_data);
+
+    fileStats = fs.statSync(filename);
+    console.log("File " + filename + " has " + fileStats.size + " characters");
+} else {
+    console.log("Enter the correct filename bozo!");
+    exit("Exiting program");
+}
 b) (2 minutes) Modify program in part (a) to print out the size of your user_data.dat file using fs.statSync(filename). Have it output to the console user_data.json has xxx characters where xxx is the filesize.
+var fs = require('fs');
+const { exit } = require('process');
 
+var filename = "./user_data.json";
+
+if (fs.existsSync(filename)) {
+    data = fs.readFileSync(filename, 'utf-8');
+
+    user_data = JSON.parse(data);
+    console.log("User_data=", user_data);
+
+    fileStats = fs.statSync(filename);
+    console.log("File " + filename + " has " + fileStats.size + " characters");
+} else {
+    console.log("Enter the correct filename bozo!");
+    exit("Exiting program");
+}
 Exercise 3: Processing a login (4 minutes)
 a) Add the following to your program from #3
 
@@ -52,6 +102,48 @@ app.post("/login", function (request, response) {
 
 app.listen(8080, () => console.log(`listening on port 8080`));
 Now add code to the app.post() callback function to check if a username and password submitted in the form match a username and password stored in users_reg_data. If so, generate a <username> logged in page. If not, redirect back to the login page. If you had data from another page, how might keep this data around until a successful login?
+
+Incase somone just had the ink to the website they couldn't just access it, instead they will need to login first.
+
+var fs = require('fs');
+var express = require('express');
+var app = express();
+var myParser = require("body-parser");
+var filename= "./user_data.json";
+
+if (fs.existsSync(filename, "utf-8")) {
+data = fs.readFileSync(filename, 'utf-8');
+
+user_data = JSON.parse(data);
+console.log("user_data=", user_data);
+
+fileStats = fs.statSync(filename);
+console.log("File" + filename + " has " + fileStats.size + "characters");
+}else {
+    console.log("Invalid Quantity");
+}
+
+
+app.get("/login", function (request, response) {
+    // Give a simple login form
+    str = `
+<body>
+<form action="" method="POST">
+<input type="text" name="username" size="40" placeholder="enter username" ><br />
+<input type="password" name="password" size="40" placeholder="enter password"><br />
+<input type="submit" value="Submit" id="submit">
+</form>
+</body>
+    `;
+    response.send(str);
+ });
+
+app.post("/login", function (request, response) {
+    // Process login form POST and redirect to logged in page if ok, back to login page if not
+
+});
+
+app.listen(8080, () => console.log(`listening on port 8080`));
 
 Exercise #4: Adding to or modifying a File (6 minutes)
 a) In your program just after you define the users_reg_data object, add a new user information as follows:
