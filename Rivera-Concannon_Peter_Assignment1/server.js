@@ -1,5 +1,6 @@
 /*
-Statement about what this page is and giving credit to me for making it
+Created by: Peter Rivera-Concannon
+Referenced code from many labs and external sources
 */
 
 var products = require('./products.json');
