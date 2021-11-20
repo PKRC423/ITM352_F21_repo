@@ -30,7 +30,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
 function checkInt(inputStr, qty_available,returnErr = false) {
     errors = []; //No errors yet hopefully
-    qty_available = '';
+    qty_available = 0;
     if (inputStr == '') inputStr= 0; //Incase they just delete the value in the input box, itll be treated as a 0.
     if (Number(inputStr) != inputStr) {
         errors.push("Enter a Valid Number");//Checks if string is a number value
@@ -40,7 +40,7 @@ function checkInt(inputStr, qty_available,returnErr = false) {
         if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
     }
-    document.getElementById(inputStr.name + '_label') = errors.join(': ')
+    //document.getElementById(inputStr.name + '_label') = errors.join();
     return returnErr ? errors : (errors.length == 0);
 }
 
@@ -65,8 +65,17 @@ app.post("/Receipt", function (request, response, next) {
             }
         }
     }
+}
+);
 
-//Referenced from Invoice 4
+//To send the user to the Invoice if the Data is valid
+app.get("/Invoice", function(request, response,next) {
+let POST = request.body;
+
+    var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
+    response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.   
+
+    //Referenced from Invoice 4
 //Function used to generate the item rows for the invoice
 function gen_invoice() {
     str = '';
@@ -112,12 +121,6 @@ function gen_invoice() {
     return str;
 }
 });
-
-app.get("/Invoice", function(request, response,next) {
-    var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
-    response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.   
-}
-);
 
 //Refrenced from the Assignment1 MVC EX
 
