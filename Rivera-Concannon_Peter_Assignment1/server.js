@@ -31,15 +31,16 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 function checkInt(inputStr, qty_available,returnErr = false) {
     errors = []; //No errors yet hopefully
     qty_available = `${products[i].qty_available}`;
-    if (inputStr > qty_available) {
-        errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
+    if (Number(inputStr) != inputStr) {
+        errors.push("Enter a Valid Number");//Checks if string is a number value
     } else{
+        if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
-        if (Number(inputStr) != inputStr) errors.push("Enter a Valid Number");//Checks if string is a number value
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
     }
     return returnErr ? errors : (errors.length == 0);
+    
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
@@ -52,7 +53,7 @@ app.post("/Receipt", function (request, response, next) {
             if ((`quantity${i}`) != undefined) {
                 qty = POST[`quantity${i}`];
                  //= qty; //To make the values sticky incase of an error ````````````````````````````` How Do you make this sticky? I cannot figure out what to put infront of the ==.
-                    if (checkInt(qty, products[i].qty_available) == true) {
+                    if (checkInt(qty, products[i].qty_available) == false) {
                         query_response += "name_err" + `${products[i].section_num}`;
                         console.log("Invalid Quantity");
                     response.redirect("UHManoaFootballTickets" + "?" + query_response);
