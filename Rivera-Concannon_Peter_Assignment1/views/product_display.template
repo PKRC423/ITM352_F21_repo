@@ -9,7 +9,7 @@ Created by: Peter Rivera-Concannon
 <head>
 
 <!--To generate the products.json data-->
-    <script src="./products.js"></script>
+    
 
     <meta charset="utf-8">
     <title>UH Manoa Football Tickets</title>
@@ -31,6 +31,7 @@ function checkInt(inputStr, qty_available,returnErr = false) {
         if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
     }
+    document.getElementById(inputStr.name + '_label') = errors.join(': ')
     return returnErr ? errors : (errors.length == 0);
 }
     </script>

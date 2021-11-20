@@ -40,6 +40,7 @@ function checkInt(inputStr, qty_available,returnErr = false) {
         if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
     }
+    document.getElementById(inputStr.name + '_label') = errors.join(': ')
     return returnErr ? errors : (errors.length == 0);
 }
 
@@ -63,7 +64,6 @@ app.post("/Receipt", function (request, response, next) {
 
             }
         }
-        next();
     }
 
 //Referenced from Invoice 4
@@ -113,7 +113,7 @@ function gen_invoice() {
 }
 });
 
-app.post("/Invoice", function(request, response,next) {
+app.get("/Invoice", function(request, response,next) {
     var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.   
 }
