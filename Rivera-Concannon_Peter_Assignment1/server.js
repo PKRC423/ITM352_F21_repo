@@ -64,13 +64,12 @@ app.post("/Receipt", function (request, response, next) {
             }
         }
     }
-});
+
 //Referenced from Invoice 4
 //Function used to generate the item rows for the invoice
 function gen_invoice() {
     str = '';
     subtotal = 0;
-    let POST = request.body;
     for (i = 0; i < products.length; i++) {
 
         if (typeof POST[`quantity${i}`] != undefined) {
@@ -111,6 +110,8 @@ function gen_invoice() {
 
     return str;
 }
+});
+
 //Refrenced from the Assignment1 MVC EX
 
 app.get("/UHManoaFootballTickets", function (request, response) {
