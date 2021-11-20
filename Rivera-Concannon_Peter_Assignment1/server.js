@@ -45,7 +45,7 @@ function checkInt(inputStr, qty_available,returnErr = false) {
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
-app.post("/Receipt", function (request, response, next) {
+app.post("/Check", function (request, response, next) {
     let POST = request.body;
     query_response = "";
     //Validating the quantities and checking the availability of the tickets
@@ -72,8 +72,21 @@ app.post("/Receipt", function (request, response, next) {
 
 //To send the user to the Invoice if the Data is valid
 app.get("/Invoice", function(request, response,next) {
-let POST = request.body;
+str = `
 
+    <body>
+        <form action="./Receipt" method="POST">
+            <input type="submit" value="Submit" id="submit">
+        </form>
+    </body>
+
+`;
+response.send(str);
+//Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
+});
+
+app.post("/Receipt", function(request, response, next){
+    let POST = request.body;
     var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.   
 
@@ -120,7 +133,6 @@ function gen_invoice() {
     return str;
 }
 });
-
 //Refrenced from the Assignment1 MVC EX
 
 app.get("/UHManoaFootballTickets", function (request, response) {

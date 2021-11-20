@@ -48,7 +48,7 @@ function checkInt(inputStr, qty_available,returnErr = false) {
             </a>
     <div style="float: right;">
             <!--A form so the user -->
-    <form name="product_purchase_form" action="/Receipt" method="POST">
+    <form name="product_purchase_form" action="./Check" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
         
