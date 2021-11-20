@@ -8,8 +8,6 @@ var fs = require('fs');
 var express = require('express');
 var myParser = require("body-parser");
 var app = express();
-const qs = require('querystring');
-const QueryString = require('qs');
 const { send } = require('process');
 
 // Routing 
@@ -30,52 +28,36 @@ app.use(express.static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
 
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
-function checkInt(inputStr, returnErr = false) {
+function checkInt(inputStr, qty_available,returnErr = false) {
     errors = []; //No errors yet hopefully
     if (Number(inputStr) != inputStr) {        //Checks if string is a number value
         errors.push("Enter a Valid Number")
-    } else {
+    } else{
         if (inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
-        if (inputStr > 100) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
+        if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
-
     }
     return returnErr ? errors : (errors.length == 0);
-}
-
-
-
-//Check te validity of the quantity entered and applies the checkInt() function to this as well.
-function checkQtyTxt(entry) {
-    errors = checkInt(entry.value, true);
-    if (errors.length == '') {
-        errors = ['Desired Amount: ']
-    }
-    if (errors.length == 0) {
-        errors = ['Zero Tickets:']
-    }
-    document.getElementById(entry.name + '_label') = errors.join('<font color="red">, </font>');
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
-
+    query_response = "";
     //Validating the quantities and checking the availability of the tickets
-    if (typeof POST['submit_purchase'] != 'undefined') {
+    if (typeof POST['submit_purchase'] != undefined) {
         for (i = 0; i < products.length; i++) {
-            if ((`quantity${i}`) != 'undefined') {
+            if ((`quantity${i}`) != undefined) {
                 qty = POST[`quantity${i}`];
-                product_purchase_form[`quantity${i}`].value = qty; //To make the values sticky incase of an error
-                if (checkQtyTxt(qty)) {
-                    if (checkInt(returnErr) == true) {
-                    response.status(404).send(`Invalid Quantity for tickets selected from Section: ${products[i].section_num}. Please return to HomePage and Check Values Entered`)
-                    response.redirect("UHManoaFootballTickets");
+                 //= qty; //To make the values sticky incase of an error ````````````````````````````` How Do you make this sticky? I cannot figure out what to put infront of the ==.
+                    if (checkInt(qty, products[i].qty_available,returnErr) == true) {
+                        query_response += "name_err" + `${products[i].section_num}`;
+                        console.log("Invalid Quantity");
+                    response.redirect("UHManoaFootballTickets" + "?" + query_response);
                     } else {
                         var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
                     response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.    
-                    }
                 }
 
             }
@@ -89,7 +71,7 @@ function gen_invoice() {
     subtotal = 0;
     for (i = 0; i < products.length; i++) {
 
-        if (typeof POST[`quantity${i}`] != 'undefined') {
+        if (typeof POST[`quantity${i}`] != undefined) {
             qty_purchased = POST[`quantity${i}`];
         }
         if (qty_purchased > 0) {
@@ -133,18 +115,26 @@ app.get("/UHManoaFootballTickets", function (request, response) {
     var body = fs.readFileSync('./views/product_display.template', 'utf8');
     response.send(eval('`' + body + '`')); // render template string
 
+
+
     //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
     function display_tickets() {
         str = '';
         for (i = 0; i < products.length; i++) {
-            str += `
+            strErr = "";
+            if (request.query["name_err"] == undefined) {
+                strErr = ""
+            } else {
+                strErr += `<h1>Invalid Quantity for purchase of Tickets in: ${products[i].section_num}. - ${request.query['name_err']}</h1>`
+            };
+            str += ` 
                 <section style="text-align: center">
                 <hr>
                 <h1>Sections: ${products[i].section_num}</h1>
                 <h2>Ticket price: <br> $${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image><img></h2> 
                 <h3><label id="quantity${i}_label"> Tickets: </label> </h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkQtyTxt(this);">
+                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkInt(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;

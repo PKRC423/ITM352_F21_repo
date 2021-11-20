@@ -7,6 +7,8 @@ var queryString = require("query-string");
 
 app.use(myParser.urlencoded({ extended: true }));
 
+app.use(express.static('./public'));
+
 if (fs.existsSync(filename)) {
     data = fs.readFileSync(filename, 'utf-8');
 
@@ -18,8 +20,6 @@ if (fs.existsSync(filename)) {
 } else {
     console.log("Enter the correct filename bozo!");
 }
-
-
 
 
 app.get("/login", function (request, response) {
@@ -48,8 +48,7 @@ app.post("/login", function (request, response) {
     if (user_data[user_name] != undefined) {
         if (user_data[user_name].password == user_pass) {
             // Good login
-            response.send("Got a good login");
-            //response.redirect("product_page.html");
+            response.redirect("products_page.html");
         } else {
             // Bad login, redirect
             response.send("Sorry bud");
@@ -58,19 +57,25 @@ app.post("/login", function (request, response) {
         // Bad username
         response.send("Bad username");
     }
+
 });
 
 app.get("/register", function (request, response) {
     // Give a simple register form
     str = `
 <body>
-<form action="/register" method="POST">
-<input type="text" name="username" size="40" placeholder="enter username" ><br />
-<input type="password" name="password" size="40" placeholder="enter password"><br />
-<input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
-<input type="email" name="email" size="40" placeholder="enter email"><br />
+<form action="/register" method="POST">`;
+    if (request.query["name_err"] == undefined) {
+        str += `<input type="text" name="username" size="40" placeholder="enter username" ><br>`;
+    } else {
+        str += `<input type="text" name="username" size="40" placeholder="${request.query['name_err']}">User already exists<br>`;
+    }
+
+    str += `<input type="password" name="password" size="40" placeholder="enter password"><br>
+<input type="password" name="repeat_password" size="40" placeholder="enter password again"><br>
+<input type="email" name="email" size="40" placeholder="enter email"><br>
 <input type="submit" value="Submit" id="submit">
-</form>
+</form> 
 </body>
     `;
     response.send(str);
@@ -84,21 +89,23 @@ app.post("/register", function (request, response) {
     user_name = POST["username"];
     user_pass = POST["password"];
     user_email = POST["email"];
+    query_response = "";
 
-    //Checking if username exists
-if (user_data[user_name] == undefined) 
+    if (user_data[user_name] == undefined) {
+        console.log("Adding user: " + user_name);
 
-    console.log("User name=" + user_name + " password=" + user_pass);
+        user_data[user_name] = {};
+        user_data[user_name].name = user_name;
+        user_data[user_name].password = user_pass;
+        user_data[user_name].email = user_email;
 
-    user_data[user_name] = {};
-    user_data[user_name].name = user_name;
-    user_data[user_name].password = user_pass;
-    user_data[user_name].email = user_email;
+        data = JSON.stringify(user_data);
+        fs.writeFileSync(filename, data, "utf-8");
 
-    data = JSON.stringify(user_data);
-    fs.writeFileSync(filename, data, "utf-8");
-
-    response.send("User " + user_name + " added!");
+        response.redirect("login");
+    } else {
+        query_response += "name_err=" + user_name;
+        console.log("Bad request to add user: " + user_name);
+        response.redirect("register" + "?" + query_response);
+    }
 });
-
-app.listen(8080, () => console.log(`listening on port 8080`));

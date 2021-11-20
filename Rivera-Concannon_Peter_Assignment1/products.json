@@ -65,7 +65,7 @@
     {
         "section_num": "120 & 121",
         "price": 15.00,
-        "image": "./public/images/UHVC.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Peter_Assignment1/public/images/UHVC.jpg",
         "qty_available": 100,
         "total_sold": 0
     },
