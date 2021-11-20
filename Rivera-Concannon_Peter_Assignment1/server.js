@@ -30,6 +30,7 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
 function checkInt(inputStr, qty_available,returnErr = false) {
     errors = []; //No errors yet hopefully
+    qty_available = `${products[i].qty_available}`;
     if (inputStr > qty_available) {
         errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
     } else{
