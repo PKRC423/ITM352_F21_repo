@@ -27,15 +27,15 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
-//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
+//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
 function checkInt(inputStr, qty_available,returnErr = false) {
     errors = []; //No errors yet hopefully
-    if (Number(inputStr) != inputStr) {        //Checks if string is a number value
-        errors.push("Enter a Valid Number")
+    if (inputStr > qty_available) {
+        errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
     } else{
         if (inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
-        if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
+        if (Number(inputStr) != inputStr) errors.push("Enter a Valid Number");//Checks if string is a number value
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
     }
     return returnErr ? errors : (errors.length == 0);
