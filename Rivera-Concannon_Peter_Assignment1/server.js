@@ -64,7 +64,9 @@ app.post("/Receipt", function (request, response, next) {
 
             }
         }
+        next();
     }
+    
 }
 );
 
@@ -81,10 +83,7 @@ function gen_invoice() {
     str = '';
     subtotal = 0;
     for (i = 0; i < products.length; i++) {
-
-        if (typeof POST[`quantity${i}`] != undefined) {
-            qty_purchased = POST[`quantity${i}`];
-        }
+        qty_purchased = POST[`quantity${i}`];
         if (qty_purchased > 0) {
 
             //takes the value of the amount purchased and subtracts it from the amount available
