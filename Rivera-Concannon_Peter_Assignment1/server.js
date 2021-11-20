@@ -35,12 +35,12 @@ function checkInt(inputStr, qty_available,returnErr = false) {
         errors.push("Enter a Valid Number");//Checks if string is a number value
     } else{
         if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
-        if (inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
+        if (inputStr < 0) errors.push('Enter a Positive and Valid Quantity');//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
     }
     return returnErr ? errors : (errors.length == 0);
-    
+
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
@@ -127,10 +127,10 @@ app.get("/UHManoaFootballTickets", function (request, response) {
         for (i = 0; i < products.length; i++) {
             strErr = "";
             if (request.query["name_err"] == undefined) {
-                strErr = ""
+                strErr = "";
             } else {
-                strErr += `<h1>Invalid Quantity for purchase of Tickets in: ${products[i].section_num}. - ${request.query['name_err']}</h1>`
-            };
+                strErr += `<h1>Invalid Quantity for purchase of Tickets in: ${products[i].section_num}. - ${request.query['name_err']}</h1>`;
+            }
             str += ` 
                 <section style="text-align: center">
                 <hr>
