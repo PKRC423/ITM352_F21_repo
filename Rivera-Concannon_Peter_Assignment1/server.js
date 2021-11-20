@@ -51,7 +51,7 @@ app.post("/Receipt", function (request, response, next) {
             if ((`quantity${i}`) != undefined) {
                 qty = POST[`quantity${i}`];
                  //= qty; //To make the values sticky incase of an error ````````````````````````````` How Do you make this sticky? I cannot figure out what to put infront of the ==.
-                    if (checkInt(qty, products[i].qty_available,returnErr) == true) {
+                    if (checkInt(qty, products[i].qty_available) == true) {
                         query_response += "name_err" + `${products[i].section_num}`;
                         console.log("Invalid Quantity");
                     response.redirect("UHManoaFootballTickets" + "?" + query_response);
@@ -69,6 +69,7 @@ app.post("/Receipt", function (request, response, next) {
 function gen_invoice() {
     str = '';
     subtotal = 0;
+    let POST = request.body;
     for (i = 0; i < products.length; i++) {
 
         if (typeof POST[`quantity${i}`] != undefined) {
