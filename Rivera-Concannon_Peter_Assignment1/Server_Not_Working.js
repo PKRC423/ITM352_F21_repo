@@ -30,17 +30,25 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
 function checkInt(inputStr, qty_available,returnErr = false) {
     errors = []; //No errors yet hopefully
-    qty_available = '';
-    if (inputStr == '') inputStr= 0; //Incase they just delete the value in the input box, itll be treated as a 0.
+    qty_available = `${products[i].qty_available}`;
     if (Number(inputStr) != inputStr) {
         errors.push("Enter a Valid Number");//Checks if string is a number value
     } else{
-        if (inputStr < 0) errors.push('Enter a Positive and Valid Quantity')//Checks if it's a negative value
-        if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
         if (inputStr > qty_available) errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
+        if (inputStr < 0) errors.push('Enter a Positive and Valid Quantity');//Checks if it's a negative value
+        if (parseInt(inputStr) != inputStr) errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
         if (inputStr > 10) errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
     }
     return returnErr ? errors : (errors.length == 0);
+
+}
+
+//Function to display the checkInt at the quantity${i}_label, referenced from MVC display_purchase.template
+function errQtyTxt(input_label_name) {
+    errs = checkInt(input_label_name.value, true);
+    if (errs.length == 0) errs = ['You would like:'];
+    if (input_label_name.value.trim() == '') errs = ['Tickets:'];
+    document.getElementById(input_label_name.name + '_label').innerHTML = errs.join(", ");
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
@@ -54,16 +62,16 @@ app.post("/Receipt", function (request, response, next) {
                 qty = POST[`quantity${i}`];
                  //= qty; //To make the values sticky incase of an error ````````````````````````````` How Do you make this sticky? I cannot figure out what to put infront of the ==.
                     if (checkInt(qty, products[i].qty_available) == false) {
-                        response.redirect("Invoice");
-                    } else {
                         query_response += "name_err" + `${products[i].section_num}`;
                         console.log("Invalid Quantity");
                     response.redirect("UHManoaFootballTickets" + "?" + query_response);
+                    } else {
+                        var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
+                    response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.    
                 }
 
             }
         }
-        next();
     }
 
 //Referenced from Invoice 4
@@ -113,12 +121,6 @@ function gen_invoice() {
 }
 });
 
-app.post("/Invoice", function(request, response,next) {
-    var bodyInv = fs.readFileSync('./views/invoice.template', 'utf8');
-    response.send(eval('`' + bodyInv + '`')); //This renders the template string into a readable html format.   
-}
-);
-
 //Refrenced from the Assignment1 MVC EX
 
 app.get("/UHManoaFootballTickets", function (request, response) {
@@ -133,10 +135,10 @@ app.get("/UHManoaFootballTickets", function (request, response) {
         for (i = 0; i < products.length; i++) {
             strErr = "";
             if (request.query["name_err"] == undefined) {
-                strErr = ""
+                strErr = "";
             } else {
-                strErr += `<h1>Invalid Quantity for purchase of Tickets in: ${products[i].section_num}. - ${request.query['name_err']}</h1>`
-            };
+                strErr += `<h1>Invalid Quantity for purchase of Tickets in: ${products[i].section_num}. - ${request.query['name_err']}</h1>`;
+            }
             str += ` 
                 <section style="text-align: center">
                 <hr>
@@ -144,7 +146,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <h2>Ticket price: <br> $${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image><img></h2> 
                 <h3><label id="quantity${i}_label"> Tickets: </label> </h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkInt(this);">
+                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "errQtyTxt(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;
@@ -152,4 +154,5 @@ app.get("/UHManoaFootballTickets", function (request, response) {
         }
         return str;
     }
-});
+}
+);
