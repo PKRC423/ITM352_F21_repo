@@ -14,8 +14,8 @@
         <main>
           <table style="border: black; border-width: 2%;">
             <tbody>
-              ${gen_invoice()} 
-                <!--generates the Invoice for the purchase.-->
+              ${gen_cart()} 
+                <!--generates the Cart for the purchase.-->
             </tbody>
           </table>
     </main>
