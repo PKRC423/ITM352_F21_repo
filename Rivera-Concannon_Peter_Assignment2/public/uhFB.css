@@ -1,0 +1,39 @@
+/*
+<!--
+  Creadted by:Peter Rivera-Concannon
+  Referenced past labs and WOD assignments
+-->
+*/
+/*Refrenced from W3 school "Responsive Pricing Tables" example*/
+h1{padding-top:32px!important;padding-bottom:32px!important}
+
+h2{padding-top:16px!important;padding-bottom:16px!important}
+
+h3 {padding-top:10px!important;padding-bottom:10px!important}
+
+body {background-image: url('./images/tc_Ching_Stadium.jpg'); 
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;}
+div {
+    border-style: inset;
+    max-width: 40%;
+    background-color: rgba(255, 255, 255, 0.75);
+    align-content: center;
+    padding: 100p
+}
+
+footer,header{
+    text-align: center;
+}
+
+hr {
+    background-color: black;
+    align-content: center;
+    height: 2%;
+}
+
+input {
+    text-align: center;
+    align-content: center;
+}
