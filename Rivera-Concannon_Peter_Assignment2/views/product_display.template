@@ -33,6 +33,9 @@ function checkInt(inputStr, qty_available,returnErr = false) {
     }
     //document.getElementById(inputStr.name + '_label') = errors.join();
     return returnErr ? errors : (errors.length == 0);
+    
+    //To change the label for the quantity[i]_label
+    document.getElementById(inputStr.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
 }
     </script>
 </head>
