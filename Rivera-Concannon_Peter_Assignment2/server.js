@@ -43,6 +43,8 @@ function checkInt(inputStr, qty_available, returnErr = false) {
     }
     //document.getElementById(inputStr.name + '_label') = errors.join();
     return returnErr ? errors : (errors.length == 0);
+    
+     (`quantity[i]_label`) == errors[i];
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
