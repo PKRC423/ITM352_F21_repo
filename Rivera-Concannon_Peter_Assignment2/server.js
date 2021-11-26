@@ -8,16 +8,12 @@ var fs = require('fs');
 var express = require('express');
 var myParser = require("body-parser");
 var app = express();
-const { send } = require('process');
-
-// Routing 
 
 // monitor all requests
 app.all('*', function (request, response, next) {
     console.log(request.method + ' to ' + request.path);
     next();
 });
-
 //So Express can decode the body of an HTTP request since by default Express cannot do that.
 app.use(express.urlencoded({ extended: true }));
 // route all other GET requests to files in public 
@@ -25,52 +21,57 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
+
+
+
+
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
 function checkInt(inputStr, qty_available, returnErr = false) {
     errors = []; //No errors yet hopefully
     qty_available = products[i].qty_available;
     if (inputStr == '') inputStr = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
     if (Number(inputStr) != inputStr) {
-        errors.push("Enter a Valid Number");//Checks if string is a number value
+        errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
         console.log("Invalid number entered");
     } else {
         console.log("Is a number");
-        if (inputStr < 0) console.log("Negative number entered"), errors.push('Enter a Positive and Valid Quantity');//Checks if it's a negative value
-        if (parseInt(inputStr) != inputStr) console.log("Number w/a decimal entered"), errors.push('Enter a non-decimal and Valid Quantity'); //Checks if it has decimal values
-        if (inputStr > 10) console.log("more tickets than allowed"), errors.push('10 Tickets Max per Party'); //Checks if over 10 ticekts are being bought from that section.
-        if (inputStr > qty_available) console.log("Not enough tickets left"), errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
+        if (inputStr == '') inputStr = 0;
+        if (inputStr < 0) console.log("Negative number entered"), errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
+        if (parseInt(inputStr) != inputStr) console.log("Number w/a decimal entered"), errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
+        if (inputStr > 10) console.log("more tickets than allowed"), errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
+        if (inputStr > qty_available) console.log("Not enough tickets left"), errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
     }
     return returnErr ? errors : (errors.length == 0);
     
     //To change the label for the quantity[i]_label
-    document.getElementById(inputStr.name + '_label').innerHTML = errors.join(':');
+    document.getElementById(inputStr.name + '_label').innerHTML = errors.join();
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
 app.post("/Check", function (request, response, next) {
     let POST = request.body;
-    query_response = "";
+
+    var err = {};
+    err['no_qty'] = 'Tickets:';
+
     //Validating the quantities and checking the availability of the tickets
     if (typeof POST['submit_purchase'] != undefined) {
         for (i = 0; i < products.length; i++) {
-            if ((`quantity${i}`) != undefined) {
+
                 qty = POST[`quantity${i}`];
-                err = [ ];
-                //= qty; //To make the values sticky incase of an error ````````````````````````````` How Do you make this sticky? I cannot figure out what to put infront of the ==.
+                
                 if (checkInt(qty, products[i].qty_available) == false) {
                     console.log(products[i].qty_available)
-                    query_response += "name_err" + `${products[i].section_num}`;
                     console.log("Invalid Quantity");
-                    err.push(`Invalid Quantity for Tickets in Sections: ${products[i].section_num}`);
+                    err['inventory' + i] = `Invalid Quantity for Tickets in Sections: ${products[i].section_num}`;
                 } else {
-                    err.push();
+                    delete err['no_qty'];
                     console.log(products[i].qty_available)
                     console.log("Valid Quantity");
                 }
-            }
         }
         if (err == ''){
-            response.redirect("UHManoaFootballTickets" + "?" + query_response);
+            response.redirect("UHManoaFootballTickets");
             console.log("Redirected to product display");
         }else {
             response.redirect("Cart");
@@ -209,7 +210,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <h1>Sections: ${products[i].section_num}</h1>
                 <h2>Ticket price: <br> $${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image><img></h2> 
-                <h3><label id="quantity${i}_label"> Tickets: <font color="red">, </font></label> </h3>
+                <h3><label id="quantity${i}_label"> Tickets:</h3>
                 <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkInt(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
