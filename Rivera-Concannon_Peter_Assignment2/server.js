@@ -35,16 +35,19 @@ function checkInt(inputStr, qty_available, returnErr = false) {
         console.log("Invalid number entered");
     } else {
         console.log("Is a number");
-        if (inputStr == '') inputStr = 0;
         if (inputStr < 0) console.log("Negative number entered"), errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) console.log("Number w/a decimal entered"), errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
         if (inputStr > 10) console.log("more tickets than allowed"), errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
         if (inputStr > qty_available) console.log("Not enough tickets left"), errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
     }
     return returnErr ? errors : (errors.length == 0);
-    
-    //To change the label for the quantity[i]_label
-    document.getElementById(inputStr.name + '_label').innerHTML = errors.join();
+}
+
+//To change the label for the quantity[i]_label when an invalid quantity is inputted
+function checkInput(input) {
+    console.log('checkInput ran');
+    errors = checkInt(entry.value, true);
+    document.getElementById(input.name + '_label').innerHTML = errors.join(':');
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
@@ -211,7 +214,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <h2>Ticket price: <br> $${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image><img></h2> 
                 <h3><label id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkInt(this);">
+                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkInput(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;

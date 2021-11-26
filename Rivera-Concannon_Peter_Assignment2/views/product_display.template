@@ -34,9 +34,13 @@ function checkInt(inputStr, qty_available, returnErr = false) {
         if (inputStr > qty_available) console.log("Not enough tickets left"), errors.push('Not enough tickets left to fullfill order'); //Checks if the amounted ordered it over the amount available
     }
     return returnErr ? errors : (errors.length == 0);
-    
-    //To change the label for the quantity[i]_label
-    document.getElementById(inputStr.name + '_label').innerHTML = errors.join(':');
+}
+
+//To change the label for the quantity[i]_label when an invalid quantity is inputted
+function checkInput(input) {
+    console.log('checkInput ran');
+    errors = checkInt(entry.value, true);
+    document.getElementById(input.name + '_label').innerHTML = errors.join(':');
 }
     </script>
 </head>
