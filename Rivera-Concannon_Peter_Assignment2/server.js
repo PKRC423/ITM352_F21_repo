@@ -45,9 +45,9 @@ function checkInt(inputStr, qty_available, returnErr = false) {
 
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
 function checkInput(input) {
-    console.log('checkInput ran');
-    errors = checkInt(entry.value, true);
+    errors = checkInt(input.value, true);
     document.getElementById(input.name + '_label').innerHTML = errors.join(':');
+    console.log('checkInput ran');
 }
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
@@ -92,6 +92,7 @@ app.get("/Cart", function (request, response, next) {
     let POST = request.body;
     var body = fs.readFileSync('./views/cart.template', 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
+    console.log('cart page loaded')
 
         //Referenced from Invoice 4
     //Function used to generate the item rows for the invoice
@@ -143,7 +144,8 @@ app.get("/Cart", function (request, response, next) {
 app.post("/Receipt", function (request, response, next) {
     let POST = request.body;
     var body = fs.readFileSync('./views/invoice.template', 'utf8');
-    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.   
+    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
+    console.log('Receipt page loaded');   
 
     //Referenced from Invoice 4
     //Function used to generate the item rows for the invoice
@@ -194,6 +196,7 @@ app.post("/Receipt", function (request, response, next) {
 app.get("/UHManoaFootballTickets", function (request, response) {
     var body = fs.readFileSync('./views/product_display.template', 'utf8');
     response.send(eval('`' + body + '`')); // render template string
+    console.log('product display page loaded')
 
 
 
@@ -211,15 +214,16 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <section style="text-align: center">
                 <hr>
                 <h1>Sections: ${products[i].section_num}</h1>
-                <h2>Ticket price: <br> $${products[i].price}</h2>
+                <h2>Ticket price: <br> \$${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image><img></h2> 
                 <h3><label id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeyup = "checkInput(this);">
+                <input type="text" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;
 
         }
         return str;
+        console.log('display_tickets ran')
     }
 });

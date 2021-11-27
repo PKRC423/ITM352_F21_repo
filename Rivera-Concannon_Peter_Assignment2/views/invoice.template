@@ -9,7 +9,7 @@ Created by: Peter Rivera-Concannon
 <head>
 
 <!--To generate the products.json data-->
-    
+    <script src="./products.js"></script>
 
     <meta charset="utf-8">
     <title>Receipt</title>

@@ -9,7 +9,7 @@ Created by: Peter Rivera-Concannon
 <head>
 
 <!--To generate the products.json data-->
-    
+    <script src="../products.json"></script>
 
     <meta charset="utf-8">
     <title>UH Manoa Football Tickets</title>
@@ -38,9 +38,9 @@ function checkInt(inputStr, qty_available, returnErr = false) {
 
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
 function checkInput(input) {
-    console.log('checkInput ran');
-    errors = checkInt(entry.value, true);
+    errors = checkInt(input.value, true);
     document.getElementById(input.name + '_label').innerHTML = errors.join(':');
+    console.log('checkInput ran');
 }
     </script>
 </head>
