@@ -3,10 +3,11 @@ Created by: Peter Rivera-Concannon
 Referenced code from many labs and WODS, mainly LAB13 and Inovice 4, as well as help from external sources
 */
 
-var products = require('./products.json');
+var products = require('./views/products.json');
 var fs = require('fs');
 var express = require('express');
 var myParser = require("body-parser");
+const { response } = require('express');
 var app = express();
 
 // monitor all requests
@@ -20,7 +21,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
-
+//rule to get the products.js data, given by Prof. Kazman.
+app.get("products.js", function (request, resposne, next){
+    response.type('.js');
+    var product_str = `var products = ${JSON.stringify(products)};`;
+    response.send(product_str);
+    console.log('GET products ran')
+});
 
 
 
