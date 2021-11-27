@@ -22,7 +22,7 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 //rule to get the products.js data, given by Prof. Kazman.
-app.get("products.js", function (request, resposne, next){
+app.get("/products.js", function (request, response, next){
     response.type('.js');
     var product_str = `var products = ${JSON.stringify(products)};`;
     response.send(product_str);
