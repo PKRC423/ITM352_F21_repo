@@ -18,30 +18,30 @@ Created by: Peter Rivera-Concannon
     <link href="uhFB.css" rel="stylesheet">
 
     <script>
-     //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
-function checkInt(inputStr, qty_available, returnErr = false) {
+
+//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
+function checkInt(input, qty_available, returnErr = false) {
     errors = []; //No errors yet hopefully
-    if (inputStr == '') inputStr = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
-    if (Number(inputStr) != inputStr) {
+    if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
+    if (Number(input) != input) {
         errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
-        console.log("Invalid number entered");
     } else {
-        console.log("Is a number");
-        if (inputStr < 0) console.log("Negative number entered"), errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
-        if (parseInt(inputStr) != inputStr) console.log("Number w/a decimal entered"), errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
-        if (inputStr > 10) console.log("more tickets than allowed"), errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
-        if (inputStr > qty_available) console.log("Not enough tickets left"), errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
+        if (input < 0) errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
+        if (parseInt(input) != input) errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
+        if (input > 10) errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
+        if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
     }
     return returnErr ? errors : (errors.length == 0);
-    console.log('checkInt ran');
+    
 }
 
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
 function checkInput(input, qty_available) {
-    errors = checkInt(input.value, qty_available, true);
-    document.getElementById(input.name + '_label').innerHTML = errors;
-    console.log('checkInput ran');
+    document.getElementById(input.name + '_label').innerHTML = `${checkInt(input, qty_available) ? 'Valid' : 'Invalid'} Quantity`; //Partially Referenced from Lab 11 Ex6
+
 }
+
+
     </script>
 </head>
 
@@ -74,5 +74,4 @@ function checkInput(input, qty_available) {
     </form>
     </div>
 </body>
-
 </html>
