@@ -35,7 +35,6 @@ app.get("/products.js", function (request, response, next){
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
 function checkInt(inputStr, qty_available, returnErr = false) {
     errors = []; //No errors yet hopefully
-    qty_available = products[i].qty_available;
     if (inputStr == '') inputStr = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
     if (Number(inputStr) != inputStr) {
         errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
@@ -48,12 +47,13 @@ function checkInt(inputStr, qty_available, returnErr = false) {
         if (inputStr > qty_available) console.log("Not enough tickets left"), errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
     }
     return returnErr ? errors : (errors.length == 0);
+    console.log('checkInt ran');
 }
 
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
-function checkInput(input) {
-    errors = checkInt(input.value, true);
-    document.getElementById(input.name + '_label').innerHTML = errors.join(':');
+function checkInput(input, qty_available) {
+    errors = checkInt(input.value, qty_available, true);
+    document.getElementById(input.name + '_label').innerHTML = errors.join();
     console.log('checkInput ran');
 }
 
@@ -224,7 +224,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <h2>Ticket price: <br> \$${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image><img></h2> 
                 <h3><label id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this);">
+                <input type="text" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this, ${products[i].qty_available});">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;
