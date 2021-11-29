@@ -39,7 +39,7 @@ function checkInt(inputStr, qty_available, returnErr = false) {
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
 function checkInput(input, qty_available) {
     errors = checkInt(input.value, qty_available, true);
-    document.getElementById(input.name + '_label').innerHTML = errors.join();
+    document.getElementById(input.name + '_label').innerHTML = errors;
     console.log('checkInput ran');
 }
     </script>

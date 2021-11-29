@@ -33,7 +33,7 @@ app.get("/products.js", function (request, response, next){
 
 
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
-function checkInt(inputStr, qty_available, returnErr = false) {
+function checkInt(inputStr, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (inputStr == '') inputStr = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
     if (Number(inputStr) != inputStr) {
@@ -44,16 +44,15 @@ function checkInt(inputStr, qty_available, returnErr = false) {
         if (inputStr < 0) console.log("Negative number entered"), errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
         if (parseInt(inputStr) != inputStr) console.log("Number w/a decimal entered"), errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
         if (inputStr > 10) console.log("more tickets than allowed"), errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
-        if (inputStr > qty_available) console.log("Not enough tickets left"), errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
+        if (inputStr > products[i].qty_available) console.log("Not enough tickets left"), errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
     }
     return returnErr ? errors : (errors.length == 0);
     console.log('checkInt ran');
 }
 
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
-function checkInput(input, qty_available) {
-    errors = checkInt(input.value, qty_available, true);
-    document.getElementById(input.name + '_label').innerHTML = errors.join();
+function checkInput(input) {
+    document.getElementById(input.name + '_label').innerHTML = `${checkInput(input) ? 'Valid' : 'Invalid'}quantity`; //Partially Referenced from Lab 11 Ex6
     console.log('checkInput ran');
 }
 
@@ -224,7 +223,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <h2>Ticket price: <br> \$${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image><img></h2> 
                 <h3><label id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this, ${products[i].qty_available});">
+                <input type="text" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this);">
                 <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;
