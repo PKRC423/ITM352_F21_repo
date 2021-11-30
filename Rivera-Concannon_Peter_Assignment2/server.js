@@ -224,10 +224,10 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <hr>
                 <h1>Sections: ${products[i].section_num}</h1>
                 <h2>Ticket price: <br> \$${products[i].price}</h2>
-                <h2><img src=${products[i].image} alt="Image><img></h2> 
-                <h3><label id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this, ${products[i].qty_available});">
-                <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
+                <h2><img src=${products[i].image} alt="Image"><img></h2> 
+                <h3><label for="inputQty" id="quantity${i}_label"> Tickets:</h3>
+                <input type="text" id="inputQty" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this, ${products[i].qty_available});">
+                <h2><label id="quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;
 
