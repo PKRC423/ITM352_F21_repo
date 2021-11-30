@@ -44,18 +44,14 @@ function checkInt(input, qty_available, returnErr = false) {
     return returnErr ? errors : (errors.length == 0);
     
 }
-
+/*This will not be here later on , just using this incase the unexpected identifier error is within this part of my functions.
 
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
 function checkInput(input, qty_available) {
-   retVal = checkInt(input, qty_available)
-   if(retVal) { str ="Valid Quantity";
-    } 
-    else {str ="Invalid Quantity";
-    }
-   document.getElementById(input.name + '_label').innerHTML = str;
-}
+    document.getElementById(input.name + '_label').innerHTML = `${checkInt(input, qty_available) ? 'Valid' : 'Invalid'} Quantity`; //Partially Referenced from Lab 11 Ex6
 
+}
+*/
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
 app.post("/Check", function (request, response, next) {

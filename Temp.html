@@ -1,3 +1,8 @@
+<!--
+This page is used to display the UHManoaFootballTickets purchase page and check if any values entered by the customer are invalid so they can make a purchase fluidly and sytaxically correcy. 
+Created by: Peter Rivera-Concannon
+-->
+
 <!DOCTYPE html>
 <html>
 
@@ -10,27 +15,33 @@
     <title>UH Manoa Football Tickets</title>
 
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-
     <link href="uhFB.css" rel="stylesheet">
 
     <script>
-        //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased.
-function checkInt(inputStr, returnErr = false) {
+
+//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
+function checkInt(input, qty_available, returnErr = false) {
     errors = []; //No errors yet hopefully
-    if (Number(inputStr) != inputStr) {        //Checks if it is a number
-        errors.push("Not a Valid Quantity")
+    if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
+    if (Number(input) != input) {
+        errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
     } else {
-        if(inputStr < 0) errors.push('Not a Valid Quantity');//Checks if it's a negative value
-        if (parseInt(inputStr) != inputStr) errors.push('Not a Valid Quanity'); //Checks if it has decimal values
-        if (inputStr >= 5) errors.push('Too many Tickets Allowed by 1 Party'); //Checks if ober 5 ticekts are being bought from that section.
-        }
+        if (input < 0) errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
+        if (parseInt(input) != input) errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
+        if (input > 10) errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
+        if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
+    }
     return returnErr ? errors : (errors.length == 0);
-    };
-//Checks if the quantity of the 
-function checkQtyTxt(){
-    var errors = (document.getElementById(`quantity${i}`).value, true);
-        qty_check_message.innerHTML = errors.join(" / ");
+    
 }
+
+//To change the label for the quantity[i]_label when an invalid quantity is inputted
+function checkInput(input, qty_available) {
+    document.getElementById(input.name + '_label').innerHTML = `${checkInt(input, qty_available) ? 'Valid' : 'Invalid'} Quantity`; //Partially Referenced from Lab 11 Ex6
+
+}
+
+
     </script>
 </head>
 
@@ -44,7 +55,7 @@ function checkQtyTxt(){
             </a>
     <div style="float: right;">
             <!--A form so the user -->
-    <form name="product_purchase_form" action="/Receipt" method="POST">
+    <form name="product_purchase_form" action="./Check" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
         
@@ -57,11 +68,10 @@ function checkQtyTxt(){
         
         <footer>
         <hr>
-            <input type="submit" value="Purchase Tickets" name="submit_purchase">
+            <input type="submit" value="View Cart" name="view_cart">
             <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
     </form>
     </div>
 </body>
-
 </html>

@@ -19,6 +19,7 @@ Created by: Peter Rivera-Concannon
 
     <script>
 
+
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
 function checkInt(input, qty_available, returnErr = false) {
     errors = []; //No errors yet hopefully
@@ -35,10 +36,15 @@ function checkInt(input, qty_available, returnErr = false) {
     
 }
 
+
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
 function checkInput(input, qty_available) {
-    document.getElementById(input.name + '_label').innerHTML = `${checkInt(input, qty_available) ? 'Valid' : 'Invalid'} Quantity`; //Partially Referenced from Lab 11 Ex6
-
+   retVal = checkInt(input, qty_available)
+   if(retVal) { str ="Valid Quantity";
+    } 
+    else {str ="Invalid Quantity";
+    }
+   document.getElementById(input.name + '_label').innerHTML = str;
 }
 
 
