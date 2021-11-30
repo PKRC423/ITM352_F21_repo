@@ -45,8 +45,9 @@ function checkInt(input, qty_available, returnErr = false) {
     
 }
 
-
+/*
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
+//Given too by professor Kazman after we had a meeting to fix my Assignment.
 function checkInput(input, qty_available) {
    retVal = checkInt(input, qty_available)
    if(retVal) { str ="Valid Quantity";
@@ -55,6 +56,7 @@ function checkInput(input, qty_available) {
     }
    document.getElementById(input.name + '_label').innerHTML = str;
 }
+*/
 
 
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
