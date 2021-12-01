@@ -9,6 +9,7 @@ var express = require('express');
 var myParser = require("body-parser");
 const { response } = require('express');
 var app = express();
+products.forEach((prod,i) => {prod.qty_available = 100;});
 
 // monitor all requests
 app.all('*', function (request, response, next) {
@@ -58,14 +59,14 @@ function checkInput(input, qty_available) {
 }
 */
 
-
 //Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
 app.post("/Check", function (request, response, next) {
     let POST = request.body;
 
-    var err = {};
-    err['no_qty'] = 'Tickets:';
+    query_response = "";
 
+    var noErr = true;
+    
     //Validating the quantities and checking the availability of the tickets
     if (typeof POST['submit_purchase'] != undefined) {
         for (i = 0; i < products.length; i++) {
@@ -73,20 +74,25 @@ app.post("/Check", function (request, response, next) {
                 qty = POST[`quantity${i}`];
                 
                 if (checkInt(qty, products[i].qty_available) == false) {
+                    query_response += "Error with Quantity in Sections" + `${products[i].section_num}`;
                     console.log(products[i].qty_available)
                     console.log("Invalid Quantity");
-                    err['inventory' + i] = `Invalid Quantity for Tickets in Sections: ${products[i].section_num}`;
+                    noErr = false;
                 } else {
-                    delete err['no_qty'];
+                    QString = query_response.stringify(POST);
+                    query_response += QString;
                     console.log(products[i].qty_available)
                     console.log("Valid Quantity");
                 }
         }
-        if (err == ''){
-            response.redirect("UHManoaFootballTickets");
+
+
+//If there noErr is false then redirect user back to the UHManoaFootballTickets, otherwise send them to the cart.
+        if (noErr == false){
+            response.redirect("UHManoaFootballTickets" + "?" + query_response);
             console.log("Redirected to product display");
         }else {
-            response.redirect("Cart");
+            response.redirect("Cart" + "?" + query_response);
             console.log("Redirected to Cart");
         }
 
@@ -144,7 +150,6 @@ app.get("/Cart", function (request, response, next) {
         grandTotal = subtotal + tax;
 
         return str;
-        console.log("gen_cart ran");
     }
 
     //Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
@@ -226,7 +231,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
                 <h2>Ticket price: <br> \$${products[i].price}</h2>
                 <h2><img src=${products[i].image} alt="Image"><img></h2> 
                 <h3><label for="inputQty" id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" id="inputQty" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this, ${products[i].qty_available});">
+                <input type="text" id="inputQty" placeholder="0" name = "quantity${i}" onkeyup = "checkInput(this, ${products[i].qty_available});">
                 <h2><label id="quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
                 </section>
                 `;
