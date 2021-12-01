@@ -120,7 +120,7 @@ app.post("/register", function (request, response) {
     //Writes user reg into user_data.json
     data = JSON.stringify(user_data);
     fs.writeFileSync(filename, data, "utf-8")
-    response.redirect ('./views/register.template')
+    response.redirect ('./views/register.html')
  
 
    
@@ -169,41 +169,45 @@ function checkInput(input, qty_available) {
 }
 */
 
-//Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
+//Created with a Reference from Nate Moylan
 app.post("/Check", function (request, response, next) {
     let POST = request.body;
 
-    query_response = "";
+    var noErr = {};
+    noErr['no_qty'] = 'Enter The Amount of Tickets You Want';
+    //Assume No qty from start.
 
-    var noErr = true;
-    
     //Validating the quantities and checking the availability of the tickets
     if (typeof POST['submit_purchase'] != undefined) {
+
+
         for (i = 0; i < products.length; i++) {
 
                 qty = POST[`quantity${i}`];
+            
                 
                 if (checkInt(qty, products[i].qty_available) == false) {
-                    query_response += "Error with Quantity in Sections" + `${products[i].section_num}`;
+                    noErr['quantity' + i] = `INVALID QUANTITY for Tickets in Section: ${products[i].section_num}`; //This will warn the customer of where their input was invalid
                     console.log(products[i].qty_available)
                     console.log("Invalid Quantity");
-                    noErr = false;
-                } else {
-                    QString = query_response.stringify(qty);
-                    query_response += QString;
-                    console.log(products[i].qty_available)
-                    console.log("Valid Quantity");
+                } 
+                if (qty > 0) {
+                    delete noErr['no_qty'];
+                if (qty > products[i].qty_available) {
+                    noErr['inventory' + i] = `${qty} of tickets in section ${products[i].section_num} are not available. Only ${products[i].qty_available} tickets are left!`;
                 }
+            }
         }
-
-
+    qString = query_response.stringify(POST);
+        if(JSON.stringify(noErr)=== '{}') {
 //If there noErr is false then redirect user back to the UHManoaFootballTickets, otherwise send them to the cart.
-        if (noErr == false){
-            response.redirect("UHManoaFootballTickets" + "?" + query_response);
-            console.log("Redirected to product display");
-        }else {
-            response.redirect("Cart" + "?" + query_response);
+            let errObj = { 'error': JSON.stringify(noErr)};
+            qString += '&' + query_response.stringify(errObj)
+            response.redirect("Cart" + "?" + qString);
             console.log("Redirected to Cart");
+        }else {
+            response.redirect("UHManoaFootballTickets" + "?" + qString);
+            console.log("Redirected to product display");
         }
 
         next();
@@ -280,9 +284,10 @@ app.post("/Receipt", function (request, response, next) {
             qty_purchased = POST[`quantity${i}`];
             if (qty_purchased > 0) {
 
-                //takes the value of the amount purchased and subtracts it from the amount available
-                products[i].total_sold += qty_purchased;
-                products[i].qty_available -= products[i].total_sold;
+                //to remove purchased items from the qty_available
+                for (i =0; i < products.length; i++) {
+                    products[i].qty_available -= Number(POST['quantity' + i]);
+                }
 
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;

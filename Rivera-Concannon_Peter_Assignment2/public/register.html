@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    
+</head>
+<body>
+
+
+    <form action = "/process_register" method = "POST" name = "register">
+    <div class = "container">
+        <h1>Register Account</h1>
+        <p>Please register an account before purchasing tickets!</p>
+
+        <!--Full Name-->
+        <label for ="fullname"><b>Full Name</b></label>
+        <input type="text" placeholder="Enter first and last name" class="form__input" name="fullname" id="fullname" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" required="Full First and last name, letters only">
+
+        <!--Username-->
+        <label for ="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter username" class="form__input" name="username" id="username" pattern=".[a-z0-9]{3,10}" required
+        title="Minimum: 4 Characters. Maximum: 10 Characters. Numbers and/or Letters Only.">
+
+        <!--Email-->
+        <label for ="email"><b>Email</b></label>
+        <input type="email" placeholder="Enter email"  name="email" id="email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter a valid email.">
+
+        <!--Password-->
+        <label for ="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter password" class="form__input" name="password" id="password" pattern=".{6,}" required title="Minimum: 6 Characters">
+
+        <!--Confirm Password-->
+        <label for ="confirm_password"><b>Confirm Password</b></label>
+        <input type="confirm_password" placeholder="Re-enter password" class="form__input" name="confirm_password" id="confirm_password" pattern=".{6,}" required title="Minimum: 6 Characters">
+
+        <br>
+        <br>
+        <button type ="submit" class = "reg_btn">Register</button>
+
+    </div>
+
+        <div class = "container sign_in">
+            <p>Already have an account? <a href ="./login.html">Sign In</a>.</p>
+        </div>
+
+    </form>
+
+
+</body>
+</html>
