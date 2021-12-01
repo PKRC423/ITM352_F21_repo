@@ -200,11 +200,13 @@ app.post("/Check", function (request, response, next) {
             }
         }
     qString = query_response.stringify(POST);
+
+    //Add the code to check if the user is logged in or not.
         if(JSON.stringify(noErr)=== '{}') {
 //If there noErr is false then redirect user back to the UHManoaFootballTickets, otherwise send them to the cart.
             let errObj = { 'error': JSON.stringify(noErr)};
             qString += '&' + query_response.stringify(errObj)
-            response.redirect("Cart" + "?" + qString);
+            response.redirect("Receipt" + "?" + qString);
             console.log("Redirected to Cart");
         }else {
             response.redirect("UHManoaFootballTickets" + "?" + qString);
@@ -216,11 +218,12 @@ app.post("/Check", function (request, response, next) {
 
 }
 );
+/*For Assignment 3
 
 //To send the user to the Invoice if the Data is valid
 app.get("/Cart", function (request, response, next) {
     let POST = request.query; //Given by Prof Kazman, This reads the query string so the data that is purchased can be processed and displayed on the cart page.
-    var body = fs.readFileSync('./views/cart.template', 'utf8');
+    var body = fs.readFileSync('./views/cart.template', POST, 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
     console.log('cart page loaded')
 
@@ -266,7 +269,9 @@ app.get("/Cart", function (request, response, next) {
     //Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
 });
 
-app.post("/Receipt", function (request, response, next) {
+*/
+
+app.get("/Receipt", function (request, response, next) {
     let POST = request.query;
     var body = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
@@ -278,20 +283,9 @@ app.post("/Receipt", function (request, response, next) {
         str = '';
         subtotal = 0;
         for (i = 0; i < products.length; i++) {
-            qty_purchased = POST[qty_purchased];
-            if (qty_purchased > 0) {
-
-
-
-                //to remove purchased items from the qty_available
-                for (i =0; i < products.length; i++) {
-                    products[i].qty_available -= Number(POST['quantity' + i]);
-                }
-            
-                //takes the value of the amount purchased and subtracts it from the amount available
-                    products[i].total_sold += qty_purchased;
-                    products[i].qty_available -= products[i].total_sold;
-
+            qty_purchased = POST[`quantity${i}`];
+            if (qty_purchased > 0) {                
+                products[i].qty_available -= Number(POST['quantity' + i]);
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
                 str += (`
