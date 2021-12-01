@@ -85,7 +85,7 @@ app.get("/register", function (request, response) {
         <button type ="submit" class = "reg_btn">Register</button>
     </div>
         <div class = "container sign_in">
-            <p>Already have an account? <a href ="./login.html">Sign In</a>.</p>
+            <p>Already have an account? <a href ="./public/index.html">Sign In</a>.</p>
         </div>
     </form>
         `;
@@ -120,7 +120,7 @@ app.post("/register", function (request, response) {
     //Writes user reg into user_data.json
     data = JSON.stringify(user_data);
     fs.writeFileSync(filename, data, "utf-8")
-    response.redirect ('register.html')
+    response.redirect ('./views/register.template')
  
 
    
