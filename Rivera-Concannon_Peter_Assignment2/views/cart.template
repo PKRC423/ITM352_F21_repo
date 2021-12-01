@@ -18,6 +18,9 @@
             <tbody>
               ${gen_cart()} 
                 <!--generates the Cart for the purchase.-->
+
+                <td style="text-align: center;" width="80%;"> <h3>Total</h3></td>
+                <td style="text-align: center;" width="80%;"> \$ ${subtotal}</td>
             </tbody>
           </table>
     </main>

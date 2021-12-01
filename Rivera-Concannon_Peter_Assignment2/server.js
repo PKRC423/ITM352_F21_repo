@@ -185,7 +185,8 @@ app.post("/Check", function (request, response, next) {
 
                 qty = POST[`quantity${i}`];
             
-                
+            //Add and If statement for if the user is/isnt logged in either let the check process happen/ direct them to the login page and then when they sign in/register then they are brought to the cart.
+
                 if (checkInt(qty, products[i].qty_available) == false) {
                     noErr['quantity' + i] = `INVALID QUANTITY for Tickets in Section: ${products[i].section_num}`; //This will warn the customer of where their input was invalid
                     console.log(products[i].qty_available)
@@ -231,11 +232,7 @@ app.get("/Cart", function (request, response, next) {
         for (i = 0; i < products.length; i++) {
             qty_purchased = POST[`quantity${i}`];
             if (qty_purchased > 0) {
-
-                //takes the value of the amount purchased and subtracts it from the amount available
-                products[i].total_sold += qty_purchased;
-                products[i].qty_available -= products[i].total_sold;
-
+      
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
                 str += (`
@@ -281,13 +278,19 @@ app.post("/Receipt", function (request, response, next) {
         str = '';
         subtotal = 0;
         for (i = 0; i < products.length; i++) {
-            qty_purchased = POST[`quantity${i}`];
+            qty_purchased = POST[qty_purchased];
             if (qty_purchased > 0) {
+
+
 
                 //to remove purchased items from the qty_available
                 for (i =0; i < products.length; i++) {
                     products[i].qty_available -= Number(POST['quantity' + i]);
                 }
+            
+                //takes the value of the amount purchased and subtracts it from the amount available
+                    products[i].total_sold += qty_purchased;
+                    products[i].qty_available -= products[i].total_sold;
 
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
