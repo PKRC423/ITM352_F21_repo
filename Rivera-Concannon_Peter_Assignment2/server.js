@@ -85,7 +85,7 @@ app.get("/register", function (request, response) {
         <button type ="submit" class = "reg_btn">Register</button>
     </div>
         <div class = "container sign_in">
-            <p>Already have an account? <a href ="./public/index.html">Sign In</a>.</p>
+            <p>Already have an account? <a href ="./public/login.html">Sign In</a>.</p>
         </div>
     </form>
         `;
@@ -218,7 +218,7 @@ app.post("/Check", function (request, response, next) {
 
 //To send the user to the Invoice if the Data is valid
 app.get("/Cart", function (request, response, next) {
-    let POST = request.body;
+    let POST = request.query; //Given by Prof Kazman, This reads the query string so the data that is purchased can be processed and displayed on the cart page.
     var body = fs.readFileSync('./views/cart.template', 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
     console.log('cart page loaded')
@@ -270,7 +270,7 @@ app.get("/Cart", function (request, response, next) {
 });
 
 app.post("/Receipt", function (request, response, next) {
-    let POST = request.body;
+    let POST = request.query;
     var body = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
     console.log('Receipt page loaded');   
@@ -317,12 +317,15 @@ app.post("/Receipt", function (request, response, next) {
         grandTotal = subtotal + tax;
 
         return str;
-        console.log("gen_invoice ran");
     }
 });
 //Refrenced from the Assignment1 MVC EX
 
 app.get("/UHManoaFootballTickets", function (request, response) {
+
+    //if user is logged in then allow them to go to the product_display
+
+
     var body = fs.readFileSync('./views/product_display.template', 'utf8');
     response.send(eval('`' + body + '`')); // render template string
     console.log('product display page loaded')
@@ -353,6 +356,5 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 
         }
         return str;
-        console.log('display_tickets ran')
     }
 });
