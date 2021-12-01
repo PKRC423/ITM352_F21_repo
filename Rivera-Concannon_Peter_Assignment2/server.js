@@ -207,7 +207,7 @@ app.post("/Check", function (request, response, next) {
             let errObj = { 'error': JSON.stringify(noErr)};
             qString += '&' + query_response.stringify(errObj)
             response.redirect("Receipt" + "?" + qString);
-            console.log("Redirected to Cart");
+            console.log("Redirected to Receipt");
         }else {
             response.redirect("UHManoaFootballTickets" + "?" + qString);
             console.log("Redirected to product display");

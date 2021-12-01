@@ -75,7 +75,7 @@ function checkInput(input, qty_available) {
         
         <footer>
         <hr>
-            <input type="submit" value="View Cart" name="view_cart">
+            <input type="submit" value="Submit Purchaset" name="view_cart">
             <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
     </form>
