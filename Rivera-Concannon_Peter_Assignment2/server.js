@@ -79,7 +79,7 @@ app.post("/Check", function (request, response, next) {
                     console.log("Invalid Quantity");
                     noErr = false;
                 } else {
-                    QString = query_response.stringify(POST);
+                    QString = query_response.stringify(qty);
                     query_response += QString;
                     console.log(products[i].qty_available)
                     console.log("Valid Quantity");
