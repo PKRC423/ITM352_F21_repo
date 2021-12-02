@@ -12,7 +12,9 @@ var myParser = require("body-parser");
 var filename = "./user_data.json";
 var queryString = require("query-string");
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
+app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
 app.use(cookieParser());
 app.use(myParser.urlencoded({ extended: true }));
 app.use(express.static('./public'));
@@ -29,6 +31,16 @@ if (fs.existsSync(filename)) {
     console.log("Enter the correct filename bozo!");
 }
 
+app.get("/", function (request, response) {
+    if (request.session.page_views) {
+       request.session.page_views++;
+       response.send("Welcome back.  This is vist # " + request.session.page_views);
+    } else {
+        request.session.page_views = 1;
+        response.send("Welcome to this page for the first time!");
+    }
+}
+);
 
 app.get("/set_cookie", function (request, response) {
     my_name = "Rick Kazman";
@@ -44,12 +56,32 @@ app.get("/get_cookie", function (request, response) {
 }
 );
 
+app.get('/set_session', function (req, res, next) {
+    res.send(`welcome, your session ID is ${req.session.id}`);
+    next();
+});
+
+app.get("/use_session", function (request, response) {
+    response.send("Your session ID is " + request.session.id);
+    request.session.destroy();
+}
+);
+
 app.get("/login", function (request, response) {
     // Give a simple login form
+    if (typeof request.session['last_login'] != "undefined") {
+        login_time = "Last login was " + request.session["last_login"];
+    } else {
+        login_time = "First login";
+    }
+    my_cookie_name = request.cookies["username"];
+
     str = `<body>
+    Login info: ${login_time} by ${my_cookie_name}
 <form action="/login" method="POST">
 <input type="text" name="username" size="40" placeholder="enter username" ><br />
 <input type="password" name="password" size="40" placeholder="enter password"><br />
+<input type="text" name="color" size="20" placeholder="enter fav color"><br />
 <input type="submit" value="Submit" id="submit">
 </form>
 </body>
@@ -57,18 +89,48 @@ app.get("/login", function (request, response) {
     response.send(str);
 });
 
+
+app.post("/login", function (request, response) {
+    // Process login form POST and redirect to logged in page if ok, back to login page if not
+    POST = request.body;
+    user_name_from_form = POST["username"];
+    if (user_data[user_name_from_form] != undefined) {
+        if (typeof request.session.last_login != 'undefined')
+        {
+            var msg = `You last logged in: ${request.session.last_login}. Your fav color is ${POST["color"]}`;
+            var now = new Date();
+        } else {
+            var msg = '';
+            var now = 'first visit';
+        }
+        request.session.last_login = now;
+        request.session.fav_color = POST["color"];
+        response.cookie('username', user_name_from_form).send(`${msg} <BR>${user_name_from_form} logged in: ${now}`);
+    } else {
+        response.send(`Sorry Charlie!`);
+    }
+});
+
+app.get("/fav_color", function (request, response) {
+    response.send("Favorite color is: " + request.session.fav_color);
+}
+);
+
+/*
 app.post("/login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log("Got a POST to login");
     POST = request.body;
-
     user_name = POST["username"];
     user_pass = POST["password"];
     console.log("User name=" + user_name + " password=" + user_pass);
     if (user_data[user_name] != undefined) {
         if (user_data[user_name].password == user_pass) {
             // Good login
-            response.redirect("products_page.html");
+            request.session['last_login'] = Date();
+            response.cookie("username", user_name, {"maxAge": 10*1000});
+            request.session['username'] = user_name;
+            response.send("Welcome " + user_name);
         } else {
             // Bad login, redirect
             response.send("Sorry bud");
@@ -77,8 +139,8 @@ app.post("/login", function (request, response) {
         // Bad username
         response.send("Bad username");
     }
-
 });
+*/
 
 app.get("/register", function (request, response) {
     // Give a simple register form
