@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--To generate the products.json data-->
+    <script src="./products.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="uhFB.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<body>
+        <img src="./images/Seating_Map.jpg" alt="Click here to view the Stadium Map!" style="float:right; border-style: inset; height:500px;width:500px;">
+  <div style="float: left;">
+        <main>
+          <table style="border: black; border-width: 2%;">
+            <tbody>
+              ${gen_cart()} 
+                <!--generates the Cart for the purchase.-->
+
+                <td style="text-align: center;" width="80%;"> <h3>Total</h3></td>
+                <td style="text-align: center;" width="80%;"> \$ ${subtotal}</td>
+            </tbody>
+          </table>
+    </main>
+    <footer>
+        <hr>
+        <form action="./Receipt" method="POST">
+            <input type="submit" value="Purchase Tickets" name="submit_purchase">
+            </form>
+            <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
+        </footer>
+  </div>
+</body>
+</html>

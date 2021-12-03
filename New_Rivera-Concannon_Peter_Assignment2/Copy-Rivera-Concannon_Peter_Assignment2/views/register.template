@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./register.css"
+
+
+
+     
+    
+</head>
+<body>
+    <form id="create-acc-form" action = "/process_register" method = "POST" name = "register">
+    <div class = "title">
+        <h1>Register Account</h1>
+        <br>
+        <p>Please register an account before purchasing tickets!</p>
+
+        <!--Full Name-->
+        <div class = "input-group">
+        <label for ="fullname"><b>Full Name</b></label>
+        <input type="text" placeholder="Enter first and last name" class="form__input" name="fullname" id="fullname" required="Full First and last name, letters only">
+        </div>
+
+        <!--Username-->
+        <div class = "input-group">
+        <label for ="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter username" class="form__input" name="username" id="username" required title="Minimum: 4 Characters. Maximum: 10 Characters. Numbers and/or Letters Only.">
+        </div>
+
+        <!--Email-->
+        <div class = "input-group">
+        <label for ="email"><b>Email</b></label>
+        <input type="email" placeholder="Enter email"  name="email" id="email" required title="Please enter a valid email.">
+        </div>
+
+        <!--Password-->
+        <div class = "input-group">
+        <label for ="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter password" class="form__input" name="password" id="password" required title="Minimum: 6 Characters">
+        </div>
+
+        <!--Confirm Password-->
+        <div class = "input-group">
+        <label for ="confirm_password"><b>Confirm Password</b></label>
+        <input type="confirm_password" placeholder="Re-enter password" class="form__input" name="confirm_password" id="confirm_password" required title="Minimum: 6 Characters">
+        </div>
+
+        <br>
+        <br>
+        <button type ="submit" class = "btn">Register</button>
+
+    </div>
+
+        <div class = "login_link">
+            <p>Already have an account? <a href ="login">Sign In</a>.</p>
+        </div>
+
+    </form>
+
+
+</body>
+</html>

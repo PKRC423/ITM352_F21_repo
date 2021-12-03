@@ -1,0 +1,16 @@
+{
+    
+    "prc": {
+        "name": "Peter R-C",
+        "password": "PRC423",
+        "email": "pkrc@hawaii.edu"
+    },
+
+
+    "nate": {
+        "name": "Nate Moylan",
+        "password": "NM123",
+        "email": "nmoylan@hawaii.edu"
+    }
+    
+}

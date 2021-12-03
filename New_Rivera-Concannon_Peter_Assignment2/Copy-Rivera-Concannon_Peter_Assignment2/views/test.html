@@ -1,0 +1,66 @@
+<script src = "./user_data.json">
+
+    function checkInt(input, qty_available, returnErr = false) {
+        errors = []; //No errors yet hopefully
+        if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
+        if (Number(input) != input) {
+            errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
+        } else {
+            if (input < 0) errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
+            if (parseInt(input) != input) errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
+            if (input > 10) errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
+            if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
+        }
+        return returnErr ? errors : (errors.length == 0);
+        
+    }
+    
+    function checkInput(input, qty_available) {
+       retVal = checkInt(input.value, qty_available);
+       if(retVal) { str ="Valid Quantity";
+        } 
+        else {str ="Invalid Quantity";
+        }
+       document.getElementById(input.name + '_label').innerHTML = str;
+    }
+    
+    </script>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+        <link rel="stylesheet" href="login-style.css">
+    </head>
+    <body>
+    
+        <div class = "center">
+            <h1>UH Manoa Football Tickets</h1>
+            <h2>Login</h2>
+    
+        <form action="/process_login" method ="POST">
+            <!--Username Field-->
+            <div class = "user-field">
+                <input type= "text" name = "username" required>
+                <span></span>
+                <label>Username</label>
+            </div>
+            <!--Password Field-->
+            <div class = "user-field">
+                <input type= "text" name = "password" required>
+                <span></span>
+                <label>Password</label>
+            </div>
+    
+            <input type = "submit" value = "Login">
+    
+            <div class = "signup_link">
+               Not a member? <a href="register">Sign Up!</a>
+            </div>
+        </form>
+        </div>
+        
+    </body>
+    </html>
