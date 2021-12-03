@@ -1,232 +1,87 @@
-/*
-Created by: Peter Rivera-Concannon
-Referenced code from many labs and WODS, mainly LAB13 and Inovice 4, as well as help from external sources
-*/
+app.post("/registernew", function (request, response) {
+    console.log("got a new register")
+    POST = request.body;
+    //getting the user info from the /register page and putting it into variables for validation. put username and email to lower case to prevent identical copies from forming
+    var user_name = POST["username"].toLowerCase();
+    var new_user_password = POST["password"];
+    var new_user_password_rpt = POST["passwordrpt"];
+    var new_user_email = POST["email"].toLowerCase();
+    var new_user_fullname = POST["fullname"];
+    console.log(POST)
 
-var products = require('./views/products.json');
-var fs = require('fs');
-var express = require('express');
-var myParser = require("body-parser");
-const { response } = require('express');
-var app = express();
 
-// monitor all requests
-app.all('*', function (request, response, next) {
-    console.log(request.method + ' to ' + request.path);
-    next();
-});
-//So Express can decode the body of an HTTP request since by default Express cannot do that.
-app.use(express.urlencoded({ extended: true }));
-// route all other GET requests to files in public 
-app.use(express.static('./public'));
-// start server
-app.listen(8080, () => console.log(`listening on port 8080`));
-//rule to get the products.js data, given by Prof. Kazman.
-app.get("/products.js", function (request, response, next){
-    response.type('.js');
-    var product_str = `var products = ${JSON.stringify(products)};`;
-    response.send(product_str);
-    console.log('GET products ran')
-});
+    console.log(new_user_fullname)
 
-//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
-function checkInt(input, qty_available, returnErr = false) {
-    errors = []; //No errors yet hopefully
-    if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
-    if (Number(input) != input) {
-        errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
+    //register validation 
+    if (typeof user_data[user_name] != 'undefined') {
+        response.send(`<script>
+        alert("Username: ${user_name} exists please enter another username"); 
+        window.history.back();
+        
+        </script>`);
+        console.log("Username Exist")
     } else {
-        if (input < 0) errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
-        if (parseInt(input) != input) errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
-        if (input > 10) errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
-        if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
+        var UsernameExist = true
     }
-    return returnErr ? errors : (errors.length == 0);
+    //uses function below to validate username for register page
+    if (!validateUsername(user_name)) {
+        response.send(`<script>
+    alert("Username: ${user_name} Needs to be no less than 5 characters and must exceed 15 characters"); 
+    window.history.back();
     
-}
-/*This will not be here later on , just using this incase the unexpected identifier error is within this part of my functions.
+    </script>`);
+    } else {
+        var validusername = true
+    }
+    //uses function below to validate fullname for regeister page
+    if (!validatefullname(new_user_fullname)) {
+        response.send(`<script>
+    alert("Fullname: ${new_user_fullname} Must between 0 and 30 characters following the prompt Last Name, First Name"); 
+    window.history.back();
+    
+    </script>`);
+    } else {
+        var validfullname = true
+    }
+    //uses function below to validate email for register page
+    if (!validateEmail(new_user_email)) {
+        response.send(`<script>
+    alert("Email: ${new_user_email} Must follow the example jimmie@gmail.com or jimmie@hotmail.al"); 
+    window.history.back();
+    
+    </script>`);
+    } else {
+        var validemail = true
+    }
+    //validates if first password matches with the confirmation password in register page
+    if (new_user_password != new_user_password_rpt) {
+        response.send(`<script>
+    alert("Passwords do not match please make sure and re-confirm that passwords match"); 
+    window.history.back();
+    </script>`);
+    } else {
+        var passwordmatch = true
+    }
+    console.log("REGISTRATION COMPLETE")
+    //if it all checks to be true it will write the new user data into user_data.json taken from File/IO Lab and modified 
+    if (UsernameExist && validusername && validfullname && validemail && passwordmatch) {
 
-//To change the label for the quantity[i]_label when an invalid quantity is inputted
-function checkInput(input, qty_available) {
-    document.getElementById(input.name + '_label').innerHTML = `${checkInt(input, qty_available) ? 'Valid' : 'Invalid'} Quantity`; //Partially Referenced from Lab 11 Ex6
+        user_data[user_name] = {}
+        user_data[user_name].fullname = POST["fullname"]
+        user_data[user_name].email = POST["email"]
+        user_data[user_name].password = POST["password"]
+        user_data[user_name].passwordrpt = POST["passwordrpt"]
 
-}
-*/
 
-//Referenced from the Lab13 Ex5 to process the invoice form and the Assignment 1 MVC EX.
-app.post("/Check", function (request, response, next) {
-    let POST = request.body;
 
-    var err = {};
-    err['no_qty'] = 'Tickets:';
-
-    //Validating the quantities and checking the availability of the tickets
-    if (typeof POST['submit_purchase'] != undefined) {
-        for (i = 0; i < products.length; i++) {
-
-                qty = POST[`quantity${i}`];
-                
-                if (checkInt(qty, products[i].qty_available) == false) {
-                    console.log(products[i].qty_available)
-                    console.log("Invalid Quantity");
-                    err['inventory' + i] = `Invalid Quantity for Tickets in Sections: ${products[i].section_num}`;
-                } else {
-                    delete err['no_qty'];
-                    console.log(products[i].qty_available)
-                    console.log("Valid Quantity");
-                }
-        }
-        if (err == ''){
-            response.redirect("UHManoaFootballTickets");
-            console.log("Redirected to product display");
-        }else {
-            response.redirect("Cart");
-            console.log("Redirected to Cart");
-        }
-
-        next();
+        data = JSON.stringify(user_data);
+        //load the user_data.json file to prepare to write the register data after validation
+        fs.writeFileSync(user_data_filename, data, "utf-8");
+        //after it redirects to invoice to show the invoice after registration
+        var invoiceview = fs.readFileSync('./public/invoice.view', 'utf-8');
+        response.send(eval('`' + invoiceview + '`'));
+    } else {
+        response.redirect("/register")
     }
 
-}
-);
-
-//To send the user to the Invoice if the Data is valid
-app.get("/Cart", function (request, response, next) {
-    let POST = request.body;
-    var body = fs.readFileSync('./views/cart.template', 'utf8');
-    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
-    console.log('cart page loaded')
-
-        //Referenced from Invoice 4
-    //Function used to generate the item rows for the invoice
-    function gen_cart() {
-        str = '';
-        subtotal = 0;
-        for (i = 0; i < products.length; i++) {
-            qty_purchased = POST[`quantity${i}`];
-            if (qty_purchased > 0) {
-
-                //takes the value of the amount purchased and subtracts it from the amount available
-                products[i].total_sold += qty_purchased;
-                products[i].qty_available -= products[i].total_sold;
-
-                exPrice = qty_purchased * products[i].price;
-                subtotal += exPrice;
-                str += (`
-                    <tr style="text-align: center; border: 4px solid black">
-                        <td> <h2>Section:</h2></td>
-                        <td style="text-align: center;">${products[i].section_num}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Tickets: </td>
-                        <td style="text-align: center;">${qty_purchased}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Price per Ticket: </td>
-                        <td style="text-align: center;">\$${products[i].price}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Extended Price: </td>
-                        <td style="text-align: center;">\$${exPrice}</td>
-                    </tr>
-                `);
-            }
-        }
-        //To Compute Tax and the Grand total.
-        tax_rate = 0.0575;
-        tax = tax_rate * subtotal;
-        grandTotal = subtotal + tax;
-
-        return str;
-        console.log("gen_cart ran");
-    }
-
-    //Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
-});
-
-app.post("/Receipt", function (request, response, next) {
-    let POST = request.body;
-    var body = fs.readFileSync('./views/invoice.template', 'utf8');
-    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
-    console.log('Receipt page loaded');   
-
-    //Referenced from Invoice 4
-    //Function used to generate the item rows for the invoice
-    function gen_invoice() {
-        str = '';
-        subtotal = 0;
-        for (i = 0; i < products.length; i++) {
-            qty_purchased = POST[`quantity${i}`];
-            if (qty_purchased > 0) {
-
-                //takes the value of the amount purchased and subtracts it from the amount available
-                products[i].total_sold += qty_purchased;
-                products[i].qty_available -= products[i].total_sold;
-
-                exPrice = qty_purchased * products[i].price;
-                subtotal += exPrice;
-                str += (`
-                    <tr style="text-align: center; border: 4px solid black">
-                        <td> <h2>Section:</h2></td>
-                        <td style="text-align: center;">${products[i].section_num}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Tickets: </td>
-                        <td style="text-align: center;">${qty_purchased}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Price per Ticket: </td>
-                        <td style="text-align: center;">\$${products[i].price}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Extended Price: </td>
-                        <td style="text-align: center;">\$${exPrice}</td>
-                    </tr>
-                `);
-            }
-        }
-        //To Compute Tax and the Grand total.
-        tax_rate = 0.0575;
-        tax = tax_rate * subtotal;
-        grandTotal = subtotal + tax;
-
-        return str;
-        console.log("gen_invoice ran");
-    }
-});
-//Refrenced from the Assignment1 MVC EX
-
-app.get("/UHManoaFootballTickets", function (request, response) {
-    var body = fs.readFileSync('./views/product_display.template', 'utf8');
-    response.send(eval('`' + body + '`')); // render template string
-    console.log('product display page loaded')
-
-
-
-    //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
-    function display_tickets() {
-        str = '';
-        for (i = 0; i < products.length; i++) {
-            strErr = "";
-            if (request.query["name_err"] == undefined) {
-                strErr = ""
-            } else {
-                strErr += `<h1>Invalid Quantity for purchase of Tickets in: ${products[i].section_num}. - ${request.query['name_err']}</h1>`
-            };
-            str += ` 
-                <section style="text-align: center">
-                <hr>
-                <h1>Sections: ${products[i].section_num}</h1>
-                <h2>Ticket price: <br> \$${products[i].price}</h2>
-                <h2><img src=${products[i].image} alt="Image><img></h2> 
-                <h3><label id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" placeholder="0" name = "quantity${i}" onkeydown = "checkInput(this, ${products[i].qty_available});">
-                <h2><label id"quantity_available${i}"> There are: ${products[i].qty_available} Seats Available </label></h2>
-                </section>
-                `;
-
-        }
-        return str;
-        console.log('display_tickets ran')
-    }
 });

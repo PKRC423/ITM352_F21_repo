@@ -4,10 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./register.css"   
+    <link rel="stylesheet" href="./register.css">
+<script>
+   //This function checks if the inputs are valid
+function checkValue(input, returnErr = false) {
+    errors = []; //No errors yet hopefully
+    POST = request.body;
+    var user_name = POST["username"].toLowerCase();
+    var new_user_password = POST["password"];
+    var new_user_confirm_password = POST["confirm_password"];
+    var new_user_email = POST["email"].toLowerCase();
+    var new_user_fullname = POST["fullname"];
+    console.log(POST);
+
+      if (typeof user_login[user_name] != 'undefined') {
+        errors.push('Username Already Exists, choose NEW Name!');
+      }
+      else{
+          var usernameExists = true;
+      }
+
+      if (!validate_Username(new_user_fullname)) {
+        errors.push('Needs to be less than 30 Letters, no numbers or special characters');
+      }
+      else{
+          var validFullName = true;
+      }
+
+      
+      if (!validate_user_fullname(new_user_fullname)) {
+        errors.push('Needs to be less than 30 Letters, no numbers or special characters');
+      }
+      else{
+          var validFullName = true;
+      }
+
+
+      if (new_user_password != new_user_confirm_password) {
+        errors.push('Passwords don"t match')
+      }
+      else{
+          var passwordMatch = true
+      }
+return returnErr ? errors : (errors.length == 0);
+console.log("registration done");
+}
+
+//functions for validation if statements
+function validate_Username(user) {
+    
+}
+
+
+function checkLabel(input) {
+   retVal = checkInt(input.value);
+   if(retVal) { str ="Valid";
+    } 
+    else {str ="Invalid";
+    }
+   document.getElementById(input.name + '_label').innerHTML = str;
+}
+</script>
 </head>
 <body>
-    <form id="create-acc-form" action = "/process_register" method = "POST" name = "register">
+    <form id="create-acc-form" action = "/process_register" method = "POST">
     <div class = "title">
         <h1>Register Account</h1>
         <br>
@@ -16,31 +76,36 @@
         <!--Full Name-->
         <div class = "input-group">
         <label for ="fullname"><b>Full Name</b></label>
-        <input type="text" placeholder="Enter first and last name" class="form__input" name="fullname" id="fullname" required="Full First and last name, letters only">
+        <div id= 'fullname_error' style="color: red;"></div>
+        <input type="text" placeholder="Enter first and last name" class="form__input" name="fullname" id="fullname" onkeydown= checkLabel(this)>
         </div>
 
         <!--Username-->
         <div class = "input-group">
         <label for ="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter username" class="form__input" name="username" id="username" required title="Minimum: 4 Characters. Maximum: 10 Characters. Numbers and/or Letters Only.">
+        <div id= 'username_error' style="color: red;"></div>
+        <input type="text" placeholder="Enter username" class="form__input" name="username" id="username" onkeydown= checkLabel(this)>
         </div>
 
         <!--Email-->
         <div class = "input-group">
         <label for ="email"><b>Email</b></label>
-        <input type="email" placeholder="Enter email"  name="email" id="email" required title="Please enter a valid email.">
+        <div id='email_error' style="color: red;"></div>
+        <input type="email" placeholder="Enter email"  name="email" id="email" required title="Please enter a valid email." onkeydown= checkLabel(this)>
         </div>
 
         <!--Password-->
         <div class = "input-group">
         <label for ="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter password" class="form__input" name="password" id="password" required title="Minimum: 6 Characters">
+        <div id= 'password_error' style="color: red;"></div>
+        <input type="password" placeholder="Enter password" class="form__input" name="password" id="password" onkeydown= checkLabel(this)>
         </div>
 
         <!--Confirm Password-->
         <div class = "input-group">
         <label for ="confirm_password"><b>Confirm Password</b></label>
-        <input type="confirm_password" placeholder="Re-enter password" class="form__input" name="confirm_password" id="confirm_password" required title="Minimum: 6 Characters">
+        <div id= 'confirm_pass_error' style="color: red;"></div>
+        <input type="password" placeholder="Re-enter password" class="form__input" name="confirm_password" id="confirm_password" onkeydown= checkLabel(this)>
         </div>
 
         <br>

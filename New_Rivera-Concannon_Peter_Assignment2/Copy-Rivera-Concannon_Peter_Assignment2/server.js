@@ -78,7 +78,7 @@ app.get("/register", function (request, response) {
 /* Processing Register page */
 
 app.post("/process_register", function (request, response) {
-    console.log('rquest.body', request.body);
+    console.log('request.body', request.body);
     console.log('user_login', user_login);
 
 
@@ -169,7 +169,7 @@ app.post("/process_register", function (request, response) {
         response.redirect('/Receipt?' + params.toString());
     } else {
         request.body['reg_errors'] = JSON.stringify(reg_errors);
-        let params = new URLSearchParams(request.body);
+        let params = new URLSearchParams(reg_errors);
         response.redirect('/register?' + params.toString());
     }
 });
