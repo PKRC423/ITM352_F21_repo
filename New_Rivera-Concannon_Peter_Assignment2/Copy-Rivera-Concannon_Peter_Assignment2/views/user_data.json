@@ -1,16 +1,1 @@
-{
-    
-    "prc": {
-        "name": "Peter R-C",
-        "password": "PRC423",
-        "email": "pkrc@hawaii.edu"
-    },
-
-
-    "nate": {
-        "name": "Nate Moylan",
-        "password": "NM123",
-        "email": "nmoylan@hawaii.edu"
-    }
-    
-}
+{"prc":{"name":"Peter R-C","password":"PRC423","email":"pkrc@hawaii.edu"},"nate":{"name":"Nate Moylan","password":"NM123","email":"nmoylan@hawaii.edu"},"sdfdf":{"name":"PETER RC","password":"PRCBMW","email":"sdf@gmail.com"}}
