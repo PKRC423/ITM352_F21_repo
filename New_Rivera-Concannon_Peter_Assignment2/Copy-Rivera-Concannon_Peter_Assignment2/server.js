@@ -48,8 +48,8 @@ app.get("/products.js", function (request, response, next){
 if (fs.existsSync(filename)) {
     //Reads user_data.json
     //Moved the require in here from Ex1
-    var data = fs.readFileSync(filename, 'utf-8');
-    var user_login = JSON.parse(data);
+    var data1 = fs.readFileSync(filename, 'utf-8');
+    var user_login = JSON.parse(data1);
     console.log("User_data = ", user_login);
 
     //Reads the stats of the file
@@ -78,7 +78,8 @@ app.get("/register", function (request, response) {
 /* Processing Register page */
 
 app.post("/process_register", function (request, response) {
-    console.log(request.body);
+    console.log('rquest.body' , request.body);
+    console.log('user_login', user_login);
 
     
     // Got from example code from Assignment 2 module
@@ -107,10 +108,12 @@ app.post("/process_register", function (request, response) {
     }
 
 //Checks if username is alread in use or not
-    if(typeof reg_username != 'undefined'){
+for (i in filename) {
+    if(typeof reg_username == filename[i].username){
         reg_errors ['username'] = 'Sorry, this username is already taken.'; 
         console.log('username not defined');
     }
+}
     if(typeof reg_username == ''){
         reg_errors['username'] = 'Please enter a username.';
         console.log('username empty');
@@ -145,21 +148,22 @@ app.post("/process_register", function (request, response) {
     }
 
     // If no errors then save new user data in JSON file and redirect to receipt
-console.log('re_errors:', reg_errors);
+console.log('reg_errors:', reg_errors);
 
     if(Object.keys(reg_errors).length == 0){
         console.log ('no errors')
 
         var username = request.body['username'].toLowerCase();
-        user_data[username] = {};
-        user_data[username].name = request.body['fullname'];
-        user_data[username].password = request.body['password'];
-        user_data[username].email = request.body['email'];
-        
-        data = JSON.stringify(user_data);
-        fs.writeFileSync(filename, data, "utf-8");
+        user_login[username] = {};
+        user_login[username]["name"] = request.body['fullname'];
+        user_login[username]["password"] = request.body['password'];
+        user_login[username]["email"] = request.body['email'];
+    console.log('files were set: ' , user_login[username]);
+        data = JSON.stringify(user_login);
+        fs.writeFileSync(data, "utf-8");
+        console.log('fs.writeFileSyncRan');
             temp_qty_data['username'] = username;
-            temp_qty_data['email'] = user_data[username]['email'];
+            temp_qty_data['email'] = user_login[username]['email'];
             console.log(temp_qty_data);
             let params = new URLSearchParams(temp_qty_data);
             response.redirect('/Receipt?' + params.toString());
