@@ -105,11 +105,13 @@ app.post("/process_register", function (request, response) {
         reg_errors['username'] = 'Username should be within 4 and 10 characters.';
         console.log('username length not good');
     }
-    if(typeof user_data[reg_username] != 'undefined'){
+
+//Checks if username is alread in use or not
+    if(typeof reg_username != 'undefined'){
         reg_errors ['username'] = 'Sorry, this username is already taken.'; 
         console.log('username not defined');
     }
-    if(typeof user_data[reg_username] == ''){
+    if(typeof reg_username == ''){
         reg_errors['username'] = 'Please enter a username.';
         console.log('username empty');
     }
@@ -132,7 +134,7 @@ app.post("/process_register", function (request, response) {
 
     //Password Validation//
     if(request.body.password < 6){
-        reg_errors['password'] = 'Please make a password longer than 6 characters.';
+        reg_errors['password']= 'Please make a password longer than 6 characters.';
         console.log('pass too short')
     }
 
@@ -143,6 +145,8 @@ app.post("/process_register", function (request, response) {
     }
 
     // If no errors then save new user data in JSON file and redirect to receipt
+console.log('re_errors:', reg_errors);
+
     if(Object.keys(reg_errors).length == 0){
         console.log ('no errors')
 
@@ -162,9 +166,8 @@ app.post("/process_register", function (request, response) {
     } else {
         request.body['reg_errors'] = JSON.stringify(reg_errors);
         let params = new URLSearchParams(request.body);
-        response.redirect('register.template?' + params.toString());
+        response.redirect('register?' + params.toString());
     }
-
 });
 
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
