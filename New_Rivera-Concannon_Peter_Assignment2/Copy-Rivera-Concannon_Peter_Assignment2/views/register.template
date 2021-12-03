@@ -56,7 +56,7 @@ function validate_Username(user_name) {
         return re.test(String(user_name).toLowerCase())
 }
 function validate_user_fullname(fullname){
-    const re = /^[ +a-zA-Z,]{0,30}$/
+    const re = /^[+a-zA-Z,]{0,30}$/
     return re.test(String(fullname));
 }
 
