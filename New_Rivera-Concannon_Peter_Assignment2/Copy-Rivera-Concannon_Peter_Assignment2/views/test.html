@@ -50,19 +50,24 @@ return returnErr ? errors : (errors.length == 0);
 console.log("registration done");
 }
 
-//functions for validation if statements
-function validate_Username(user) {
-    ////////////////////////////////////////////////////////////////
+//functions for validation if statements, referenced from Nates code
+function validate_Username(user_name) {
+    const re = /^[a-zA-Z0-9]{5,15}$/;
+        return re.test(String(user_name).toLowerCase())
+}
+function validate_user_fullname(fullname){
+    const re = /^[ +a-zA-Z,]{0,30}$/
+    return re.test(String(fullname));
 }
 
-
+//Calls checkValue to see if there was any error within the registration.
 function checkLabel(input) {
-   retVal = checkInt(input.value);
+   retVal = checkValue(input.value);
    if(retVal) { str ="Valid";
     } 
     else {str ="Invalid";
     }
-   document.getElementById(input.name + '_label').innerHTML = str;
+   document.getElementById(input.name + '_error').innerHTML = str;
 }
 </script>
 </head>

@@ -63,6 +63,21 @@ app.post("/registernew", function (request, response) {
         var passwordmatch = true
     }
     console.log("REGISTRATION COMPLETE")
+
+    function validateUsername(user) {
+        const re = /^[a-zA-Z0-9]{5,15}$/;
+        return re.test(String(user).toLowerCase());
+    }
+    
+    function validatefullname(fullname){
+        const re = /^[ +a-zA-Z,]{0,30}$/
+        return re.test(String(fullname));
+    }
+    
+    function validateEmail(email) {//used 😡 and +. to seperate sections of email
+        const re = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+.[a-z]{2,3}$/;
+        return re.test(String(email).toLowerCase());
+    }
     //if it all checks to be true it will write the new user data into user_data.json taken from File/IO Lab and modified 
     if (UsernameExist && validusername && validfullname && validemail && passwordmatch) {
 
