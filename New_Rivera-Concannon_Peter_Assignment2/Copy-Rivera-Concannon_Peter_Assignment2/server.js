@@ -285,14 +285,12 @@ app.post("/process_login", function (request, response) {
 });
 
 /*For Assignment 3
-
 //To send the user to the Invoice if the Data is valid
 app.get("/Cart", function (request, response, next) {
     let POST = request.query; //Given by Prof Kazman, This reads the query string so the data that is purchased can be processed and displayed on the cart page.
     var body = fs.readFileSync('./views/cart.template', POST, 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
     console.log('cart page loaded')
-
         //Referenced from Invoice 4
     //Function used to generate the item rows for the invoice
     function gen_cart() {
@@ -328,13 +326,10 @@ app.get("/Cart", function (request, response, next) {
         tax_rate = 0.0575;
         tax = tax_rate * subtotal;
         grandTotal = subtotal + tax;
-
         return str;
     }
-
     //Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
 });
-
 */
 
 app.get("/Receipt", function (request, response, next) {
@@ -421,4 +416,3 @@ app.get("/UHManoaFootballTickets", function (request, response) {
         return str;
     }
 });
-

@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./register.css">
 <script>
+
    //This function checks if the inputs are valid
 function checkValue(input, returnErr = false) {
     errors = []; //No errors yet hopefully
-    POST = request.body;
+    let POST = http.request.body;
     var user_name = POST["username"].toLowerCase();
     var new_user_password = POST["password"];
     var new_user_confirm_password = POST["confirm_password"];
@@ -56,7 +57,7 @@ function validate_Username(user_name) {
         return re.test(String(user_name).toLowerCase())
 }
 function validate_user_fullname(fullname){
-    const re = /^[ +a-zA-Z,]{0,30}$/
+    const re = /^[+a-zA-Z,]{0,30}$/
     return re.test(String(fullname));
 }
 
@@ -69,6 +70,7 @@ function checkLabel(input) {
     }
    document.getElementById(input.name + '_error').innerHTML = str;
 }
+
 </script>
 </head>
 <body>

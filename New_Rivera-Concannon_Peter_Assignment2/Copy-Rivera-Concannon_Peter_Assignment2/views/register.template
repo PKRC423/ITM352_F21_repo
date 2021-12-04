@@ -9,12 +9,11 @@
    //This function checks if the inputs are valid
 function checkValue(input, returnErr = false) {
     errors = []; //No errors yet hopefully
-    POST = request.body;
-    var user_name = POST["username"].toLowerCase();
-    var new_user_password = POST["password"];
-    var new_user_confirm_password = POST["confirm_password"];
-    var new_user_email = POST["email"].toLowerCase();
-    var new_user_fullname = POST["fullname"];
+    var user_name = document.getElementById(username).toLowerCase();
+    var new_user_password = document.getElementById(password);
+    var new_user_confirm_password = document.getElementById(confirm_password);
+    var new_user_email = document.getElementById(email.toLowerCase());
+    var new_user_fullname = document.getElementById(fullname);
     console.log(POST);
 
       if (typeof user_login[user_name] != 'undefined') {
