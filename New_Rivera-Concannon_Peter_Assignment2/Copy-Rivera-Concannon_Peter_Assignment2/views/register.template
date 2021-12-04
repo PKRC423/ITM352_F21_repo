@@ -1,129 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./register.css">
-<script>
-   //This function checks if the inputs are valid
-function checkValue(input, returnErr = false) {
-    errors = []; //No errors yet hopefully
-    var user_name = document.getElementById(username).toLowerCase();
-    var new_user_password = document.getElementById(password);
-    var new_user_confirm_password = document.getElementById(confirm_password);
-    var new_user_email = document.getElementById(email.toLowerCase());
-    var new_user_fullname = document.getElementById(fullname);
-    console.log(POST);
+    <script>
 
-      if (typeof user_login[user_name] != 'undefined') {
-        errors.push('Username Already Exists, choose NEW Name!');
-      }
-      else{
-          var usernameExists = true;
-      }
-
-      if (!validate_Username(new_user_fullname)) {
-        errors.push('Needs to be less than 30 Letters, no numbers or special characters');
-      }
-      else{
-          var validFullName = true;
-      }
-
-      
-      if (!validate_user_fullname(new_user_fullname)) {
-        errors.push('Needs to be less than 30 Letters, no numbers or special characters');
-      }
-      else{
-          var validFullName = true;
-      }
+        //function for validation for fullname, referenced from Nates code
+        function validate_user_fullname(input) {
+            const re = /^[+a-zA-Z,]{0,30}$/
+            return re.test(String(input));
+        }
+        //This function checks if the username is valid
+        function checkValueFN(input) {
+            errors = []; //No errors yet hopefully
+            returnValue = validate_user_fullname(input);
+            if (returnValue) {
+                errors.push('Valid Entry');
+                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+            } else {
+                if (input.length < 4 && input.length > 10) {
+                    errors.push('Name must use letters, no numbers or special characters')
+                    document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+                }
+            }
+            console.log("checkValueFN done");
+        }
 
 
-      if (new_user_password != new_user_confirm_password) {
-        errors.push('Passwords don"t match')
-      }
-      else{
-          var passwordMatch = true
-      }
-return returnErr ? errors : (errors.length == 0);
-console.log("registration done");
-}
 
-//functions for validation if statements, referenced from Nates code
-function validate_Username(user_name) {
-    const re = /^[a-zA-Z0-9]{5,15}$/;
-        return re.test(String(user_name).toLowerCase())
-}
-function validate_user_fullname(fullname){
-    const re = /^[+a-zA-Z,]{0,30}$/
-    return re.test(String(fullname));
-}
+        //function for validation for username, referenced from Nates code
+        function validate_Username(user_name) {
+            const re = /^[a-zA-Z0-9]{5,15}$/;
+            return re.test(String(user_name).toLowerCase())
+        }
+        //This function checks if the username is valid
+        function checkValueUN(input) {
+            errors = []; //No errors yet hopefully
+            returnValue = validate_Username(input)
+            if (returnValue) {
+                error.push('Valid Entry');
+                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+            }
+            if (input != 'undefined') {
+                errors.push('Username Already Exists, choose NEW Name!');
+                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+            } else {
+                if (input.length < 4 && input.length > 10) {
+                    errors.push('Username must be in between 4 to 10 characters')
+                    document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+                }
+            }
+            return returnErr ? errors : (errors.length == 0);
+            console.log("checkValueUserExists done");
+        }
 
-//Calls checkValue to see if there was any error within the registration.
-function checkLabel(input) {
-   retVal = checkValue(input.value);
-   if(retVal) { str ="Valid";
-    } 
-    else {str ="Invalid";
-    }
-   document.getElementById(input.name + '_error').innerHTML = str;
-}
-</script>
+
+
+
+
+
+
+        //This function checks if the username is valid
+        function checkValuePassword(input) {
+            errors = []; //No errors yet hopefully
+            if (input.length < 6) {
+                errors.push('Needs to be greater than 6 characters');
+                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+            }
+            else {
+                error.push('Valid Entry');
+                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+            }
+            console.log("checkValuePassword done");
+        }
+
+
+        //This function checks if the username is valid
+        function checkValuePasswordConfirm(input, password) {
+            errors = []; //No errors yet hopefully
+            if (input != password) {
+                errors.push('Passwords don"t match')
+                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+            }
+            else {
+                errors.push('Valid Password');
+                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+            }
+            console.log("checkValuePassword done");
+        }
+
+    </script>
 </head>
+
 <body>
-    <form id="create-acc-form" action = "/process_register" method = "POST">
-    <div class = "title">
-        <h1>Register Account</h1>
-        <br>
-        <p>Please register an account before purchasing tickets!</p>
+    <form id="create-acc-form" action="/process_register" method="POST">
+        <div class="title">
+            <h1>Register Account</h1>
+            <br>
+            <p>Please register an account before purchasing tickets!</p>
 
-        <!--Full Name-->
-        <div class = "input-group">
-        <label for ="fullname"><b>Full Name</b></label>
-        <div id= 'fullname_error' style="color: red;"></div>
-        <input type="text" placeholder="Enter first and last name" class="form__input" name="fullname" id="fullname" onkeydown= checkLabel(this)>
+            <!--Full Name-->
+            <div class="input-group">
+                <label for="fullname"><b>Full Name</b></label>
+                <div id='fullname_error' style="color: red;"></div>
+                <input type="text" placeholder="Enter first and last name" class="form__input" name="fullname"
+                    id="fullname" onkeydown=checkValueFN(this)>
+            </div>
+
+            <!--Username-->
+            <div class="input-group">
+                <label for="username"><b>Username</b></label>
+                <div id='username_error' style="color: red;"></div>
+                <input type="text" placeholder="Enter username" class="form__input" name="username" id="username"
+                    onkeydown=checkLabelUN(this)>
+            </div>
+
+            <!--Email-->
+            <div class="input-group">
+                <label for="email"><b>Email</b></label>
+                <div id='email_error' style="color: red;"></div>
+                <input type="email" placeholder="Enter email" name="email" id="email">
+            </div>
+
+            <!--Password-->
+            <div class="input-group">
+                <label for="password"><b>Password</b></label>
+                <div id='password_error' style="color: red;"></div>
+                <input type="password" placeholder="Enter password" class="form__input" name="password" id="password"
+                    onkeydown=checkLabelPW(this)>
+            </div>
+
+            <!--Confirm Password-->
+            <div class="input-group">
+                <label for="confirm_password"><b>Confirm Password</b></label>
+                <div id='confirm_pass_error' style="color: red;"></div>
+                <input type="password" placeholder="Re-enter password" class="form__input" name="confirm_password"
+                    id="confirm_password" onkeydown=checkLabelPWC(this,password.value)>
+            </div>
+
+            <br>
+            <br>
+            <button type="submit" class="btn">Register</button>
+
         </div>
 
-        <!--Username-->
-        <div class = "input-group">
-        <label for ="username"><b>Username</b></label>
-        <div id= 'username_error' style="color: red;"></div>
-        <input type="text" placeholder="Enter username" class="form__input" name="username" id="username" onkeydown= checkLabel(this)>
-        </div>
-
-        <!--Email-->
-        <div class = "input-group">
-        <label for ="email"><b>Email</b></label>
-        <div id='email_error' style="color: red;"></div>
-        <input type="email" placeholder="Enter email"  name="email" id="email" required title="Please enter a valid email." onkeydown= checkLabel(this)>
-        </div>
-
-        <!--Password-->
-        <div class = "input-group">
-        <label for ="password"><b>Password</b></label>
-        <div id= 'password_error' style="color: red;"></div>
-        <input type="password" placeholder="Enter password" class="form__input" name="password" id="password" onkeydown= checkLabel(this)>
-        </div>
-
-        <!--Confirm Password-->
-        <div class = "input-group">
-        <label for ="confirm_password"><b>Confirm Password</b></label>
-        <div id= 'confirm_pass_error' style="color: red;"></div>
-        <input type="password" placeholder="Re-enter password" class="form__input" name="confirm_password" id="confirm_password" onkeydown= checkLabel(this)>
-        </div>
-
-        <br>
-        <br>
-        <button type ="submit" class = "btn">Register</button>
-
-    </div>
-
-        <div class = "login_link">
-            <p>Already have an account? <a href ="login">Sign In</a>.</p>
+        <div class="login_link">
+            <p>Already have an account? <a href="login">Sign In</a>.</p>
         </div>
 
     </form>
 
 
 </body>
+
 </html>
