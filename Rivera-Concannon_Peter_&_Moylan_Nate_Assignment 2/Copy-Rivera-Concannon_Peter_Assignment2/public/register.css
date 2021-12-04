@@ -8,33 +8,34 @@
 body {
     margin: 0;
     padding: 0;
-
-
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: black;
-    color: green;
+    color: white;
     background-image: url('./images/tc_Ching_Stadium.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-size: cover;
     background-position: center;
-    background-size:cover;
 }
 
-
-h1{
+form {
     text-align: center;
 }
 
+h1,h2{
+    text-align: center;
+}
 
 #create-acc-form {
     width: 400px;
     padding: 20px;
     text-transform: uppercase;
-    background-color: white;
+    background-color: lightgray;
     color: black;
+    border-radius: 50px;
 }
 
 .title {
@@ -53,15 +54,7 @@ h1{
     display: inline-block;
     margin-bottom: 5px;
     font-family:sans-serif;
-    color: limegreen;
-}
-
-.error input {
-    border: 3px red solid;
-}
-
-.success input {
-    border: 3px green solid;
+    color: green;
 }
 
 .input-group input {
@@ -69,16 +62,6 @@ h1{
     width: 100%;
     padding: 10px;
     text-align: center;
-}
-
-.input-group p {
-    font-size: 15px;
-    color: red;
-    visibility: hidden;
-}
-
-.error p {
-    visibility: visible;
 }
 
 .btn {
@@ -105,6 +88,9 @@ h1{
     color: green;
     text-decoration: none;
 }
+
+
+
 
 
 

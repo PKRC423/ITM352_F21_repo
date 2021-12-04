@@ -14,7 +14,11 @@ var query_response = require("query-string");
 
 var temp_qty_data = {}; //Stores needed info
 
-products.forEach((prod,i) => {prod.qty_available = 100;});
+// Set filename as variable for user_data.json
+var filename = './views/user_data.json';
+
+
+products.forEach((prod, i) => { prod.qty_available = 100; });
 
 // monitor all requests
 app.all('*', function (request, response, next) {
@@ -28,7 +32,7 @@ app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 //rule to get the products.js data, given by Prof. Kazman.
-app.get("/products.js", function (request, response, next){
+app.get("/products.js", function (request, response, next) {
     response.type('.js');
     var product_str = `var products = ${JSON.stringify(products)};`;
     response.send(product_str);
@@ -37,23 +41,23 @@ app.get("/products.js", function (request, response, next){
 
 
 //For Login Page and Processing
-// Set filename as variable for user_data.json
-var filename = './user_data.json';
+
+
 
 //Checks if file exists
 if (fs.existsSync(filename)) {
     //Reads user_data.json
     //Moved the require in here from Ex1
-    var data = fs.readFileSync(filename, 'utf-8');
-    var user_data = JSON.parse(data);
-    console.log("User_data = ", user_data);
+    var data1 = fs.readFileSync(filename, 'utf-8');
+    var user_login = JSON.parse(data1);
+    console.log("User_data = ", user_login);
 
     //Reads the stats of the file
     fileStats = fs.statSync(filename);
     console.log("File " + filename + " has " + fileStats.size + " characters");
 } else {
     console.log("Enter the correct filename");
-    user_data = {};
+    const user_login = [];
 }
 app.use(express.urlencoded({ extended: true }));
 
@@ -73,81 +77,101 @@ app.get("/register", function (request, response) {
 
 /* Processing Register page */
 
-app.post("/register", function (request, response) {
-    console.log(request.body);
+app.post("/process_register", function (request, response) {
+    console.log('request.body', request.body);
+    console.log('user_login', user_login);
 
-    
 
+    // Got from example code from Assignment 2 module
     //assumes no errors at first
     var reg_errors = [];
 
     // Fullname Validation// 
-    if(/^[A-Za-z, ]+$/.test(request.body.fullname)){ 
-    } 
+    if (/^[A-Za-z, ]+$/.test(request.body.fullname)) {
+        console.log('fullname good');
+    }
     else {
         reg_errors['fullname'] = 'Please only use letters for fullname';
+        console.log('fullname bad');
     }
-    if(request.body.fullname.length > 30 || request.body.fullname < 1){
-        reg_errors['fullname'] = 'Maximum 30 Characters'; 
+    if (request.body.fullname.length > 30 || request.body.fullname < 1) {
+        reg_errors['fullname'] = 'Maximum 30 Characters';
+        console.log('fullname length is bad')
     }
 
     //Username Validation//
     var reg_username = request.body.username.toLowerCase(); // Requires username to be in lowercase
 
-    if(request.body.username.length > 10 || request.body.username.length < 4){
+    if (request.body.username.length > 10 || request.body.username.length < 4) {
         reg_errors['username'] = 'Username should be within 4 and 10 characters.';
+        console.log('username length not good');
     }
-    if(typeof user_data[reg_username] != 'undefined'){
-        reg_errors ['username'] = 'Sorry, this username is already taken.'; 
+
+    //Checks if username is alread in use or not
+    for (i in filename) {
+        if (typeof reg_username == filename[i].username) {
+            reg_errors['username'] = 'Sorry, this username is already taken.';
+            console.log('username not defined');
+        }
     }
-    if(typeof user_data[reg_username] == ''){
+    if (typeof reg_username == '') {
         reg_errors['username'] = 'Please enter a username.';
+        console.log('username empty');
     }
-    if(/^[0-9a-zA-Z]+$/.test(request.body.username)){
+    if (/^[0-9a-zA-Z]+$/.test(request.body.username)) {
+        console.log('username has no other values')
     } else {
         reg_errors['username'] = 'Numbers and letters only please.';
+        console.log('username has other values')
+
     }
 
     //Email Validation//
-    if(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(request.body.email)){
-    } 
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(request.body.email)) {
+        console.log('Email good');
+    }
     else {
         reg_errors['email'] = 'Please enter a valid email (Ex: user@gmail.com';
+        console.log('email bad');
     }
 
     //Password Validation//
-    if(request.body.password < 6){
+    if (request.body.password < 6) {
         reg_errors['password'] = 'Please make a password longer than 6 characters.';
+        console.log('pass too short')
     }
 
     //Confirm Password Validation 
-    if(request.body.password !== request.body.confirm_password) {
+    if (request.body.password != request.body.confirm_password) {
         reg_errors['confirm_password'] = 'Passwords do not match.';
+        console.log('pass dont match')
     }
 
     // If no errors then save new user data in JSON file and redirect to receipt
-    if(Object.keys(reg_errors).length == 0){
-        console.log ('no errors')
+    console.log('reg_errors:', reg_errors);
+
+    if (Object.keys(reg_errors).length == 0) {
+        console.log('no errors')
 
         var username = request.body['username'].toLowerCase();
-        user_data[username] = {};
-        user_data[username].name = request.body['fullname'];
-        user_data[username].password = request.body['password'];
-        user_data[username].email = request.body['email'];
-        
-        data = JSON.stringify(user_data);
-        fs.writeFileSync(filename, data, "utf-8");
-            temp_qty_data['username'] = username;
-            temp_qty_data['email'] = user_data[username]['email'];
-            console.log(temp_qty_data);
-            let params = new URLSearchParams(temp_qty_data);
-            response.redirect('/receipt?' + params.toString());
+        user_login[username] = {};
+        user_login[username]["name"] = request.body['fullname'];
+        user_login[username]["password"] = request.body['password'];
+        user_login[username]["email"] = request.body['email'];
+        console.log('files were set: ', user_login[username]);
+        //var data = JSON.stringify(user_login);
+        fs.writeFileSync(filename, JSON.stringify(user_login), "utf-8");
+        console.log('fs.writeFileSyncRan');
+        temp_qty_data['username'] = username;
+        temp_qty_data['email'] = user_login[username]['email'];
+        console.log(temp_qty_data);
+        let params = new URLSearchParams(temp_qty_data);
+        response.redirect('/Receipt?' + params.toString());
     } else {
         request.body['reg_errors'] = JSON.stringify(reg_errors);
-        let params = new URLSearchParams(request.body);
-        response.redirect('register.template?' + params.toString());
+        let params = new URLSearchParams(reg_errors);
+        response.redirect('/register?' + params.toString());
     }
-
 });
 
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
@@ -163,7 +187,7 @@ function checkInt(input, qty_available, returnErr = false) {
         if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
     }
     return returnErr ? errors : (errors.length == 0);
-    
+
 }
 
 /*
@@ -190,36 +214,35 @@ app.post("/Check", function (request, response, next) {
     //Validating the quantities and checking the availability of the tickets
     if (typeof POST['submit_purchase'] != undefined) {
 
-
         for (i = 0; i < products.length; i++) {
 
-                qty = POST[`quantity${i}`];
-            
+            qty = POST[`quantity${i}`];
+
             //Add and If statement for if the user is/isnt logged in either let the check process happen/ direct them to the login page and then when they sign in/register then they are brought to the cart.
 
-                if (checkInt(qty, products[i].qty_available) == false) {
-                    noErr['quantity' + i] = `INVALID QUANTITY for Tickets in Section: ${products[i].section_num}`; //This will warn the customer of where their input was invalid
-                    console.log(products[i].qty_available)
-                    console.log("Invalid Quantity");
-                } 
-                if (qty > 0) {
-                    delete noErr['no_qty'];
+            if (checkInt(qty, products[i].qty_available) == false) {
+                noErr['quantity' + i] = `INVALID QUANTITY for Tickets in Section: ${products[i].section_num}`; //This will warn the customer of where their input was invalid
+                console.log(products[i].qty_available)
+                console.log("Invalid Quantity");
+            }
+            if (qty > 0) {
+                delete noErr['no_qty'];
                 if (qty > products[i].qty_available) {
                     noErr['inventory' + i] = `${qty} of tickets in section ${products[i].section_num} are not available. Only ${products[i].qty_available} tickets are left!`;
                 }
             }
         }
-    qString = query_response.stringify(POST);
+        qString = query_response.stringify(POST);
 
-    //Add the code to check if the user is logged in or not.
-        if(JSON.stringify(noErr)=== '{}') {
-//If there noErr is false then redirect user back to the UHManoaFootballTickets, otherwise send them to the cart.
-            let errObj = { 'error': JSON.stringify(noErr)};
+        //Add the code to check if the user is logged in or not.
+        if (JSON.stringify(noErr) === '{}') {
+            //If there noErr is false then redirect user back to the UHManoaFootballTickets, otherwise send them to the cart.
+            let errObj = { 'error': JSON.stringify(noErr) };
             qString += '&' + query_response.stringify(errObj)
             temp_qty_data = request.body;
-            response.redirect("Receipt" + "?" + qString);
+            response.redirect("login" + "?" + qString);
             console.log("Redirected to Receipt");
-        }else {
+        } else {
             response.redirect("UHManoaFootballTickets" + "?" + qString);
             console.log("Redirected to product display");
         }
@@ -229,6 +252,38 @@ app.post("/Check", function (request, response, next) {
 
 }
 );
+
+app.get("/login", function (request, response, next) {
+    let POST = request.body;
+    var body = fs.readFileSync('./views/login.template', 'utf8');
+    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
+    console.log('Login page loaded');
+
+});
+
+app.post("/process_login", function (request, response) {
+    // Process login form POST and redirect to logged in page if ok, back to login page if not
+    let POST = request.body;
+    var the_username = POST.username.toLowerCase();
+
+    if (typeof user_login[the_username] != 'undefined') { //if there is a matching username
+        if (user_login[the_username].password == POST.password) { //If the password is correct as well
+            temp_qty_data['username'] = the_username;
+            temp_qty_data['email'] = user_login[the_username].email;
+            let params = new URLSearchParams(temp_qty_data); 
+            response.redirect('/Receipt?' + params.toString()); //redirect to Receipt page with error
+            return;
+        }else{//Password has an error
+            request.query.username = the_username;
+            request.query.Err = 'Invalid Password!';
+        }
+    }else {//Username has an error
+        request.query.Err = 'Invalid Username!';
+    }
+    params = new URLSearchParams(request.query);
+    response.redirect('/login?' + params.toString()); //redirect to login page with error
+});
+
 /*For Assignment 3
 //To send the user to the Invoice if the Data is valid
 app.get("/Cart", function (request, response, next) {
@@ -281,7 +336,7 @@ app.get("/Receipt", function (request, response, next) {
     let POST = request.query;
     var body = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
-    console.log('Receipt page loaded');   
+    console.log('Receipt page loaded');
 
     //Referenced from Invoice 4
     //Function used to generate the item rows for the invoice
@@ -290,7 +345,7 @@ app.get("/Receipt", function (request, response, next) {
         subtotal = 0;
         for (i = 0; i < products.length; i++) {
             qty_purchased = POST[`quantity${i}`];
-            if (qty_purchased > 0) {                
+            if (qty_purchased > 0) {
                 products[i].qty_available -= Number(POST['quantity' + i]);
                 exPrice = qty_purchased * products[i].price;
                 subtotal += exPrice;
