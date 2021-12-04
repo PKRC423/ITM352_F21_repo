@@ -1,10 +1,10 @@
 <!--
-This page is used to display the UHManoaFootballTickets purchase page and check if any values entered by the customer are invalid so they can make a purchase fluidly and sytaxically correcy. 
+This page is used to display the Reciepts (invoice) page and check if any values proessed from the product_display are invalid so they can view the purchase they made fluidly and sytaxically correct. 
 Created by: Peter Rivera-Concannon
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang ="en">
 
 <head>
 
@@ -12,66 +12,41 @@ Created by: Peter Rivera-Concannon
     <script src="./products.js"></script>
 
     <meta charset="utf-8">
-    <title>UH Manoa Football Tickets</title>
+    <title>Receipt</title>
 
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
     <link href="uhFB.css" rel="stylesheet">
 
-    <script>
-
-//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
-function checkInt(input, qty_available, returnErr = false) {
-    errors = []; //No errors yet hopefully
-    if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
-    if (Number(input) != input) {
-        errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
-    } else {
-        if (input < 0) errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
-        if (parseInt(input) != input) errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
-        if (input > 10) errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
-        if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
-    }
-    return returnErr ? errors : (errors.length == 0);
-    
-}
-
-//To change the label for the quantity[i]_label when an invalid quantity is inputted
-function checkInput(input, qty_available) {
-    document.getElementById(input.name + '_label').innerHTML = `${checkInt(input, qty_available) ? 'Valid' : 'Invalid'} Quantity`; //Partially Referenced from Lab 11 Ex6
-
-}
-
-
-    </script>
 </head>
-
-<body>
-<a href="https://hawaiiathletics.com/documents/2021/10/19//Ching_Complex_Map_10_19_21.pdf?id=12135" target="_blank">
-            <figure>
-            <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;">
-            <br>
-            <figcaption>Click here to view the stadium map-</figcaption>
-            </figure>
-            </a>
-    <div style="float: right;">
-            <!--A form so the user -->
-    <form name="product_purchase_form" action="./Check" method="POST">
-        <header>
-            <h1>University of Hawaii at Manoa, Football Tickets</h1>
-        
-        </header>
-
-            <main>
-            ${display_tickets()}
-                 <!--calls function display_tickets-->
-            </main>
-        
-        <footer>
+  <body>
+        <img src="./images/Seating_Map.jpg" alt="Click here to view the Stadium Map!" style="float:right; border-style: inset; height:500px;width:500px;">
+  <div style="float: left;">
+    <h1> Thank you for Your Purchase! </h1>
+      <h3>See you at the Game!</h3>
+        <main>
+          <table style="border: black; border-width: 2%;">
+            <tbody>
+              ${gen_invoice()} 
+                <!--generates the Invoice for the purchase.-->
+              <tr>
+                <td style="text-align: center;" width="80%;"> <h3>Total</h3></td>
+                <td style="text-align: center;" width="80%;"> \$ ${subtotal}</td>
+              </tr><tr></tr><tr></tr>
+              <tr>
+                <td style="text-align: center;"><h2>Grand Total: \$ ${grandTotal.toFixed(2)}</h2></td>
+                <td>Tax Rate: ${tax_rate.toFixed(2)}</td>
+              </tr>
+            </tbody>
+          </table>
+    </main>
+    <footer>
         <hr>
-            <input type="submit" value="View Cart" name="view_cart">
+            <a href="./UHManoaFootballTickets">
+            <input type="submit" value="Buy More Tickets" name="to_redisplay_tickets">
+            </a>
             <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
-    </form>
-    </div>
+  </div>
 </body>
 </html>

@@ -18,11 +18,14 @@ Created by: Peter Rivera-Concannon
 
     <link href="uhFB.css" rel="stylesheet">
 
+
+
 </head>
   <body>
         <img src="./images/Seating_Map.jpg" alt="Click here to view the Stadium Map!" style="float:right; border-style: inset; height:500px;width:500px;">
   <div style="float: left;">
-    <h1> Thank you for Your Purchase!</h1>
+    <h1> Thank you for Your Purchase</h1>
+
       <h3>See you at the Game!</h3>
         <main>
           <table style="border: black; border-width: 2%;">
