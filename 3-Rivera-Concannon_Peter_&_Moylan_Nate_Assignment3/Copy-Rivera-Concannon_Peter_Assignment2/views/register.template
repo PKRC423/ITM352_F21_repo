@@ -7,90 +7,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./register.css">
     <script>
-
-        //function for validation for fullname, referenced from Nates code
-        function validate_user_fullname(input) {
-            const re = /^[+a-zA-Z,]{0,30}$/
-            return re.test(String(input));
-        }
-        //This function checks if the username is valid
+                                                //function for validation for fullname, referenced from Nates code
+                                                    function validate_user_fullname(input) {
+                                                    const re = /^[+a-zA-Z,]{0,30}$/
+                                                    return re.test(String(input));
+                                                    }
+        //This function checks if the fullname is valid
         function checkValueFN(input) {
-            errors = []; //No errors yet hopefully
             returnValue = validate_user_fullname(input);
-            if (returnValue) {
-                errors.push('Valid Entry');
-                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
-            } else {
-                if (input.length < 4 && input.length > 10) {
-                    errors.push('Name must use letters, no numbers or special characters')
-                    document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
-                }
-            }
+            if (returnValue.length == 0) returnValue= ['<font color="red">Valid Entry</font>'];
+            if (input.length < 4 && input.length > 10) returnValue= ['<font color="red">Name must use letters, no numbers or special characters'];
+            document.getElementById(input.name + '_error').innerHTML = returnValue.join('<font color="red">, </font>');
             console.log("checkValueFN done");
         }
 
-
-
-        //function for validation for username, referenced from Nates code
-        function validate_Username(user_name) {
-            const re = /^[a-zA-Z0-9]{5,15}$/;
-            return re.test(String(user_name).toLowerCase())
-        }
+                                                //function for validation for username, referenced from Nates code
+                                                    function validate_Username(user_name) {
+                                                        const re = /^[a-zA-Z0-9]{5,15}$/;
+                                                        return re.test(String(user_name).toLowerCase())
+                                                    }
         //This function checks if the username is valid
         function checkValueUN(input) {
-            errors = []; //No errors yet hopefully
-            returnValue = validate_Username(input)
-            if (returnValue) {
-                error.push('Valid Entry');
-                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
-            }
-            if (input != 'undefined') {
-                errors.push('Username Already Exists, choose NEW Name!');
-                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
-            } else {
-                if (input.length < 4 && input.length > 10) {
-                    errors.push('Username must be in between 4 to 10 characters')
-                    document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
-                }
-            }
-            return returnErr ? errors : (errors.length == 0);
+            returnValue = validate_Username(input);
+            if (returnValue) returnValue = ['<font color="red">Valid Entry</font>'];
+            if (input != 'undefined') returnValue = ['<font color="red">Username Already Exists, choose NEW Name!</font>'];
+            if (input.length < 4 && input.length > 10) returnValue = ['<font color="red">Username must be in between 4 to 10 characters</font>'];
+            document.getElementById(input.name + '_error').innerHTML = returnValue.join('<font color="red">, </font>');
             console.log("checkValueUserExists done");
         }
 
 
 
-
-
-
-
-        //This function checks if the username is valid
-        function checkValuePassword(input) {
+        //This function checks if the password is valid
+        function checkValuePW(input) {
             errors = []; //No errors yet hopefully
             if (input.length < 6) {
-                errors.push('Needs to be greater than 6 characters');
-                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+                errors = ['<font color="red">Needs to be greater than 6 characters</font>'];
+                document.getElementById(input.name + '_error').innerHTML = errors.join('<font color="red">, </font>');
             }
             else {
-                error.push('Valid Entry');
-                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+                errors = ['<font color="red">Valid Entry</font>'];
+                document.getElementById(input.name + '_error').innerHTML = errors.join('<font color="red">, </font>');
             }
             console.log("checkValuePassword done");
         }
 
 
-        //This function checks if the username is valid
-        function checkValuePasswordConfirm(input, password) {
+        //This function checks if the checkPassword is valid
+        function checkValuePWC(input, password) {
             errors = []; //No errors yet hopefully
             if (input != password) {
-                errors.push('Passwords don"t match')
-                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+                errors = ['<font color="red">Passwords don"t match</font>'];
+                document.getElementById(input.name + '_error').innerHTML = errors.join('<font color="red">, </font>');
             }
             else {
-                errors.push('Valid Password');
-                document.getElementById(input.name + '_error').innerHTML = JSON.stringify(errors);
+                errors = ['<font color="red">Valid Password</font>'];
+                document.getElementById(input.name + '_error').innerHTML = errors.join('<font color="red">, </font>');
             }
             console.log("checkValuePassword done");
         }
+
 
     </script>
 </head>
@@ -115,7 +91,7 @@
                 <label for="username"><b>Username</b></label>
                 <div id='username_error' style="color: red;"></div>
                 <input type="text" placeholder="Enter username" class="form__input" name="username" id="username"
-                    onkeydown=checkLabelUN(this)>
+                    onkeydown=checkValueUN(this)>
             </div>
 
             <!--Email-->
@@ -130,7 +106,7 @@
                 <label for="password"><b>Password</b></label>
                 <div id='password_error' style="color: red;"></div>
                 <input type="password" placeholder="Enter password" class="form__input" name="password" id="password"
-                    onkeydown=checkLabelPW(this)>
+                    onkeydown=checkValuePW(this)>
             </div>
 
             <!--Confirm Password-->
@@ -138,7 +114,7 @@
                 <label for="confirm_password"><b>Confirm Password</b></label>
                 <div id='confirm_pass_error' style="color: red;"></div>
                 <input type="password" placeholder="Re-enter password" class="form__input" name="confirm_password"
-                    id="confirm_password" onkeydown=checkLabelPWC(this,password.value)>
+                    id="confirm_password" onkeydown=checkValuePWC(this,password.value)>
             </div>
 
             <br>

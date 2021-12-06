@@ -21,32 +21,32 @@ Created by: Peter Rivera-Concannon
 
 
 //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
-function checkInt(input, qty_available, returnErr = false) {
-    errors = []; //No errors yet hopefully
-    if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
-    if (Number(input) != input) {
-        errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
-    } else {
-        if (input < 0) errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
-        if (parseInt(input) != input) errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
-        if (input > 10) errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
-        if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
+function isNonNegInt(inputstring, returnErrors = false) {
+        errors = []; // assume no errors at first
+        if (Number(inputstring) != inputstring) {
+            errors.push('<font color="red">Not a number! Please fix the errors below.</font>'); // Check if string is a number value
+        }
+        else {
+            if (inputstring == 0) errors.push('<font color="red">Enter a Number! Please fix the errors below.</font>')
+            if (inputstring < 0) errors.push('<font color="red">Negative value! Please fix the errors below.</font>'); // Check if it is non-negative
+            if (parseInt(inputstring) != inputstring) errors.push('<font color="red">Not an integer! Please fix the errors below.</font>'); // Check that it is an integer
+
+        }
+        return returnErrors ? errors : (errors.length == 0);
     }
-    return returnErr ? errors : (errors.length == 0);
-    
-}
 
 
 //To change the label for the quantity[i]_label when an invalid quantity is inputted
 //Given too by professor Kazman after we had a meeting to fix my Assignment.
-function checkInput(input, qty_available) {
-   retVal = checkInt(input.value, qty_available);
-   if(retVal) { str ="Valid Quantity";
-    } 
-    else {str ="Invalid Quantity";
+ function checkQuantityTextbox(theTextbox) {
+        errors = isNonNegInt(theTextbox.value, true); // setting errors to isNonNegInt
+        if (errors.length == 0) errors = ['You want:'];
+        if (theTextbox.value.trim() == '') errors = ['Please type quantity desired: ']; //Input outside the textbox
+        document.getElementById(theTextbox.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
     }
-   document.getElementById(input.name + '_label').innerHTML = str;
-}
+
+
+
 
 
     </script>
@@ -75,7 +75,7 @@ function checkInput(input, qty_available) {
         
         <footer>
         <hr>
-            <input type="submit" value="Submit Purchaset" name="view_cart">
+            <input type="submit" value="Submit Purchase" name="view_cart">
             <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
         </footer>
     </form>
