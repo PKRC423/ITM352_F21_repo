@@ -1,25 +1,25 @@
 <script>
 
- function get_user_info(a_username) {
-        // go through lines and look for username. If found, returns object with user data, otherwise returns undefined.
-        // Format is assumed to be username;password;fullname
-        var user_data = [];
-        for(i in user_login) {
-            console.log("user login:", user_login[i]);
-            let user_data_array = user_login[i];
-            console.log("UD Array", user_data_array);
-            if(user_data_array[i] == a_username) { // found it!
-                user_data = {'password': user_data_array[1], 'name': user_data_array[2]};
-                console.log("UD", user_data_array)
-              
-            }
-        }
-        return user_data;
+window.onload = function () {
+
+    let params = (new URL(document.location)).searchParams;
+    //if errorMessage is in qry string then put up alert with error message
+        if (params.has("loginMessage")) {
+        alert(params.get("loginMessage"));
     }
+        //make username sticky after inputting wrong password
+        if (params.has('wrong_pass')) {
+        //username_tag is the ID of username box
+        username_tag.value = params.get('wrong_pass')
+        }
+
+        }
 
 
 
 </script>
+
+
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -38,10 +38,11 @@
         <form action="/process_login" method ="POST">
             <!--Username Field-->
             <div class = "user-field">
-                <input type= "text" name = "username" required>
+                <input id= username_tag type= "text" name = "username" required>
                 <span></span>
                 <label>Username</label>
             </div>
+            
             <!--Password Field-->
             <div class = "user-field">
                 <input type= "text" name = "password" required>

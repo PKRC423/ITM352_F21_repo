@@ -94,7 +94,7 @@ app.post("/process_register", function (request, response) {
         reg_errors['fullname'] = 'Please only use letters for fullname';
         console.log('fullname bad');
     }
-    if (request.body.fullname.length > 30 || request.body.fullname < 1) {
+    if (request.body.fullname.length > 30 || request.body.fullname.length < 1) {
         reg_errors['fullname'] = 'Maximum 30 Characters';
         console.log('fullname length is bad')
     }
@@ -107,13 +107,6 @@ app.post("/process_register", function (request, response) {
         console.log('username length not good');
     }
 
-    //Checks if username is alread in use or not
-    for (i in filename) {
-        if (typeof reg_username == filename[i].username) {
-            reg_errors['username'] = 'Sorry, this username is already taken.';
-            console.log('username not defined');
-        }
-    }
     if (typeof reg_username == '') {
         reg_errors['username'] = 'Please enter a username.';
         console.log('username empty');
@@ -268,6 +261,8 @@ app.post("/process_login", function (request, response) {
     let POST = request.body;
     var the_username = POST.username.toLowerCase();
 
+    var bad_login_str = '';
+
     if (typeof user_login[the_username] != 'undefined') { //if there is a matching username
         if (user_login[the_username].password == POST.password) { //If the password is correct as well
             temp_qty_data['username'] = the_username;
@@ -275,15 +270,22 @@ app.post("/process_login", function (request, response) {
             let params = new URLSearchParams(temp_qty_data); 
             response.redirect('/Receipt?' + params.toString()); //redirect to Receipt page with error
             return;
+
         }else{//Password has an error
-            request.query.username = the_username;
-            request.query.Err = 'Invalid Password!';
+           bad_login_str = 'Password is incorrect, please input the correct password!'
+           console.log('password incorrect')
+           request.query.the_username = the_username;
+           request.query.name = user_login[the_username].name;
         }
+
     }else {//Username has an error
-        request.query.Err = 'Invalid Username!';
+        bad_login_str = 'Username does not exists. Please try again.'
+        request.query.the_username = the_username;
     }
+
+
     params = new URLSearchParams(request.query);
-    response.redirect('/login?' + params.toString()); //redirect to login page with error
+    response.redirect(`/login?loginMessage=${bad_login_str}&wrong_pass=${the_username}`); //redirect to login page with error
 });
 
 /*For Assignment 3
@@ -335,10 +337,14 @@ app.get("/Cart", function (request, response, next) {
 */
 
 app.get("/Receipt", function (request, response, next) {
+
+
     let POST = request.query;
     var body = fs.readFileSync('./views/invoice.template', 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
     console.log('Receipt page loaded');
+
+   
 
     //Referenced from Invoice 4
     //Function used to generate the item rows for the invoice
