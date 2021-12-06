@@ -169,8 +169,10 @@ app.post("/process_register", function (request, response) {
         response.redirect('/Receipt?' + params.toString());
     } else {
         request.body['reg_errors'] = JSON.stringify(reg_errors);
-        let params = new URLSearchParams(reg_errors);
+        let params = new URLSearchParams(request.body);
         response.redirect('/register?' + params.toString());
+        console.log('sent back')
+        
     }
 });
 
