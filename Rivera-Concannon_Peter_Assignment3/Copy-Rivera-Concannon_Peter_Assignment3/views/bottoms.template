@@ -1,0 +1,84 @@
+<!--
+This page is used to display the UHManoaFootballTickets purchase page and check if any values entered by the customer are invalid so they can make a purchase fluidly and sytaxically correcy. 
+Created by: Peter Rivera-Concannon
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<!--To generate the products.json data-->
+    <script src="./products.js"></script>
+
+    <meta charset="utf-8">
+    <title>UH Manoa Football Tickets</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="uhFB.css" rel="stylesheet">
+
+    <script>
+
+
+//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
+function isNonNegInt(inputstring, returnErrors = false) {
+        errors = []; // assume no errors at first
+        if (Number(inputstring) != inputstring) {
+            errors.push('<font color="red">Not a number! Please fix the errors below.</font>'); // Check if string is a number value
+        }
+        else {
+            if (inputstring == 0) errors.push('<font color="red">Enter a Number! Please fix the errors below.</font>')
+            if (inputstring < 0) errors.push('<font color="red">Negative value! Please fix the errors below.</font>'); // Check if it is non-negative
+            if (parseInt(inputstring) != inputstring) errors.push('<font color="red">Not an integer! Please fix the errors below.</font>'); // Check that it is an integer
+
+        }
+        return returnErrors ? errors : (errors.length == 0);
+    }
+
+
+//To change the label for the quantity[i]_label when an invalid quantity is inputted
+//Given too by professor Kazman after we had a meeting to fix my Assignment.
+ function checkQuantityTextbox(theTextbox) {
+        errors = isNonNegInt(theTextbox.value, true); // setting errors to isNonNegInt
+        if (errors.length == 0) errors = ['You want:'];
+        if (theTextbox.value.trim() == '') errors = ['Please type quantity desired: ']; //Input outside the textbox
+        document.getElementById(theTextbox.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
+    }
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+<a href="https://hawaiiathletics.com/documents/2021/10/19//Ching_Complex_Map_10_19_21.pdf?id=12135" target="_blank">
+            <figure>
+            <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;">
+            <br>
+            <figcaption>Click here to view the stadium map-</figcaption>
+            </figure>
+            </a>
+    <div style="float: right;">
+            <!--A form so the user -->
+    <form name="product_purchase_form" action="./Check" method="POST">
+        <header>
+            <h1>University of Hawaii at Manoa, Football Tickets</h1>
+        
+        </header>
+
+            <main>
+            
+               <!--calls function display_products-->
+            </main>
+        
+        <footer>
+        <hr>
+            <input type="submit" value="Submit Purchase" name="view_cart">
+            <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
+        </footer>
+    </form>
+    </div>
+</body>
+</html>
