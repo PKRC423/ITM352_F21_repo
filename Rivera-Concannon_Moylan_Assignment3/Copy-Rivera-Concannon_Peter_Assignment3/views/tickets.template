@@ -62,15 +62,15 @@ function isNonNegInt(inputstring, returnErrors = false) {
             </a>
     <div style="float: right;">
             <!--A form so the user -->
-    <form name="product_purchase_form" action="./Check" method="POST">
+    <form name="product_purchase_form" action="./Check_tickets" method="POST">
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
         
         </header>
 
             <main>
-            
-               <!--calls function display_products-->
+            ${display_tickets()}
+                 <!--calls function display_tickets-->
             </main>
         
         <footer>

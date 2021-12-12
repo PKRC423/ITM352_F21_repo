@@ -24,7 +24,7 @@
     
     <body>
 
-
+<!-- Need to add more categories for reg-->
         <form id="create-acc-form" action="/process_register" method="POST" name="register">
             <div class="title">
                 <h1>Register Account</h1>
