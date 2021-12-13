@@ -1,6 +1,6 @@
 <!--
-This page is used to display the Reciepts (invoice) page and check if any values proessed from the product_display are invalid so they can view the purchase they made fluidly and sytaxically correct. 
-Created by: Peter Rivera-Concannon
+filename: invoice.template
+authors: Peter Rivera-Concannon and Nate Moylan
 -->
 
 <script>

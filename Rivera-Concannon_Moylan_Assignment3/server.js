@@ -1,6 +1,6 @@
 /*
-Created by: Peter Rivera-Concannon and Nate Moylan
-Referenced code from many labs and WODS, mainly LAB13 and Inovice 4, as well as help from external sources
+filename: server.js
+authors: Peter Rivera-Concannon and Nate Moylan
 */
 
 var products = require('./views/products.json');
@@ -19,7 +19,8 @@ var filename = './views/user_data.json';
 var cookieParser = require('cookie-parser'); // Require cookie-parser
 var session = require('express-session'); // Require express sessions
 const nodemailer = require("nodemailer"); // Require nodemailer module
-app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
+
+app.use(session({secret: "ITM352", resave: true, saveUninitialized: true}));
 app.use(cookieParser());
 // monitor all requests
 app.all('*', function (request, response, next) {

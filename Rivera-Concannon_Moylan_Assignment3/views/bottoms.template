@@ -1,6 +1,6 @@
 <!--
-This page is used to display the UHManoaFootballTickets purchase page and check if any values entered by the customer are invalid so they can make a purchase fluidly and sytaxically correcy. 
-Created by: Peter Rivera-Concannon
+filename: bottoms.template
+authors: Peter Rivera-Concannon and Nate Moylan
 -->
 
 <!DOCTYPE html>

@@ -1,3 +1,8 @@
+<!--
+filename: login.template
+authors: Peter Rivera-Concannon and Nate Moylan
+-->
+
 <script>
 
 window.onload = function () {
