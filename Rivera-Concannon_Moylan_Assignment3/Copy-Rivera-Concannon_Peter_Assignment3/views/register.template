@@ -88,7 +88,7 @@
 
         for(err in errors) { 
             // Puts error messages in span where error occured
-            document.getElementById(`${err}_errors`).innerHTML = errors[err].join('<font color="red">, </font>');
+            document.getElementById(err + '_errors').innerHTML = errors[err].join('<font color="red">, </font>');
            
             
             // Makes textboxes sticky
