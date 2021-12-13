@@ -23,6 +23,6 @@ function nav_bar(this_product_key, products_data) {
     // This makes a navigation bar to other product pages
     for (let products_key in products_data) {
         if (products_key == this_product_key) continue;
-        document.write(`<a href='./display_products.html?products_key=${products_key}'>${products_key}<a>&nbsp&nbsp&nbsp;`); //./display_products.html needs to be changed to something that represents the "Call Name" for the app.get of the product_key's respective page.
+        document.write(`<a href='UHManoaFootballTickets?products_key=${products_key}'>${products_key}<a>&nbsp&nbsp&nbsp;`); // "./display_products.html" needs to be changed to something that represents the "Call Name" for the app.get of the product_key's respective page.
     }
 }

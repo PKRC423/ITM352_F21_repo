@@ -9,7 +9,15 @@ authors: Peter Rivera-Concannon and Nate Moylan
 <head>
 
 <!--To generate the products.json data-->
-    <script src="./products.js"></script>
+    <script src="./products.js" type="text/javascript"></script>
+    <!-- <script src="./functions.js" type="text/javascript"></script> still need to figure out difference in Noah's work to better understand how he used it-->
+    <script src="./navbar.js" type="text/javascript"></script>
+
+    <script>
+       let params = (new URL(document.location)).searchParams; // GET the query string & check that the quantities are valid values then go to login.html if it is good
+       var product_key = params.get("product_key");
+       var nav = allProducts[product_key];
+    </script>
 
     <meta charset="utf-8">
     <title>UH Manoa Football Tickets</title>
@@ -53,16 +61,22 @@ function isNonNegInt(inputstring, returnErrors = false) {
 </head>
 
 <body>
-<a href="https://hawaiiathletics.com/documents/2021/10/19//Ching_Complex_Map_10_19_21.pdf?id=12135" target="_blank">
-            <figure>
-            <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;">
-            <br>
-            <figcaption>Click here to view the stadium map-</figcaption>
-            </figure>
-            </a>
+
+    <!--This calls nav_bar from my navbar.js file-->
+        ${nav_bar(this_product_key, products)}
+
+        <br>
+            <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;"> //Change image to correct image for page
+        <br>
+
     <div style="float: right;">
             <!--A form so the user -->
     <form name="product_purchase_form" action="./Check_acc" method="POST">
+
+    <script>
+            document.write(`<input type="hidden" name="product_key" value="${product_key}">`);
+    </script>
+
         <header>
             <h1>University of Hawaii at Manoa, Football Tickets</h1>
         

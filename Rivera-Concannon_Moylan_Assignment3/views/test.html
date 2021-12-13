@@ -1,162 +1,95 @@
- <!--
- Author: Nate and Peter
- Reference: We referenced passed assignments and labs, as well 
+<!--
+filename: tops.template
+authors: Peter Rivera-Concannon and Nate Moylan
+-->
 
- -->
- 
- 
- <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html>
 
-    <img src="" style="border: 5px solid green;">
+<head>
 
-    <p style= "border-radius: solid;" style="border-color: green;" style="border-width: thick;"></p>
+<!--To generate the products.json data-->
+    <script src="./products.js" type="text/javascript"></script>
+    <!-- <script src="./functions.js" type="text/javascript"></script> still need to figure out difference in Noah's work to better understand how he used it-->
+    <script src="./navbar.js" type="text/javascript"></script>
 
-    <h1><p style="color: green;"></p></h1>
+    <script>
+       let params = (new URL(document.location)).searchParams; // GET the query string & check that the quantities are valid values then go to login.html if it is good
+       var product_key = params.get("product_key");
+       var nav = allProducts[product_key];
+    </script>
 
-    <a href="https://hawaiiathletics.com/documents/2021/10/19//Ching_Complex_Map_10_19_21.pdf?id=12135" target="_blank">
-        <figure>
-        <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;">
+    <meta charset="utf-8">
+    <title>UH Manoa Football Tickets</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="uhFB.css" rel="stylesheet">
+
+    <script>
+
+
+//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
+function isNonNegInt(inputstring, returnErrors = false) {
+        errors = []; // assume no errors at first
+        if (Number(inputstring) != inputstring) {
+            errors.push('<font color="red">Not a number! Please fix the errors below.</font>'); // Check if string is a number value
+        }
+        else {
+            if (inputstring == 0) errors.push('<font color="red">Enter a Number! Please fix the errors below.</font>')
+            if (inputstring < 0) errors.push('<font color="red">Negative value! Please fix the errors below.</font>'); // Check if it is non-negative
+            if (parseInt(inputstring) != inputstring) errors.push('<font color="red">Not an integer! Please fix the errors below.</font>'); // Check that it is an integer
+
+        }
+        return returnErrors ? errors : (errors.length == 0);
+    }
+
+
+//To change the label for the quantity[i]_label when an invalid quantity is inputted
+//Given too by professor Kazman after we had a meeting to fix my Assignment.
+ function checkQuantityTextbox(theTextbox) {
+        errors = isNonNegInt(theTextbox.value, true); // setting errors to isNonNegInt
+        if (errors.length == 0) errors = ['You want:'];
+        if (theTextbox.value.trim() == '') errors = ['Please type quantity desired: ']; //Input outside the textbox
+        document.getElementById(theTextbox.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
+    }
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+        <!--This calls nav_bar from my navbar.js file-->
+        ${nav_bar(this_product_key, products)}
+
         <br>
-        <figcaption>Click here to view the stadium map-</figcaption>
-        </figure>
-    </a>
-    
+            <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;"> //Change image to correct image for page
+        <br>
 
-
-        <h1> Thank you for Your Purchase: <br>${POST['username']} <br><br>We will send a copy of your tickets to your email: <br><font: color="green">${POST['email']}</font:></h1>
-
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./register.css">
-       
-       <!--
-       Referenced from Li Xinfei
-       -->
-            < <script>
-                //try to get the register errors and if the user enter bad information,give a alert, then put the bad information back and let them change it
-                let params = (new URL(document.location)).searchParams;
-                window.onload = function () {
-                if (params.has('reg_errors')) {
-                    var errors = JSON.parse(params.get('reg_errors'));
-                    console.log("invalid");
-                    // make register form sticky
-                    for (i = 0; i < register.elements.length; i++) {
-                    register[i].value = params.get(register[i].name);
-
-
-                    if (typeof errors[register[i].name] != 'undefined') {
-                        document.getElementById(register[i].name + '_error').innerHTML = errors[register[i].name];
-                    }
-                    }
-
-                    alert('Please fix the following errors!');
-                }
-                }
-            </script>
-
-
-
-<script>
-    let params = (new URL(document.location)).searchParams;
-    if (params.has('errors_obj')) {
-        // Converts string to json then object
-        var error = JSON.parse(params.get('errors_obj'));
-        for(err in error) { 
-            // Puts error messages in span where error occured
-            document.getElementById(`${err}_error`).innerHTML = error[err].join('<br>');
-            // Makes textboxes sticky
-            document.getElementById(err).value = params.get(err);
-            document.getElementById
-        }       
-    }
-</script>
-<h1><p>Please Log In before purchasing tickets!</p></h1>
-
-
-<script>
-    let params = (new URL(document.location)).searchParams;
-    if (params.has('errors_obj')) {
-        // Converts string to json then object
-        var errors = JSON.parse(params.get('errors_obj'));
-
-        console.log('YOOOOO ITS THIS:' + errors);
+    <div style="float: right;">
+            <!--A form so the user -->
+    <form name="product_purchase_form" action="./Check_tops" method="POST">
+    <script>
+            document.write(`<input type="hidden" name="product_key" value="${product_key}">`);
+    </script>
+        <header>
+            <h1>University of Hawaii at Manoa, Football Tickets</h1>
         
-        for(err in errors) { 
-            // Puts error messages in span where error occured
-            document.getElementById(`${err}_errors`).innerHTML = errors[err].join('<br>');
-            // Makes textboxes sticky
-            document.getElementById(err).value = params.get(err);
-        }       
-    }
-</script>
+        </header>
 
-document.getElementById(`${err}_errors`).innerHTML = errors[err].join('<font color="red">, </font>');
-       
-    </head>
-    
-    <body>
-        <form id="create-acc-form" action="/process_register" method="POST" name="register">
-            <div class="title">
-                <h1>Register Account</h1>
-                <br>
-                <p>Please register an account before purchasing tickets!</p>
-    
-                <!--Full Name-->
-                <div class="input-group">
-                    <label for="fullname"><b>Full Name</b></label>
-                    <div id='fullname_error' style="color: red;"></div>
-                    <input type="text" placeholder="Enter first and last name" class="form__input" name="fullname"
-                        id="fullname">
-                </div>
-    
-                <!--Username-->
-                <div class="input-group">
-                    <label for="username"><b>Username</b></label>
-                    <div id='username_error' style="color: red;"></div>
-                    <input type="text" placeholder="Enter username" class="form__input" name="username" id="username"
-                        >
-                </div>
-    
-                <!--Email-->
-                <div class="input-group">
-                    <label for="email"><b>Email</b></label>
-                    <div id='email_error' style="color: red;"></div>
-                    <input type="email" placeholder="Enter email" name="email" id="email">
-                </div>
-    
-                <!--Password-->
-                <div class="input-group">
-                    <label for="password"><b>Password</b></label>
-                    <div id='password_error' style="color: red;"></div>
-                    <input type="password" placeholder="Enter password" class="form__input" name="password" id="password"
-                        >
-                </div>
-    
-                <!--Confirm Password-->
-                <div class="input-group">
-                    <label for="confirm_password"><b>Confirm Password</b></label>
-                    <div id='confirm_password_error' style="color: red;"></div>
-                    <input type="password" placeholder="Re-enter password" class="form__input" name="confirm_password"
-                        id="confirm_password" >
-                </div>
-    
-                <br>
-                <br>
-                <button type="submit" class="btn">Register</button>
-    
-            </div>
-    
-            <div class="login_link">
-                <p>Already have an account? <a href="login">Sign In</a>.</p>
-            </div>
-    
-        </form>
-    
-    
-    </body>
-    
-    </html>
+            <main>
+             ${display_tops()}
+              <!--calls function display_products-->
+            </main>
+        
+        <footer>
+        <hr>
+            <input type="submit" value="Submit Purchase" name="view_cart">
+            <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
+        </footer>
+    </form>
+    </div>
+</body>
+</html>

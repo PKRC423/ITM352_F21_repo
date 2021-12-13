@@ -7,7 +7,17 @@ authors: Peter Rivera-Concannon and Nate Moylan
 <html lang="en">
 <head>
 <!--To generate the products.json data-->
-    <script src="./products.js"></script>
+    <script src="./products.js" type="text/javascript"></script>
+    <!-- <script src="./functions.js" type="text/javascript"></script> still need to figure out difference in Noah's work to better understand how he used it-->
+    <script src="./navbar.js" type="text/javascript"></script>
+
+    <script>
+       let params = (new URL(document.location)).searchParams; // GET the query string & check that the quantities are valid values then go to login.html if it is good
+       var product_key = params.get("product_key");
+       var nav = allProducts[product_key];
+    </script>
+
+
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link href="uhFB.css" rel="stylesheet">
     <meta charset="UTF-8">
@@ -16,7 +26,14 @@ authors: Peter Rivera-Concannon and Nate Moylan
     <title>Cart</title>
 </head>
 <body>
-        <img src="./images/Seating_Map.jpg" alt="Click here to view the Stadium Map!" style="float:right; border-style: inset; height:500px;width:500px;">
+
+    <!--This calls nav_bar from my navbar.js file-->
+        ${nav_bar(this_product_key, products)}
+
+        <br>
+            <img src="images/Seating_Map.jpg" style="float: right; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;"> //Change image to correct image for page
+        <br>
+
   <div style="float: left;">
         <main>
           <table style="border: black; border-width: 2%;">
