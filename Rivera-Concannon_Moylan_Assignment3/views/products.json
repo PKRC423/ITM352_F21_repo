@@ -1,4 +1,24 @@
 {
+    "allProdcuts":[
+        {
+            "type": "Tickets"
+        },
+
+        {
+            "type": "Tops"
+        },
+
+        {
+            "type": "Bottoms"
+        },
+
+        {
+            "type": "Accessories"
+        }
+    ],
+
+
+
     "Tops":[
         {
             "name": "Men's Manoa Shirt",

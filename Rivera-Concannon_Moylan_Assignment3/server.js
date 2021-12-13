@@ -4,6 +4,7 @@ Referenced code from many labs and WODS, mainly LAB13 and Inovice 4, as well as 
 */
 
 var products = require('./views/products.json');
+// To load the labels for the navbar?  ------>  var allProducts = products[allProducts];
 var fs = require('fs');
 var express = require('express');
 var myParser = require("body-parser");
@@ -11,26 +12,15 @@ const { response } = require('express');
 var app = express();
 // npm install query-string in terminal
 var query_response = require("query-string");
-
-var temp_qty_data = {}; //Stores needed info
-
+var temp_qty_data = {}; //Stores needed temporary info used during /process_register and other places.
 // Set filename as variable for user_data.json
 var filename = './views/user_data.json';
-
-
 // Setup cookies and sessions
 var cookieParser = require('cookie-parser'); // Require cookie-parser
 var session = require('express-session'); // Require express sessions
-//const nodemailer = require("nodemailer"); // Require nodemailer module
-
+const nodemailer = require("nodemailer"); // Require nodemailer module
 app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
 app.use(cookieParser());
-
-
-
-
-
-
 // monitor all requests
 app.all('*', function (request, response, next) {
     console.log(request.method + ' to ' + request.path);
@@ -42,6 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 // start server
 app.listen(8080, () => console.log(`listening on port 8080`));
+
+
 //rule to get the products.js data, given by Prof. Kazman.
 app.get("/products.js", function (request, response, next) {
     response.type('.js');
@@ -51,7 +43,7 @@ app.get("/products.js", function (request, response, next) {
 });
 
 
-//For Login Page and Processing
+//---------------------------------------For Login Page and Processing----------------------------------------
 
 
 
@@ -85,7 +77,7 @@ app.get("/register", function (request, response) {
 
 
 
-/* Processing Register page */
+// ---------------------------------------Processing Register page---------------------------------------
 
 app.post("/process_register", function (request, response) {
     console.log('request.body', request.body);
@@ -219,7 +211,9 @@ app.post("/process_register", function (request, response) {
     }
 });
 
-//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
+
+
+//-------------------This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.------------
 function checkInt(input, qty_available, returnErr = false) {
     errors = []; //No errors yet hopefully
     if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
@@ -235,21 +229,9 @@ function checkInt(input, qty_available, returnErr = false) {
 
 }
 
-/*
-//To change the label for the quantity[i]_label when an invalid quantity is inputted
-//Given too by professor Kazman after we had a meeting to fix my Assignment.
-function checkInput(input, qty_available) {
-   retVal = checkInt(input, qty_available)
-   if(retVal) { str ="Valid Quantity";
-    } 
-    else {str ="Invalid Quantity";
-    }
-   document.getElementById(input.name + '_label').innerHTML = str;
-}
-*/
 
 //Created with a Reference from Nate Moylan
-// Check for Tickets
+// ------------------------------------------------------------Check for Tickets------------------------------------------------------------
 app.post("/Check_tickets", function (request, response, next) {
     let POST = request.body;
 
@@ -299,7 +281,7 @@ app.post("/Check_tickets", function (request, response, next) {
 }
 );
 
-// Check for bottoms
+// ------------------------------------------------------------Check for bottoms------------------------------------------------------------
 app.post("/Check_bottoms", function (request, response, next) {
     let POST = request.body;
 
@@ -349,7 +331,7 @@ app.post("/Check_bottoms", function (request, response, next) {
 });
 
 
-// Check for tops
+// ------------------------------------------------------------Check for tops------------------------------------------------------------
 app.post("/Check_tops", function (request, response, next) {
     let POST = request.body;
 
@@ -397,7 +379,7 @@ app.post("/Check_tops", function (request, response, next) {
     }
 });
 
-// Check for Accessories
+// ------------------------------------------------------------Check for Accessories------------------------------------------------------------
 app.post("/Check_acc", function (request, response, next) {
     let POST = request.body;
 
@@ -447,7 +429,7 @@ app.post("/Check_acc", function (request, response, next) {
 });
 
 
-
+//------------------------------------------------------------Get Login------------------------------------------------------------
 
 app.get("/login", function (request, response, next) {
     let POST = request.body;
@@ -457,6 +439,7 @@ app.get("/login", function (request, response, next) {
 
 });
 
+// ------------------------------------------------------------Process Login------------------------------------------------------------
 app.post("/process_login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     let POST = request.body;
@@ -489,7 +472,8 @@ app.post("/process_login", function (request, response) {
     response.redirect(`/login?loginMessage=${bad_login_str}&wrong_pass=${the_username}`); //redirect to login page with error
 });
 
-/*For Assignment 3
+
+// ------------------------------------------------------------ To Get Cart, and function to display cart as well ------------------------------------------------------------
 //To send the user to the Invoice if the Data is valid
 app.get("/Cart", function (request, response, next) {
     let POST = request.query; //Given by Prof Kazman, This reads the query string so the data that is purchased can be processed and displayed on the cart page.
@@ -510,7 +494,7 @@ app.get("/Cart", function (request, response, next) {
                 str += (`
                     <tr style="text-align: center; border: 4px solid black">
                         <td> <h2>Section:</h2></td>
-                        <td style="text-align: center;">${products[i].section_num}</td>
+                        <td style="text-align: center;">${products[i].section_num}</td> 
                     </tr>
                     <tr style="border: 2px solid black">
                         <td>Tickets: </td>
@@ -524,7 +508,7 @@ app.get("/Cart", function (request, response, next) {
                         <td>Extended Price: </td>
                         <td style="text-align: center;">\$${exPrice}</td>
                     </tr>
-                `);
+                `); // ${} Values need to be stored in sessions and then displayed using the request.session.*the thing* if I am sure ~~~~~~~~~~~~~~~~~~~~~~~~~~
             }
         }
         //To Compute Tax and the Grand total.
@@ -535,8 +519,9 @@ app.get("/Cart", function (request, response, next) {
     }
     //Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
 });
-*/
 
+
+// ------------------------------------------------------------Get Receipt------------------------------------------------------------
 app.get("/Receipt", function (request, response, next) {
 
 
@@ -587,7 +572,7 @@ app.get("/Receipt", function (request, response, next) {
     }
 });
 //Refrenced from the Assignment1 MVC EX
-
+// ------------------------------------------------------------ Get Tickets Display------------------------------------------------------------
 app.get("/UHManoaFootballTickets", function (request, response) {
 
     //if user is logged in then allow them to go to the product_display
@@ -600,7 +585,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
 
 
     //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
-    function display_tickets() {
+    function display_tickets() {//function used to display tickets
         str = '';
         for (i = 0; i < products['Tickets'].length; i++) {
             strErr = "";
@@ -626,7 +611,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
     }
 });
 
-// UH TOPS
+// ------------------------------------------------------------Get UH TOPS------------------------------------------------------------
 app.get("/Tops", function (request, response) {
 
     //if user is logged in then allow them to go to the product_display
@@ -636,7 +621,7 @@ app.get("/Tops", function (request, response) {
     response.send(eval('`' + body + '`')); // render template string
     console.log('product display page loaded')
 
-    function display_tops() {
+    function display_tops() {//function used to display tops
         str = '';
         for (i = 0; i < products['Tops'].length; i++) {
             strErr = "";
@@ -662,7 +647,7 @@ app.get("/Tops", function (request, response) {
     }
 });
 
-// UH BOTTOMS
+// ------------------------------------------------------------Get UH BOTTOMS------------------------------------------------------------
 app.get("/Bottoms", function (request, response) {
 
     //if user is logged in then allow them to go to the product_display
@@ -672,7 +657,7 @@ app.get("/Bottoms", function (request, response) {
     response.send(eval('`' + body + '`')); // render template string
     console.log('product display page loaded')
 
-    function display_bottoms() {
+    function display_bottoms() {//function used to display bottomss
         str = '';
         for (i = 0; i < products['Bottoms'].length; i++) {
             strErr = "";
@@ -699,7 +684,7 @@ app.get("/Bottoms", function (request, response) {
 
 });
 
-// UH ACCESSORIES
+// ------------------------------------------------------------Get UH ACCESSORIES------------------------------------------------------------
 app.get("/Accessories", function (request, response) {
 
     //if user is logged in then allow them to go to the product_display
@@ -709,7 +694,7 @@ app.get("/Accessories", function (request, response) {
     response.send(eval('`' + body + '`')); // render template string
     console.log('product display page loaded')
 
-    function display_acc() {
+    function display_acc() { //function used to display accesories
         str = '';
         for (i = 0; i < products['Accessories'].length; i++) {
             strErr = "";
