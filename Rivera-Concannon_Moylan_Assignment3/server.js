@@ -3,8 +3,8 @@ filename: server.js
 authors: Peter Rivera-Concannon and Nate Moylan
 */
 
-var products = require('./views/products.json');
-// To load the labels for the navbar?  ------>  var allProducts = products[allProducts];
+var products = require('./views/products.js');
+var allProducts = products.allProducts;
 var fs = require('fs');
 var express = require('express');
 var myParser = require("body-parser");
@@ -588,7 +588,7 @@ app.get("/UHManoaFootballTickets", function (request, response) {
     //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
     function display_tickets() {//function used to display tickets
         str = '';
-        for (i = 0; i < products['Tickets'].length; i++) {
+        for (i = 0; i < allProducts[Tickets].length; i++) {
             strErr = "";
             if (request.query["name_err"] == undefined) {
                 strErr = ""
@@ -624,7 +624,7 @@ app.get("/Tops", function (request, response) {
 
     function display_tops() {//function used to display tops
         str = '';
-        for (i = 0; i < products['Tops'].length; i++) {
+        for (i = 0; i < products[Tops].length; i++) {
             strErr = "";
             if (request.query["name_err"] == undefined) {
                 strErr = ""
@@ -660,7 +660,7 @@ app.get("/Bottoms", function (request, response) {
 
     function display_bottoms() {//function used to display bottomss
         str = '';
-        for (i = 0; i < products['Bottoms'].length; i++) {
+        for (i = 0; i < products[Bottoms].length; i++) {
             strErr = "";
             if (request.query["name_err"] == undefined) {
                 strErr = ""
@@ -697,7 +697,7 @@ app.get("/Accessories", function (request, response) {
 
     function display_acc() { //function used to display accesories
         str = '';
-        for (i = 0; i < products['Accessories'].length; i++) {
+        for (i = 0; i < products[Accessories].length; i++) {
             strErr = "";
             if (request.query["name_err"] == undefined) {
                 strErr = ""
