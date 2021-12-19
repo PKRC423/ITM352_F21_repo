@@ -1,88 +1,74 @@
 <!--
-  filename: index.html
-  authors: Peter Rivera-Concannon & Nate Moylan
+FileName: index.html
+Authors: Peter Rivera-Concannon & Nate Moylan
+Purpose: to create an index page for the site.
 -->
 
 <!--Referenced from W3 Schools CSS Template (Coming Soon) example-->
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <title>index</title>
+  <!--SCRIPTS-->
+  <script src ="./views/navbar.js"></script>
+  <script src ="./views/products.js"></script>
+  <script src ="./views/functions.js"></script>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UH Manoa Athletic Store</title>
 
-  <!--Sets the style of this page-->
-  <style>
-    body,
-    h1,
-    h2 {
-      font-family: "Raleway", sans-serif;
-      color: lightgreen;
-      background-color: black;
-      border-radius: 10px;
-      text-align: center;
-      margin: 50px;
-      display: block;
-      font-size: 35px;
-      
-    }
+  <!--SCRIPT TO LOAD NAVBAR-->
+  <script type = "text/javascript">
+    // This calls our navbar form navbar.js file 
+    navbar ();
+  </script>
 
-    h2{
-      color: green;
-    }
+  <br>
+  <p>
+    <h4>Please do not forget to logout after your session!</h4>
+  </p>
 
-    body,
-    html {
-      height: 100%
-    }
-  </style>
 </head>
 
-<body style="background-image: url('./images/tc_Ching_Stadium.jpg'); 
-background-repeat: no-repeat;
-background-position: center;
-background-size: cover;">
+<!--NEED TO ADD THE FUNCTIONS FOR THIS PAGE-->
+  <script>
+    // function isNonNegInt
 
-  <section style="position: relative; text-align: center">
-    <h1>Welcome to the University of Hawai'i Sporting Events Page</h1>
-    <h2>Next big event is the <i>Last Home <b>Football</b> game</i> !</h2>
-        <br/>
+    // fucntion checkQuantityTextbox
 
- <!--For Images for each product that we sell-->
+    // window.onload function
+  </script>
 
+<body>
+  <!--Creates the product display with links of the 4 different product pages-->
+  <form name = "" action = "" method = "POST">
+    <header>
+      <h1>UH Manoa Athletic Shop</h1>
+    </header>
 
+    <main><script>
+       // Outputs the prodtype which returns the product's name and pictures as long it is named exactly how it is named in my var allProducts so it will output the correct product info. as long as it is named exactly the same way as my 4 var (Tickets, Tops, Bottoms, Accessories)
 
-    <!--Tickets-->
-    <a href="./UHManoaFootballTickets">
-      <!--get request for the product display-->
-      <img src="/images/uhLogo.png" height="30%" width="30%">
-    </a>
+       for (let prodtype in allProducts){
+          document.write(`
+            <section class = "item">
+              <h2>${prodtype}s</h2>
+              <a href = "./products.html?product_key=${prodtype}"><img src="./images/${prodtype}.jpeg"></a> 
+              <br>
+              <br>
+              <p> Click on the image below to enter the page! </p>
+            </section>`);}
+    </script></main>
 
-     <!--Tops-->
-    <a href="./Tops">
-      <!--get request for the product display-->
-      <img src="/images/uhLogo.png" height="30%" width="30%">
-    </a>
+    <footer>
 
-     <!--Bottoms-->
-    <a href="./Bottoms">
-      <!--get request for the product display-->
-      <img src="/images/uhLogo.png" height="30%" width="30%">
-    </a>
+      <h1>SHOW YOUR SUPPORT FOR UH ATHLETICS!</h1><br>
+      <input type = "submit" value = "Add to Cart" name = "submitCart">
 
-     <!--Accessories-->
-    <a href="./Accessories">
-      <!--get request for the product display-->
-      <img src="/images/uhLogo.png" height="30%" width="30%">
-    </a>
-
+    </footer>
     
-
-
-    <h1>Click on the logo to choose your seat(s)!</h1>
-  </section>
+  </form>
+  
 </body>
-
 </html>

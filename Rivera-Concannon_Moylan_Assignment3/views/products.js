@@ -1,8 +1,8 @@
 /*
-filename: products,js
-authors: Peter Rivera-Concannon & Nate Moylan
+FileName: products.js
+Authors: Peter Rivera-Concannon & Nate Moylan
+Purpose: a file to contain all of our data for the sites products.
 */
-
 
 
 var products_array = [
@@ -109,7 +109,7 @@ var Accessories =[
 var Tickets =[
     //Section 1
     {
-        "section_num": "100, 106, 200, 204",
+        "name": "100, 106, 200, 204",
         "price": 15.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -117,7 +117,7 @@ var Tickets =[
     },
     //Section 2
     {
-        "section_num": "101, 102, 104, 105, 201, 203",
+        "name": "101, 102, 104, 105, 201, 203",
         "price": 20.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -125,7 +125,7 @@ var Tickets =[
     },
     //Section 3
     {
-        "section_num": "103 & 202",
+        "name": "103 & 202",
         "price": 30.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -133,7 +133,7 @@ var Tickets =[
     },
     //Section 4
     {
-        "section_num": "140, 141, 148, 149",
+        "name": "140, 141, 148, 149",
         "price": 15.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -149,7 +149,7 @@ var Tickets =[
     },
     //Section 6
     {
-        "section_num": "144 & 145",
+        "name": "144 & 145",
         "price": 30.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -157,7 +157,7 @@ var Tickets =[
     },
     //Section 7
     {
-        "section_num": "160 & 161",
+        "name": "160 & 161",
         "price": 15.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -165,7 +165,7 @@ var Tickets =[
     },
     //Section 8
     {
-        "section_num": "162 & 163",
+        "name": "162 & 163",
         "price": 20.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -173,7 +173,7 @@ var Tickets =[
     },
     //Section 9
     {
-        "section_num": "164 & 165",
+        "name": "164 & 165",
         "price": 15.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -181,7 +181,7 @@ var Tickets =[
     },
     //Section 10
     {
-        "section_num": "120 & 121",
+        "name": "120 & 121",
         "price": 15.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -189,7 +189,7 @@ var Tickets =[
     },
     //Section 11
     {
-        "section_num": "122",
+        "name": "122",
         "price": 20.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,
@@ -197,7 +197,7 @@ var Tickets =[
     },
     //Section 12
     {
-        "section_num": "123 & 124",
+        "name": "123 & 124",
         "price": 15.00,
         "image": "https://raw.githubusercontent.com/natemoylan/ITM352_F21_repo/main/3-Rivera-Concannon_Peter_&_Moylan_Nate_Assignment3/public/images/UHVC.jpg",
         "qty_available": 100,

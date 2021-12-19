@@ -1,6 +1,7 @@
 /*
-filename: server.js
-authors: Peter Rivera-Concannon and Nate Moylan
+FileName: server.js
+Authors: Peter Rivera-Concannon & Nate Moylan
+Purpose: Main server file.
 */
 
 var products = require('./views/products.js');
@@ -65,19 +66,10 @@ if (fs.existsSync(filename)) {
 }
 app.use(express.urlencoded({ extended: true }));
 
-/* Just to load the register page */
 
-app.get("/register", function (request, response) {
-    // Give a simple register form
-    var body = fs.readFileSync('./views/register.template', 'utf8');
-    response.send(eval('`' + body + '`')); // render template string
-    console.log('register page loaded')
-});
-
-
-
-
-
+/////////////////////////////////////////////////////////////////////////
+/* I EDITED process_register ONE AND TRIED MAKING IT APPLICABLE WITH OUR NEW FORMAT*/
+/////////////////////////////////////////////////////////////////////////
 // ---------------------------------------Processing Register page---------------------------------------
 
 app.post("/process_register", function (request, response) {
@@ -163,13 +155,10 @@ app.post("/process_register", function (request, response) {
     request.query.username = request.body.username;
     request.query.email = request.body.email;
 
-
-
-
-
     // If no errors then save new user data in JSON file and redirect to receipt
     console.log('reg_errors:', reg_errors);
 
+    //using object.keys because we need to look at the length of each 'sub-array'
     if (Object.keys(reg_errors).length == 0) {
         console.log('no errors')
 
@@ -186,7 +175,7 @@ app.post("/process_register", function (request, response) {
         temp_qty_data['email'] = user_login[username]['email'];
         console.log(temp_qty_data);
         let params = new URLSearchParams(temp_qty_data);
-        response.redirect('/Receipt?' + params.toString());
+        response.redirect('/cart.html' + params.toString());
     } else {
         // fix the JSON to show the reg_errors
         request.body.errors_obj = JSON.stringify(reg_errors);
@@ -206,7 +195,7 @@ app.post("/process_register", function (request, response) {
         // data passing through the query currently works
         // Things need to do now: add the <script> in register.template but still need to figure that out and modify it from Bryson's
 
-        response.redirect('/register?' + query_response.stringify(request.body));
+        response.redirect('/register.html' + query_response.stringify(request.body));
         console.log('sent back')
 
     }
@@ -233,7 +222,7 @@ function checkInt(input, qty_available, returnErr = false) {
 
 //Created with a Reference from Nate Moylan
 // ------------------------------------------------------------Check for Tickets------------------------------------------------------------
-app.post("/Check_tickets", function (request, response, next) {
+app.post("/Check", function (request, response, next) {
     let POST = request.body;
 
     var noErr = {};
@@ -269,10 +258,10 @@ app.post("/Check_tickets", function (request, response, next) {
             let errObj = { 'error': JSON.stringify(noErr) };
             qString += '&' + query_response.stringify(errObj)
             temp_qty_data = request.body;
-            response.redirect("./index.html" + "?" + qString);
+            response.redirect("products.html" + "?" + qString);
             console.log("Redirected to Receipt");
         } else {
-            response.redirect("UHManoaFootballTickets" + "?" + qString);
+            response.redirect("products.html" + "?" + qString);
             console.log("Redirected to product display");
         }
 
@@ -282,201 +271,49 @@ app.post("/Check_tickets", function (request, response, next) {
 }
 );
 
-// ------------------------------------------------------------Check for bottoms------------------------------------------------------------
-app.post("/Check_bottoms", function (request, response, next) {
-    let POST = request.body;
-
-    var noErr = {};
-    noErr['no_qty'] = 'Enter The Amount of Bottoms You Want';
-    //Assume No qty from start.
-
-    //Validating the quantities and checking the availability of the bottoms
-    if (typeof POST['submit_purchase'] != undefined) {
-        //try to find the name of the specific product
-        for (i = 0; i < products['Bottoms'].length; i++) {
-
-            qty = POST[`quantity${i}`];
-
-            //Add and If statement for if the user is/isnt logged in either let the check process happen/ direct them to the login page and then when they sign in/register then they are brought to the cart.
-
-            if (checkInt(qty, products['Bottoms'][i].qty_available) == false) {
-                noErr['quantity' + i] = `INVALID QUANTITY for Bottoms in Section: ${products['Bottoms'][i].name}`; //This will warn the customer of where their input was invalid
-                console.log(products['Bottoms'][i].qty_available)
-                console.log("Invalid Quantity");
-            }
-            if (qty > 0) {
-                delete noErr['no_qty'];
-                if (qty > products['Bottoms'][i].qty_available) {
-                    noErr['inventory' + i] = `${qty} of bottoms in category ${products['Bottoms'][i].name} are not available. Only ${products['Bottoms'][i].qty_available} bottoms are left!`;
-                }
-            }
-        }
-        qString = query_response.stringify(POST);
-
-        //Add the code to check if the user is logged in or not.
-        if (JSON.stringify(noErr) === '{}') {
-            //If there noErr is false then redirect user back to the UHManoaFootballBottoms, otherwise send them to the cart.
-            let errObj = { 'error': JSON.stringify(noErr) };
-            qString += '&' + query_response.stringify(errObj)
-            temp_qty_data = request.body;
-            response.redirect("./index.html" + "?" + qString);
-            console.log("Redirected to Receipt");
-        } else {
-            response.redirect("Bottoms" + "?" + qString);
-            console.log("Redirected to product display");
-        }
-
-        next();
-    }
-
-});
-
-
-// ------------------------------------------------------------Check for tops------------------------------------------------------------
-app.post("/Check_tops", function (request, response, next) {
-    let POST = request.body;
-
-    var noErr = {};
-    noErr['no_qty'] = 'Enter The Amount of Tops You Want';
-    //Assume No qty from start.
-
-    //Validating the quantities and checking the availability of the tops
-    if (typeof POST['submit_purchase'] != undefined) {
-        //try to find the name of the specific product
-        for (i = 0; i < products['Tops'].length; i++) {
-
-            qty = POST[`quantity${i}`];
-
-            //Add and If statement for if the user is/isnt logged in either let the check process happen/ direct them to the login page and then when they sign in/register then they are brought to the cart.
-
-            if (checkInt(qty, products['Tops'][i].qty_available) == false) {
-                noErr['quantity' + i] = `INVALID QUANTITY for Tops in Section: ${products['Tops'][i].name}`; //This will warn the customer of where their input was invalid
-                console.log(products['Tops'][i].qty_available)
-                console.log("Invalid Quantity");
-            }
-            if (qty > 0) {
-                delete noErr['no_qty'];
-                if (qty > products['Tops'][i].qty_available) {
-                    noErr['inventory' + i] = `${qty} of tops in category ${products['Tops'][i].name} are not available. Only ${products['Tops'][i].qty_available} tops are left!`;
-                }
-            }
-        }
-        qString = query_response.stringify(POST);
-
-        //Add the code to check if the user is logged in or not.
-        if (JSON.stringify(noErr) === '{}') {
-            //If there noErr is false then redirect user back to the UHManoaFootballTops, otherwise send them to the cart.
-            let errObj = { 'error': JSON.stringify(noErr) };
-            qString += '&' + query_response.stringify(errObj)
-            temp_qty_data = request.body;
-            response.redirect("./index.html" + "?" + qString);
-            console.log("Redirected to Receipt");
-        } else {
-            response.redirect("Tops" + "?" + qString);
-            console.log("Redirected to product display");
-        }
-
-        next();
-    }
-});
-
-// ------------------------------------------------------------Check for Accessories------------------------------------------------------------
-app.post("/Check_acc", function (request, response, next) {
-    let POST = request.body;
-
-    var noErr = {};
-    noErr['no_qty'] = 'Enter The Amount of Accessories You Want';
-    //Assume No qty from start.
-
-    //Validating the quantities and checking the availability of the accessories
-    if (typeof POST['submit_purchase'] != undefined) {
-        //try to find the name of the specific product
-        for (i = 0; i < products['Accessories'].length; i++) {
-
-            qty = POST[`quantity${i}`];
-
-            //Add and If statement for if the user is/isnt logged in either let the check process happen/ direct them to the login page and then when they sign in/register then they are brought to the cart.
-
-            if (checkInt(qty, products['Accessories'][i].qty_available) == false) {
-                noErr['quantity' + i] = `INVALID QUANTITY for Accessories in Section: ${products['Accessories'][i].name}`; //This will warn the customer of where their input was invalid
-                console.log(products['Accessories'][i].qty_available)
-                console.log("Invalid Quantity");
-            }
-            if (qty > 0) {
-                delete noErr['no_qty'];
-                if (qty > products['Accessories'][i].qty_available) {
-                    noErr['inventory' + i] = `${qty} of accessories in category ${products['Accessories'][i].name} are not available. Only ${products['Accessories'][i].qty_available} accessories are left!`;
-                }
-            }
-        }
-        qString = query_response.stringify(POST);
-
-        //Add the code to check if the user is logged in or not.
-        if (JSON.stringify(noErr) === '{}') {
-            //If there noErr is false then redirect user back to the UHManoaFootballAccessories, otherwise send them to the cart.
-            let errObj = { 'error': JSON.stringify(noErr) };
-            qString += '&' + query_response.stringify(errObj)
-            temp_qty_data = request.body;
-            response.redirect("./index.html" + "?" + qString);
-            console.log("Redirected to Receipt");
-        } else {
-            response.redirect("Accessories" + "?" + qString);
-            console.log("Redirected to product display");
-        }
-
-        next();
-    }
-
-});
-
-
-//------------------------------------------------------------Get Login------------------------------------------------------------
-
-app.get("/login", function (request, response, next) {
-    let POST = request.body;
-    var body = fs.readFileSync('./views/login.template', 'utf8');
-    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
-    console.log('Login page loaded');
-
-});
+/////////////////////////////////////////////////////////////////////////
+/* I EDITED process_login ONE AND TRIED MAKING IT APPLICABLE WITH OUR NEW FORMAT*/
+/////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------Process Login------------------------------------------------------------
-app.post("/process_login", function (request, response) {
+app.post("/process_login", function (request, response, next) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     let POST = request.body;
     var the_username = POST.username.toLowerCase();
-
-    var bad_login_str = '';
+    var Login_Error = '';
 
     if (typeof user_login[the_username] != 'undefined') { //if there is a matching username
         if (user_login[the_username].password == POST.password) { //If the password is correct as well
             temp_qty_data['username'] = the_username;
             temp_qty_data['email'] = user_login[the_username].email;
             let params = new URLSearchParams(temp_qty_data);
-            response.redirect('/Receipt?' + params.toString()); //redirect to Receipt page with error
+            response.redirect('/cart.html?' + params.toString()); //redirect to Receipt page with error
             return;
 
         } else {//Password has an error
-            bad_login_str = `Password is incorrect for username: ${the_username}!`;
+            Login_Error = `Password is incorrect for username: ${the_username}!`;
             console.log('password incorrect')
             request.query.the_username = the_username;
             request.query.name = user_login[the_username].name;
         }
 
     } else {//Username has an error
-        bad_login_str = 'Username does not exists. Please try again.'
+        Login_Error = 'Username does not exists. Please try again.'
         request.query.the_username = the_username;
     }
 
 
     params = new URLSearchParams(request.query);
-    response.redirect(`/login?loginMessage=${bad_login_str}&wrong_pass=${the_username}`); //redirect to login page with error
+    response.redirect(`/login.html?loginMessage=${Login_Error}&wrong_pass=${the_username}`); //redirect to login page with error
 });
 
 
+/////////////////////////////////////////////////////////////////////////
+/* WE NEED A NEW WAY OF DOING THIS WITH READING THE COOKIES & SESSIONS */
+/////////////////////////////////////////////////////////////////////////
 // ------------------------------------------------------------ To Get Cart, and function to display cart as well ------------------------------------------------------------
 //To send the user to the Invoice if the Data is valid
-app.get("/Cart", function (request, response, next) {
+app.post("/Cart", function (request, response, next) {
     let POST = request.query; //Given by Prof Kazman, This reads the query string so the data that is purchased can be processed and displayed on the cart page.
     var body = fs.readFileSync('./views/cart.template', POST, 'utf8');
     response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
@@ -521,14 +358,14 @@ app.get("/Cart", function (request, response, next) {
     //Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
 });
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////
+/* WE NEED TO MAKE THIS SO IT READ THE COOKIES AND SESSIONS AND SENDS THE EMAIL TO CUSTOMER */
+//////////////////////////////////////////////////////////////////////////////////////////////
 // ------------------------------------------------------------Get Receipt------------------------------------------------------------
-app.get("/Receipt", function (request, response, next) {
+app.post("/purchase_cart", function (request, response, next) {
 
 
     let POST = request.query;
-    var body = fs.readFileSync('./views/invoice.template', 'utf8');
-    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
     console.log('Receipt page loaded');
 
 
@@ -572,155 +409,7 @@ app.get("/Receipt", function (request, response, next) {
         return str;
     }
 });
-//Refrenced from the Assignment1 MVC EX
-// ------------------------------------------------------------ Get Tickets Display------------------------------------------------------------
-app.get("/UHManoaFootballTickets", function (request, response) {
-
-    //if user is logged in then allow them to go to the product_display
 
 
-    var body = fs.readFileSync('./views/tickets.template', 'utf8');
-    response.send(eval('`' + body + '`')); // render template string
-    console.log('product display page loaded')
-
-
-
-    //<!--Referenced from SmartPhoneProducts3 but modified to work with my arrays--> Used to display the different products.
-    function display_tickets() {//function used to display tickets
-        str = '';
-        for (i = 0; i < allProducts[Tickets].length; i++) {
-            strErr = "";
-            if (request.query["name_err"] == undefined) {
-                strErr = ""
-            } else {
-                strErr += `<h1>Invalid Quantity for purchase of Tickets in: ${products['Tickets'][i].section_num}. - ${request.query['name_err']}</h1>`
-            };
-            str += ` 
-                <section style="text-align: center">
-                <hr>
-                <h1>Sections:<p style="color: green;"> ${products['Tickets'][i].section_num}</p></h1>
-                <h2>Ticket price: <br><p style="color:green"> \$${products['Tickets'][i].price}</p></h2>
-                <h2><img src=${products['Tickets'][i].image} style="border: 5px solid green;" alt="Image"><img></h2> 
-                <h3><label for="inputQty" id="quantity${i}_label"> Tickets:</h3>
-                <input type="text" id="inputQty" placeholder="0" name = "quantity${i}" onkeyup = "checkQuantityTextbox(this, ${products['Tickets'][i].qty_available});">
-                <h2><label id="quantity_available${i}"> There are:<p style="color: green;"> ${products['Tickets'][i].qty_available}</p> Seats Available! </label></h2>
-                </section>
-                `;
-
-        }
-        return str;
-    }
-});
-
-// ------------------------------------------------------------Get UH TOPS------------------------------------------------------------
-app.get("/Tops", function (request, response) {
-
-    //if user is logged in then allow them to go to the product_display
-
-
-    var body = fs.readFileSync('./views/tops.template', 'utf8');
-    response.send(eval('`' + body + '`')); // render template string
-    console.log('product display page loaded')
-
-    function display_tops() {//function used to display tops
-        str = '';
-        for (i = 0; i < products[Tops].length; i++) {
-            strErr = "";
-            if (request.query["name_err"] == undefined) {
-                strErr = ""
-            } else {
-                strErr += `<h1>Invalid Quantity for purchase of Tops in: ${products['Tops'][i].section_num}. - ${request.query['name_err']}</h1>`
-            };
-            str += ` 
-                <section style="text-align: center">
-                <hr>
-                <h1>Tops:<p style="color: green;"> ${products['Tops'][i].name}</p></h1>
-                <h2>Top price: <br><p style="color:green"> \$${products['Tops'][i].price}</p></h2>
-                <h2><img src=${products['Tops'][i].image} style="border: 5px solid green;" alt="Image"><img></h2> 
-                <h3><label for="inputQty" id="quantity${i}_label"> Tops:</h3>
-                <input type="text" id="inputQty" placeholder="0" name = "quantity${i}" onkeyup = "checkQuantityTextbox(this, ${products['Tops'][i].qty_available});">
-                <h2><label id="quantity_available${i}"> There are:<p style="color: green;"> ${products['Tops'][i].qty_available}</p> Tops Available! </label></h2>
-                </section>
-                `;
-
-        }
-        return str;
-    }
-});
-
-// ------------------------------------------------------------Get UH BOTTOMS------------------------------------------------------------
-app.get("/Bottoms", function (request, response) {
-
-    //if user is logged in then allow them to go to the product_display
-
-
-    var body = fs.readFileSync('./views/bottoms.template', 'utf8');
-    response.send(eval('`' + body + '`')); // render template string
-    console.log('product display page loaded')
-
-    function display_bottoms() {//function used to display bottomss
-        str = '';
-        for (i = 0; i < products[Bottoms].length; i++) {
-            strErr = "";
-            if (request.query["name_err"] == undefined) {
-                strErr = ""
-            } else {
-                strErr += `<h1>Invalid Quantity for purchase of Bottoms in: ${products['Bottoms'][i].name}. - ${request.query['name_err']}</h1>`
-            };
-            str += ` 
-                <section style="text-align: center">
-                <hr>
-                <h1>Bottoms:<p style="color: green;"> ${products['Bottoms'][i].name}</p></h1>
-                <h2>Top price: <br><p style="color:green"> \$${products['Bottoms'][i].price}</p></h2>
-                <h2><img src=${products['Bottoms'][i].image} style="border: 5px solid green;" alt="Image"><img></h2> 
-                <h3><label for="inputQty" id="quantity${i}_label"> Bottoms:</h3>
-                <input type="text" id="inputQty" placeholder="0" name = "quantity${i}" onkeyup = "checkQuantityTextbox(this, ${products['Bottoms'][i].qty_available});">
-                <h2><label id="quantity_available${i}"> There are:<p style="color: green;"> ${products['Bottoms'][i].qty_available}</p> Bottoms Available! </label></h2>
-                </section>
-                `;
-
-        }
-        return str;
-    }
-
-});
-
-// ------------------------------------------------------------Get UH ACCESSORIES------------------------------------------------------------
-app.get("/Accessories", function (request, response) {
-
-    //if user is logged in then allow them to go to the product_display
-
-
-    var body = fs.readFileSync('./views/acc.template', 'utf8');
-    response.send(eval('`' + body + '`')); // render template string
-    console.log('product display page loaded')
-
-    function display_acc() { //function used to display accesories
-        str = '';
-        for (i = 0; i < products[Accessories].length; i++) {
-            strErr = "";
-            if (request.query["name_err"] == undefined) {
-                strErr = ""
-            } else {
-                strErr += `<h1>Invalid Quantity for purchase of Accessories in: ${products['Accessories'][i].name}. - ${request.query['name_err']}</h1>`
-            };
-            str += ` 
-                <section style="text-align: center">
-                <hr>
-                <h1>Accessories:<p style="color: green;"> ${products['Accessories'][i].name}</p></h1>
-                <h2>Top price: <br><p style="color:green"> \$${products['Accessories'][i].price}</p></h2>
-                <h2><img src=${products['Accessories'][i].image} style="border: 5px solid green;" alt="Image"><img></h2> 
-                <h3><label for="inputQty" id="quantity${i}_label"> Accessories:</h3>
-                <input type="text" id="inputQty" placeholder="0" name = "quantity${i}" onkeyup = "checkQuantityTextbox(this, ${products['Accessories'][i].qty_available});">
-                <h2><label id="quantity_available${i}"> There are:<p style="color: green;"> ${products['Accessories'][i].qty_available}</p> Accessories Available! </label></h2>
-                </section>
-                `;
-
-        }
-        return str;
-    }
-
-
-});
 
 

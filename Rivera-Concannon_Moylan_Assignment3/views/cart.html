@@ -1,0 +1,187 @@
+<!--
+FileName: cart.html
+Authors: Peter Rivera-Concannon & Nate Moylan
+Purpose: 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--To generate the products.json data-->
+    <script src="./products.js" type="text/javascript"></script>
+    <script src="./functions.js" type="text/javascript"></script>
+    <script src="./navbar.js" type="text/javascript"></script>
+
+    <script>
+       let params = (new URL(document.location)).searchParams; // GET the query string & check that the quantities are valid values then go to login.html if it is good
+    </script>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="uhFB.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+
+    <script type="text/javascript">
+        // This calls the navbar from navbar.js file
+        navbar();
+    </script>
+
+
+</head>
+<body>
+
+  <h1>UH Manoa Athletic Store</h1>
+
+    <br>
+        <img src="images/Seating_Map.jpg" style="float: right; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;"> <!--Change image to correct image for page-->
+    <br> 
+
+  <div id = "cartDiv">
+    <!--Need to figure out the form name and action to connect back to the server.js-->
+    <form name = "" action = "/" method = "POST">
+        <table id = "cartTable">
+          <table border="2">
+            <tbody>
+              <tr>
+                <th style="text-align: center;" width="43%">Item(s)</th>
+                <th style="text-align: center;" width="11%">Quantity</th>
+                <th style="text-align: center;" width="13%">Price</th>
+                <th style="text-align: center;" width="54%">Extended Price</th>
+              </tr>
+
+              <script>
+                //Get the Shopping cart data
+                  var cart_data = {};
+                  loadJSON('loadcart', function (response) {
+                  cart_data = JSON.parse(response);
+                  });
+
+                //for loop to calculate extended_price & subtotal 
+                  subtotal = 0;
+                  for (let prodtype in cart_data){
+                    products = allProducts[prodtype];
+                    for (i in cart_data[prodtype]){
+                      if(cart_data[prodtype][i] > 0){ // if wuantities > 0 then perform the expression
+                        extended_price = cart_data[prodtype][i] * products[i].price;
+                        subtotal += extended_price; // subtotal = subtotal + extended_price
+
+                        // The quantities is now a txtbox that checks quantity errors and sets the value to 'this.value' which is the value the user chooses to enter in the box 
+
+                        document.write (`
+                          <tr>
+                            <td width="43%"> ${products[i].name}</td>
+                            <td align="center" width="11%">
+                            <input type="text" onchange="cart_data['${prodtype}'][${i}]=this.value" name="quantities[${prodtype}][${i}]" value="${cart_data[prodtype][i]}" min="0"></td> 
+                            <td width="13%">\$${products[i].price}</td> 
+                            <td width="54%">\$${extended_price.toFixed(2)}</td>  
+                          </tr>  
+                        `);
+                      }
+                    }
+                  }
+              
+                // The following expressions are from Invoice 4
+
+                //Compute Tax
+                    var tax_rate = 0.045;
+                    var tax = tax_rate * subtotal;
+
+                //Compute Shipping
+                    if (subtotal <= 50){
+                      shipping = 10;
+                    }
+
+                    else if (subtotal <= 100){
+                      shipping = 20;
+                    }
+
+                    else {
+                      shipping = 0.03 * subtotal;
+                    }
+
+                //Compute Grand Total
+                    var total = subtotal + tax + shipping;
+
+              </script>
+
+              <!--Layout of the table-->
+              <tr>
+                <td colspan="4" width="100%">&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+                <td width="54%">$ <script>document.write(subtotal.toFixed(2));</script> </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @<script>document.write(100 * tax_rate);</script>% </span></td>
+                <td width="54%">$<script>document.write(tax.toFixed(2));</script> </td> 
+              </tr>
+
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%">Shipping</td>
+                <td width="54%">$<script>document.write(shipping.toFixed(2));</script></td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+                <td width="54%"><strong>$<script>document.write(total.toFixed(2));</script></strong></td>    
+              </tr>
+
+            </tbody>
+          </table></div>
+          <script>
+            document.write(`<h5> To modify your shopping cart, please add/ remove items in the quantity box, then press "Update Cart"! Press "Refresh Cart" to view your updated changes!</h5>`)
+          </script>
+          <!--Button for UPDATE CART-->
+          <input type = "submit" value = "Update Cart" name = "Update Cart!">
+          <br><br>
+    </form>
+  
+    <div>
+      <!--Revised the shipping policy from Invoice4 b/c the products I am selling are of a higher value and price range-->
+    <div class="col-75">
+      <div class="container">
+      <br><br><b>
+        OUR SHIPPING POLICY IS:
+        <br>
+        <br>Subtotals ranging from $0 - $50.00 will be $10 shipping.
+        <br>Subtotals ranging from $50.00 - $100.00 will be $20 shipping.
+        <br>Subtotals over $100 will be charged 3% of the subtotal amount.
+        <br><br>
+      </b>
+    </div>
+
+      
+
+  
+</body>
+</html>
+
+
+<!--THIS IS REFERENCE NOT ACTUALLY IMPLEMENTED INTO THE CODE-->
+
+  <div style="float: left;">
+    <main>
+      <table style="border: black; border-width: 2%;">
+        <tbody>
+          ${gen_cart()} 
+            <!--generates the Cart for the purchase.-->
+
+            <td style="text-align: center;" width="80%;"> <h3>Total</h3></td>
+            <td style="text-align: center;" width="80%;"> \$ ${subtotal}</td>
+        </tbody>
+      </table>
+  </main>
+  <footer>
+    <hr>
+    <form action="./Receipt" method="POST">
+        <input type="submit" value="Purchase Tickets" name="submit_purchase">
+        </form>
+        <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
+    </footer>
+  </div>

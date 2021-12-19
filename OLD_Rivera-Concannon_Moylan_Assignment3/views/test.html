@@ -1,0 +1,97 @@
+<!--
+filename: tops.template
+authors: Peter Rivera-Concannon and Nate Moylan
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<!--To generate the products.json data-->
+    <script src="./products.js" type="text/javascript">//gets the products array from products</script>
+    <script src="./functions.js" type="text/javascript">//loads the JSON within functions.js</script> <!--Need to work on this doc still-->
+    <script src="./navbar.js">//Links page to nav bar</script>
+
+    <script>
+       let params = (new URL(document.location)).searchParams; // GET the query string
+       var product_key = params.get("product_key");
+       var nav = allProducts[product_key];
+    </script>
+
+    <meta charset="utf-8">
+    <title>UH Manoa Football Tickets</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="uhFB.css" rel="stylesheet">
+
+    <script>
+
+
+//This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
+function isNonNegInt(inputstring, returnErrors = false) {
+        errors = []; // assume no errors at first
+        if (Number(inputstring) != inputstring) {
+            errors.push('<font color="red">Not a number! Please fix the errors below.</font>'); // Check if string is a number value
+        }
+        else {
+            if (inputstring == 0) errors.push('<font color="red">Enter a Number! Please fix the errors below.</font>')
+            if (inputstring < 0) errors.push('<font color="red">Negative value! Please fix the errors below.</font>'); // Check if it is non-negative
+            if (parseInt(inputstring) != inputstring) errors.push('<font color="red">Not an integer! Please fix the errors below.</font>'); // Check that it is an integer
+
+        }
+        return returnErrors ? errors : (errors.length == 0);
+    }
+
+
+//To change the label for the quantity[i]_label when an invalid quantity is inputted
+//Given too by professor Kazman after we had a meeting to fix my Assignment.
+ function checkQuantityTextbox(theTextbox) {
+        errors = isNonNegInt(theTextbox.value, true); // setting errors to isNonNegInt
+        if (errors.length == 0) errors = ['You want:'];
+        if (theTextbox.value.trim() == '') errors = ['Please type quantity desired: ']; //Input outside the textbox
+        document.getElementById(theTextbox.name + '_label').innerHTML = errors.join('<font color="red">, </font>');
+    }
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <!--This calls nav_bar from my navbar.js file-->
+        ${nav_bar()}
+        
+        <br>
+            <img src="images/Seating_Map.jpg" style="float: left; border-style: inset; position: fixed; height : 55%; width : 55%; float: left;"> //Change image to correct image for page
+        <br>
+
+    <div style="float: right;">
+            <!--A form so the user -->
+    <form name="product_purchase_form" action="./Check_tops" method="POST">
+    
+    <script>
+            document.write(`<input type="hidden" name="product_key" value="${product_key}">`);
+    </script>
+        <header>
+            <h1>University of Hawaii at Manoa, Football Tickets</h1>
+        
+        </header>
+
+            <main>
+             ${display_tops()}
+              <!--calls function display_products-->
+            </main>
+        
+        <footer>
+        <hr>
+            <input type="submit" value="Submit Purchase" name="view_cart">
+            <h2> If you have any troubles or need special assistance, please contact the office at- <br> 888-888-8889 or uhFB@hawaii.edu</h2>
+        </footer>
+    </form>
+    </div>
+</body>
+</html>
