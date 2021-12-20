@@ -33,16 +33,51 @@ Purpose: to create an index page for the site.
 
 <!--NEED TO ADD THE FUNCTIONS FOR THIS PAGE-->
   <script>
-    // function isNonNegInt
+    function isValid(q, return_errors = false) {
+      errors = [];
+      if (q == '') q = 0; //if there is nothing inputted then a 0 appears
+      if (Number(q) != q) errors.push('<font color="red"><b> Enter a Number </b></font>');//Checks if input is actually a number or not
+      else if (q < 0) errors.push ('<font color="red"><b> Enter a Positive Number </b></font>'); //Check if the value is positive or negative
+      else if (parseInt(q) != q) errors.push('<font color="red"><b> Enter a Whole Number </b></font>');//Check if value is a full number
+      
+      return return_errors ? errors : (errors.length == 0);
+    }
+    function checkQuantityTextbox(theTextbox) {
+      errs = isValid(theTextbox.value, true);
+      if (errs.length == 0) errs = ['You want:']; //If there no errors then make this text appear
+      if (theTextbox.value.trim() == '') errs = ['Quantity'];
+      document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+    }
 
-    // fucntion checkQuantityTextbox
-
-    // window.onload function
+    window.onload = function () {
+      let params = (new URL(document.location)).searchParams; //retrieves the qString and check that the entries are valid
+      if (params.has('submitPurchase')) {
+        has_errors = false; //Assume no errors
+        total_qty = 0; //
+        //loop to display the products
+        for (i = 0; i < products.length; i++) {
+          if (params.has(`quantity${i}`)){
+            a_qty = params.get(`quantity${i}`);
+            product_display[`quantity${i}`].value = a_qty;//Makes value sticky
+            total_qty += a_qty;
+            if(isValid(a_qty)) {
+              has_errors = true; //There are invalid quantities 
+              checkQuantityTextbox(product_display[`quantity${i}`]); //runs checkQuantityTextbox and shows the errors location
+            }
+          }
+        }
+        if (has_errors) {
+          alert("Please enter valid quantities, mahalo");
+        } else if (total_qty == 0) {//no inputs made
+          alert("Please select the amount of products you'd wish to purchase, mahalo");
+        }
+      }
+    }
   </script>
 
 <body>
   <!--Creates the product display with links of the 4 different product pages-->
-  <form name = "" action = "" method = "POST">
+  <form name = "product_display" action = "process_purchase" method = "POST">
     <header>
       <h1>UH Manoa Athletic Shop</h1>
     </header>
@@ -64,7 +99,7 @@ Purpose: to create an index page for the site.
     <footer>
 
       <h1>SHOW YOUR SUPPORT FOR UH ATHLETICS!</h1><br>
-      <input type = "submit" value = "Add to Cart" name = "submitCart">
+      <input type = "submit" value = "Add to Cart" name = "submitCart"><!--When pressed it goes through /Check-->
 
     </footer>
     

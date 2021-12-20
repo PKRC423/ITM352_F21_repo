@@ -7,29 +7,33 @@ Purpose: Main server file.
 var products = require('./views/products.js');
 var allProducts = products.allProducts;
 var fs = require('fs');
+var qs = require('qs');
 var express = require('express');
-var myParser = require("body-parser");
-const { response } = require('express');
 var app = express();
-// npm install query-string in terminal
-var query_response = require("query-string");
-var temp_qty_data = {}; //Stores needed temporary info used during /process_register and other places.
+
+var myParser = require("body-parser");
+app.use(myParser.urlencoded({ extended: true}));
+app.use(myParser.json());
+
+const { request } = require('express');
+
+
 // Set filename as variable for user_data.json
 var filename = './views/user_data.json';
+
 // Setup cookies and sessions
 var cookieParser = require('cookie-parser'); // Require cookie-parser
 var session = require('express-session'); // Require express sessions
 const nodemailer = require("nodemailer"); // Require nodemailer module
 
-app.use(session({secret: "ITM352", resave: true, saveUninitialized: true}));
+app.use(session({ secret: "ITM352" }));
 app.use(cookieParser());
+
 // monitor all requests
 app.all('*', function (request, response, next) {
     console.log(request.method + ' to ' + request.path);
     next();
 });
-//So Express can decode the body of an HTTP request since by default Express cannot do that.
-app.use(express.urlencoded({ extended: true }));
 // route all other GET requests to files in public 
 app.use(express.static('./public'));
 // start server
@@ -43,11 +47,6 @@ app.get("/products.js", function (request, response, next) {
     response.send(product_str);
     console.log('GET products ran')
 });
-
-
-//---------------------------------------For Login Page and Processing----------------------------------------
-
-
 
 //Checks if file exists
 if (fs.existsSync(filename)) {
@@ -67,11 +66,9 @@ if (fs.existsSync(filename)) {
 app.use(express.urlencoded({ extended: true }));
 
 
-/////////////////////////////////////////////////////////////////////////
-/* I EDITED process_register ONE AND TRIED MAKING IT APPLICABLE WITH OUR NEW FORMAT*/
-/////////////////////////////////////////////////////////////////////////
-// ---------------------------------------Processing Register page---------------------------------------
-
+/////////////////////////////////
+/* TO PROCESS THE REGISTRATION */
+/////////////////////////////////
 app.post("/process_register", function (request, response) {
     console.log('request.body', request.body);
     console.log('user_login', user_login);
@@ -180,8 +177,6 @@ app.post("/process_register", function (request, response) {
         // fix the JSON to show the reg_errors
         request.body.errors_obj = JSON.stringify(reg_errors);
 
-       
-
         // Makes sticky 
         request.query.StickyUsername = request.body.username;
         request.query.StickyName = request.body.fullname;
@@ -201,81 +196,9 @@ app.post("/process_register", function (request, response) {
     }
 });
 
-
-
-//-------------------This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.------------
-function checkInt(input, qty_available, returnErr = false) {
-    errors = []; //No errors yet hopefully
-    if (input == '') input = 0; //Incase they just delete the value in the input box, itll be treated as a 0.
-    if (Number(input) != input) {
-        errors.push("<font color='red'>Enter a Valid Number</font>");//Checks if string is a number value
-    } else {
-        if (input < 0) errors.push('<font color="red">Enter a Positive and Valid Quantity</font>');//Checks if it's a negative value
-        if (parseInt(input) != input) errors.push('<font color="red">Enter a non-decimal and Valid Quantity</font>'); //Checks if it has decimal values
-        if (input > 10) errors.push('<font color="red">10 Tickets Max per Party</font>'); //Checks if over 10 ticekts are being bought from that section.
-        if (input > qty_available) errors.push('<font color="red">Not enough tickets left to fullfill order</font>'); //Checks if the amounted ordered it over the amount available
-    }
-    return returnErr ? errors : (errors.length == 0);
-
-}
-
-
-//Created with a Reference from Nate Moylan
-// ------------------------------------------------------------Check for Tickets------------------------------------------------------------
-app.post("/Check", function (request, response, next) {
-    let POST = request.body;
-
-    var noErr = {};
-    noErr['no_qty'] = 'Enter The Amount of Tickets You Want';
-    //Assume No qty from start.
-
-    //Validating the quantities and checking the availability of the tickets
-    if (typeof POST['submit_purchase'] != undefined) {
-        //try to find the name of the specific product
-        for (i = 0; i < products['Tickets'].length; i++) {
-
-            qty = POST[`quantity${i}`];
-
-            //Add and If statement for if the user is/isnt logged in either let the check process happen/ direct them to the login page and then when they sign in/register then they are brought to the cart.
-
-            if (checkInt(qty, products['Tickets'][i].qty_available) == false) {
-                noErr['quantity' + i] = `INVALID QUANTITY for Tickets in Section: ${products['Tickets'][i].section_num}`; //This will warn the customer of where their input was invalid
-                console.log(products['Tickets'][i].qty_available)
-                console.log("Invalid Quantity");
-            }
-            if (qty > 0) {
-                delete noErr['no_qty'];
-                if (qty > products['Tickets'][i].qty_available) {
-                    noErr['inventory' + i] = `${qty} of tickets in section ${products['Tickets'][i].section_num} are not available. Only ${products['Tickets'][i].qty_available} tickets are left!`;
-                }
-            }
-        }
-        qString = query_response.stringify(POST);
-
-        //Add the code to check if the user is logged in or not.
-        if (JSON.stringify(noErr) === '{}') {
-            //If there noErr is false then redirect user back to the UHManoaFootballTickets, otherwise send them to the cart.
-            let errObj = { 'error': JSON.stringify(noErr) };
-            qString += '&' + query_response.stringify(errObj)
-            temp_qty_data = request.body;
-            response.redirect("products.html" + "?" + qString);
-            console.log("Redirected to Receipt");
-        } else {
-            response.redirect("products.html" + "?" + qString);
-            console.log("Redirected to product display");
-        }
-
-        next();
-    }
-
-}
-);
-
-/////////////////////////////////////////////////////////////////////////
-/* I EDITED process_login ONE AND TRIED MAKING IT APPLICABLE WITH OUR NEW FORMAT*/
-/////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------Process Login------------------------------------------------------------
+//////////////////////////
+/* TO PROCESS THE LOGIN */
+//////////////////////////
 app.post("/process_login", function (request, response, next) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     let POST = request.body;
@@ -307,109 +230,141 @@ app.post("/process_login", function (request, response, next) {
     response.redirect(`/login.html?loginMessage=${Login_Error}&wrong_pass=${the_username}`); //redirect to login page with error
 });
 
+///////////////////////////
+/* TO PROCESS THE LOGOUT */
+///////////////////////////
+app.get("/logout", function (request, response){
+    str = `<script> alert('${request.cookies["username"]} has logged out); location.href="./index.html";</script>`;
+    response.clearCookie('username'); //Clears var user_info
+    response.send(str);
+    request.session.destroy();
+})
 
-/////////////////////////////////////////////////////////////////////////
-/* WE NEED A NEW WAY OF DOING THIS WITH READING THE COOKIES & SESSIONS */
-/////////////////////////////////////////////////////////////////////////
-// ------------------------------------------------------------ To Get Cart, and function to display cart as well ------------------------------------------------------------
-//To send the user to the Invoice if the Data is valid
+/////////////////////////////////////
+/* To Update and get the Cart Data */
+/////////////////////////////////////
 app.post("/Cart", function (request, response, next) {
-    let POST = request.query; //Given by Prof Kazman, This reads the query string so the data that is purchased can be processed and displayed on the cart page.
-    var body = fs.readFileSync('./views/cart.template', POST, 'utf8');
-    response.send(eval('`' + body + '`')); //This renders the template string into a readable html format.
-    console.log('cart page loaded')
-        //Referenced from Invoice 4
-    //Function used to generate the item rows for the invoice
-    function gen_cart() {
-        str = '';
-        subtotal = 0;
-        for (i = 0; i < products.length; i++) {
-            qty_purchased = POST[`quantity${i}`];
-            if (qty_purchased > 0) {
-      
-                exPrice = qty_purchased * products[i].price;
-                subtotal += exPrice;
-                str += (`
-                    <tr style="text-align: center; border: 4px solid black">
-                        <td> <h2>Section:</h2></td>
-                        <td style="text-align: center;">${products[i].section_num}</td> 
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Tickets: </td>
-                        <td style="text-align: center;">${qty_purchased}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Price per Ticket: </td>
-                        <td style="text-align: center;">\$${products[i].price}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Extended Price: </td>
-                        <td style="text-align: center;">\$${exPrice}</td>
-                    </tr>
-                `); // ${} Values need to be stored in sessions and then displayed using the request.session.*the thing* if I am sure ~~~~~~~~~~~~~~~~~~~~~~~~~~
-            }
-        }
-        //To Compute Tax and the Grand total.
-        tax_rate = 0.0575;
-        tax = tax_rate * subtotal;
-        grandTotal = subtotal + tax;
-        return str;
+    console.log(request.body, request.session.cart);
+
+    let haserrors = false;
+    for (let prodtype in request.body.quantities) {
+        for (let i in request.body.quantities[prodtype]) {
+            qty = request.body.quantities[prodtype][i];
+            haserrors = !isValid(qty) || haserrors;
+        };
+    };
+    if (haserrors == true) {
+        message = "Invalid Quantites, Cart not Updated";
+    }else{
+        message = "Valid Quantities, Cart Updated!";
+        request.session.cart = request.body.quantities;
     }
-    //Need to make a form to store the data so we can make a cart page and and display their order to make sure it correct, if not then we'll have a button to let them go back to their order. And then this form will react with a post request to show the invoice. referenced from Lab 14
+    const ref_URL = new URL(request.get('Referrer'));
+    ref_URL.searchParams.set("message", message);
+    response.redirect(ref_URL.toString());
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-/* WE NEED TO MAKE THIS SO IT READ THE COOKIES AND SESSIONS AND SENDS THE EMAIL TO CUSTOMER */
-//////////////////////////////////////////////////////////////////////////////////////////////
-// ------------------------------------------------------------Get Receipt------------------------------------------------------------
-app.post("/purchase_cart", function (request, response, next) {
+app.post('/get_cart', function (request, response, next){
+    response.json(request.session.cart);
+})
 
-
-    let POST = request.query;
-    console.log('Receipt page loaded');
-
-
-
-    //Referenced from Invoice 4
-    //Function used to generate the item rows for the invoice
-    function gen_invoice() {
-        str = '';
-        subtotal = 0;
-        for (i = 0; i < products.length; i++) {
-            qty_purchased = POST[`quantity${i}`];
-            if (qty_purchased > 0) {
-                products[i].qty_available -= Number(POST['quantity' + i]);
-                exPrice = qty_purchased * products[i].price;
-                subtotal += exPrice;
-                str += (`
-                    <tr style="text-align: center; border: 4px solid black">
-                        <td> <h2>Section:</h2></td>
-                        <td style="text-align: center;">${products[i].section_num}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Tickets: </td>
-                        <td style="text-align: center;">${qty_purchased}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Price per Ticket: </td>
-                        <td style="text-align: center;">\$${products[i].price}</td>
-                    </tr>
-                    <tr style="border: 2px solid black">
-                        <td>Extended Price: </td>
-                        <td style="text-align: center;">\$${exPrice}</td>
-                    </tr>
-                `);
-            }
+//////////////////////////////////////////////
+/* Completes Purchase and emails the Invoice*/
+//////////////////////////////////////////////
+app.post("/purchase_cart", function (request, response) {
+        console.log(request.body.invoiceHTML);
+    var invoiceHTML = request.body.invoiceHTML;
+    var username = request.cookies["username"];
+    var email = user_data[username].email;
+    var transporter = nodemailer.createTransport({
+        host: "mail.hawaii.edu",
+        port: 25,
+        secure: false,
+        tls: {
+            rejectUnauthorized: false
         }
-        //To Compute Tax and the Grand total.
-        tax_rate = 0.0575;
-        tax = tax_rate * subtotal;
-        grandTotal = subtotal + tax;
-
-        return str;
-    }
+    });
+    var mailOptions = {
+        from: 'UHAthletics2021@gmail.com',
+        to: email,
+        subject: "UH Athletics Store Invoice",
+        html: invoiceHTML
+    };
+    transporter.sendMail(mailOptions, function (error, info){
+        if (error) {
+            str = 'Error Occured, Invoice not Emailed!';
+        } else{
+            str = `Invoice Sent to ${user_data[username].email}`;
+        }
+        response.join({"Status" : str});
+    });
+    request.session.destroy();
 });
 
+///////////////////////////
+/* To LOAD THE CART DATA */
+///////////////////////////
+app.post("/loadCart", function (request, response){
+    if (typeof request.session.cart == "undefined") {
+        request.session.cart = {};
+    }
+    response.json(request.session.cart) //Gives cart data back as a JSON
+});
 
+////////////////////////////
+/* CART QTY IN THE NAVBAR */
+////////////////////////////
+app.post('/cart_qty', function (request, response) {
+    var tot = 0;
+    for (product_key in request.session.cart){
+        tot += request.session.cart[product_key].reduce((a, b) => a + b);
+    }
+    response.join({"qty": tot});
+});
 
+/////////////////////////////////////////////////////////
+/* Processes adding to cart as well as submitting cart */
+/////////////////////////////////////////////////////////
+app.post("/Check", function (request, response) {
+    let POST = request.body;
+    var qty = POST["prod_qty"];
 
+    //Validating the quantities and checking the availability of the tickets
+    if (typeof POST['submitCart'] != undefined) {
+        //try to find the name of the specific product
+        product_key = POST["product_key"];
+        products = allProducts[product_key];
+        var hasvalidquantities = true;
+        let quantities = [];
+        for (i = 0; i < products.length; i++) {
+            qty = POST[`quantity${i}`];
+            quantities[i] = qty;
+            hasvalidquantities = hasvalidquantities && isValid(qty);
+        }
+
+        if (hasvalidquantities) {
+            if (typeof request.session.cart == "undefined") {
+                request.session.cart = {};
+            }
+            request.session.cart[product_key] = quantities; //POSTS the customer's session and qtys
+            POST["message"] = "Added to Cart!";
+            }else {
+            POST["message"] = "Invalid inputs, Quantites not added to cart!";
+            }
+
+        const qString = qs.stringify(POST);
+        console.log(request.session);
+        response.redirect(`./products.html?${qString}`);
+
+}
+});
+
+function isValid(q, return_errors = false) {
+    errors = [];
+    if (q == '') q = 0; //if there is nothing inputted then a 0 appears
+    if (Number(q) != q) errors.push('<font color="red"><b> Enter a Number </b></font>');//Checks if input is actually a number or not
+    else if (q < 0) errors.push('<font color="red"><b> Enter a Positive Number </b></font>'); //Check if the value is positive or negative
+    else if (parseInt(q) != q) errors.push('<font color="red"><b> Enter a Whole Number </b></font>');//Check if value is a full number
+
+    return return_errors ? errors : (errors.length == 0);
+}
