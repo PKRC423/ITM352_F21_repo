@@ -5,7 +5,7 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: powderblue;
+    background-color: green;
     position: sticky; /* navbar remains in place when scrolling up & down the page */
     top: 0;
     width: 100%;

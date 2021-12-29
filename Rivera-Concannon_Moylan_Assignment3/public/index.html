@@ -21,7 +21,7 @@ Purpose: to create an index page for the site.
   <!--CSS LINKS-->
 
 
-  <link href="./uhFB.css" rel="stylesheet"> <!--Using uhFB CSS because the index one looks worse in my opinion-->
+  <link href="./index.css" rel="stylesheet"> <!--Using uhFB CSS because the index one looks worse in my opinion-->
 
   
   <link href="./navbar.css" rel="stylesheet">
@@ -84,13 +84,13 @@ Purpose: to create an index page for the site.
 
         for (let prodtype in allProducts) {
           document.write(`
-            <section class = "item">
+            <div>
               <h2>${prodtype}</h2>
               <a href="./products.html?product_key=${prodtype}"><img src="./images/${prodtype}.jpeg"></a> 
               <br>
               <br>
               <p> Click on the image below to enter the page! </p>
-            </section>`);
+            </div>`);
         }
       </script>
     </main>
