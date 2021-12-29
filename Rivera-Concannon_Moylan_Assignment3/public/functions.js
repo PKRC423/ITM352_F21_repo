@@ -1,7 +1,7 @@
 /*
 FileName: functions.js
 Authors: Peter Rivera-Concannon & Nate Moylan
-Purpose: To store functions used.
+Purpose: To store functions used. Referenced from a source given by Nate
 */
 
 

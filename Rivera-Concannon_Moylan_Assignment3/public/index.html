@@ -7,95 +7,82 @@ Purpose: to create an index page for the site.
 <!--Referenced from W3 Schools CSS Template (Coming Soon) example-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!--SCRIPTS-->
-  <script src ="./navbar.js" type="text/javascript"></script>
-  <script src ="./products.js" type="text/javascript"></script>
-  <script src ="./views/functions.js" type="text/javascript"></script>
+  <script src="./navbar.js" type="text/javascript"></script>
+  <script src="./products.js" type="text/javascript"></script>
+  <script src="./views/functions.js" type="text/javascript"></script>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!--CSS LINKS-->
-  <link href="./index.css" rel="stylesheet">
+
+
+  <link href="./uhFB.css" rel="stylesheet"> <!--Using uhFB CSS because the index one looks worse in my opinion-->
+
+  
   <link href="./navbar.css" rel="stylesheet">
 
 
   <title>UH Manoa Athletic Store</title>
 
   <!--SCRIPT TO LOAD NAVBAR-->
-  <script type = "text/javascript">
+  <script type="text/javascript">
     // This calls our navbar from navbar.js file 
-    navbar();
+      navbar();
 
-  
   </script>
 
   <br>
   <p>
-    <h4>Please do not forget to logout after your session!</h4>
+  <h3>Please do not forget to logout after your session!</h3>
   </p>
 
 </head>
 
 <!--NEED TO ADD THE FUNCTIONS FOR THIS PAGE-->
-  <script>
-    function isValid(q, return_errors = false) {
-      errors = [];
-      if (q == '') q = 0; //if there is nothing inputted then a 0 appears
-      if (Number(q) != q) errors.push('<font color="red"><b> Enter a Number </b></font>');//Checks if input is actually a number or not
-      else if (q < 0) errors.push ('<font color="red"><b> Enter a Positive Number </b></font>'); //Check if the value is positive or negative
-      else if (parseInt(q) != q) errors.push('<font color="red"><b> Enter a Whole Number </b></font>');//Check if value is a full number
-      
-      return return_errors ? errors : (errors.length == 0);
-    }
-    function checkQuantityTextbox(theTextbox) {
-      errs = isValid(theTextbox.value, true);
-      if (errs.length == 0) errs = ['You want:']; //If there no errors then make this text appear
-      if (theTextbox.value.trim() == '') errs = ['Quantity'];
-      document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
-    }
-
-    window.onload = function () {
-      let params = (new URL(document.location)).searchParams; //retrieves the qString and check that the entries are valid
-      if (params.has('submitPurchase')) {
-        has_errors = false; //Assume no errors
-        total_qty = 0; //
-        //loop to display the products
-        for (i = 0; i < products.length; i++) {
-          if (params.has(`quantity${i}`)){
-            a_qty = params.get(`quantity${i}`);
-            product_display[`quantity${i}`].value = a_qty;//Makes value sticky
-            total_qty += a_qty;
-            if(isValid(a_qty)) {
-              has_errors = true; //There are invalid quantities 
-              checkQuantityTextbox(product_display[`quantity${i}`]); //runs checkQuantityTextbox and shows the errors location
-            }
+<script>
+  window.onload = function () {
+    let params = (new URL(document.location)).searchParams; //retrieves the qString and check that the entries are valid
+    if (params.has('submitPurchase')) {
+      has_errors = false; //Assume no errors
+      total_qty = 0; //
+      //loop to display the products
+      for (i = 0; i < products.length; i++) {
+        if (params.has(`quantity${i}`)) {
+          a_qty = params.get(`quantity${i}`);
+          product_display[`quantity${i}`].value = a_qty;//Makes value sticky
+          total_qty += a_qty;
+          if (isValid(a_qty)) {
+            has_errors = true; //There are invalid quantities 
+            checkQuantityTextbox(product_display[`quantity${i}`]); //runs checkQuantityTextbox and shows the errors location
           }
         }
-        if (has_errors) {
-          alert("Please enter valid quantities, mahalo");
-        } else if (total_qty == 0) {//no inputs made
-          alert("Please select the amount of products you'd wish to purchase, mahalo");
-        }
+      }
+      if (has_errors) {
+        alert("Please enter valid quantities, mahalo");
+      } else if (total_qty == 0) {//no inputs made
+        alert("Please select the amount of products you'd wish to purchase, mahalo");
       }
     }
-  </script>
+  }
+</script>
 
 <body>
   <!--Creates the product display with links of the 4 different product pages-->
-  <form name = "product_display" action = "/process_purchase" method = "POST">
     <header>
       <h1>UH Manoa Athletic Shop</h1>
     </header>
-    
+
     <main>
       <script>
-       // Outputs the prodtype which returns the product's name and pictures as long it is named exactly how it is named in my var allProducts so it will output the correct product info. as long as it is named exactly the same way as my 4 var (Tickets, Tops, Bottoms, Accessories)
+        // Outputs the prodtype which returns the product's name and pictures as long it is named exactly how it is named in my var allProducts so it will output the correct product info. as long as it is named exactly the same way as my 4 var (Tickets, Tops, Bottoms, Accessories)
 
-       
-       for (let prodtype in allProducts){
+
+        for (let prodtype in allProducts) {
           document.write(`
             <section class = "item">
               <h2>${prodtype}</h2>
@@ -103,18 +90,15 @@ Purpose: to create an index page for the site.
               <br>
               <br>
               <p> Click on the image below to enter the page! </p>
-            </section>`);}
+            </section>`);
+        }
       </script>
     </main>
 
     <footer>
-
-      <h1>SHOW YOUR SUPPORT FOR UH ATHLETICS!</h1><br>
-      <input type = "submit" value = "Add to Cart" name = "submitCart"><!--When pressed it goes through /Check-->
-
+      <h1>SHOW YOUR SUPPORT FOR UH ATHLETICS!</h1>
     </footer>
-    
-  </form>
-  
+
 </body>
+
 </html>
