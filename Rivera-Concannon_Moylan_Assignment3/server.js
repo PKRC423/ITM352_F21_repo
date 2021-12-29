@@ -4,12 +4,13 @@ Authors: Peter Rivera-Concannon & Nate Moylan
 Purpose: Main server file.
 */
 
-var products = require('./views/products.js');
+var products = require('./public/products.js');
 var allProducts = products.allProducts;
 var fs = require('fs');
 var qs = require('qs');
 var express = require('express');
 var app = express();
+
 
 var myParser = require("body-parser");
 app.use(myParser.urlencoded({ extended: true}));

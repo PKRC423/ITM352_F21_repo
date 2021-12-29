@@ -1,0 +1,106 @@
+   /* Noah Kim's Index Stylesheet */
+/* Author: Noah Kim */
+/* index.css */
+/* Retrieved and modified from SmartPhoneProducts3 */
+
+/* General */
+html {
+  font-family: 'Blinker', sans-serif;
+  background-color: whitesmoke;
+  font-size: 10px;
+}
+
+body {
+  width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* Typography */
+h1, h2 {
+  font-family: 'Blinker', sans-serif;
+  margin: 0;
+  text-align: center;
+}
+
+h1 {
+  font-size: 5rem;
+  background-size: 48px 48px;
+  background-blend-mode: lighten;
+}
+
+h2 {
+  font-size: 2.75rem;
+  color: plum;
+  text-align: center;
+  width: 100%;
+  margin: 20px 0 20px;
+  position: absolute;
+  right: 4%;
+  z-index: 3000;
+  text-shadow: 5px 5px 3px white;
+  line-height: 2rem;
+  padding-top: 0.3rem;
+}
+
+h4 {
+  color: peachpuff;
+}
+
+b {
+  font-weight: bold;
+}
+
+p {
+  font-size: 1.75rem;
+}
+
+/* Block Styling */
+header, aside, main, footer {
+  padding: 20px;
+}
+
+body > div {
+  display: flex;
+}
+
+footer h1 {
+  font-style: italic;
+  font-size: 2.5rem;
+}
+
+/*  Form Styling */
+main {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+aside {
+  display: flex;
+  align-items: stretch;
+  padding: 50px 0;
+}
+
+aside div {
+  margin-bottom: 20px;
+}
+
+/* Styling the products */
+section {
+  width: 200%;
+  margin: 5px;
+  background-color: powderblue;
+  position: relative;
+  height: 350px;
+}
+
+/* Makes the image stick to the bottom right of the blocks */
+.item img {
+    width: 350px;
+    height: 180px; 
+    display: block;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}

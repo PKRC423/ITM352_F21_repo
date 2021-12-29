@@ -9,10 +9,11 @@ Purpose: a page that will load the products requested based on the users choice 
 
 <head>
 
-<!--To generate the products.json data-->
+<!--SCRIPTS FOR FUNCTIONS-->
     <script src="./products.js" type="text/javascript"></script>
     <!-- <script src="./functions.js" type="text/javascript"></script> still need to figure out difference in Noah's work to better understand how he used it-->
     <script src="./navbar.js" type="text/javascript"></script>
+   
 
     <script>
        let params = (new URL(document.location)).searchParams; // GET the query string & check that the quantities are valid values then go to login.html if it is good
@@ -23,8 +24,12 @@ Purpose: a page that will load the products requested based on the users choice 
     <meta charset="utf-8">
     <title>UH Manoa Football Tickets</title>
 
+
+    <!--CSS LINKS-->
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link href="uhFB.css" rel="stylesheet">
+    <link href="./navbar.css" rel="stylesheet">
+    
 
     <script>
             //This function checks if the input is a non-negative integer and if there are more than or equal to 5 tickets of the same type are purchased. And it validates that there are enough tickets availabl to purchase.
@@ -56,12 +61,23 @@ Purpose: a page that will load the products requested based on the users choice 
 
             /* Need to add window.onload function (line 92-119 on Noah's) */
 
+            window.onload = function (){
+
+            }
+
+    </script>
+
+    <script type="text/javascript">
+
+        // This calls the navbar function in navbar.js
+        navbar();
+
     </script>
 
 </head>
 
 <body>
-    <!--Generates the product display page with links to my different pages-->
+    <!--Generates the product display page with links to our different pages-->
 
     <!--Need to add app.post(/add_toCart) on server.js-->
    

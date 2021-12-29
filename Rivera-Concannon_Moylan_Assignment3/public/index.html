@@ -9,19 +9,27 @@ Purpose: to create an index page for the site.
 <html lang="en">
 <head>
   <!--SCRIPTS-->
-  <script src ="./views/navbar.js"></script>
-  <script src ="./views/products.js"></script>
-  <script src ="./views/functions.js"></script>
+  <script src ="./navbar.js" type="text/javascript"></script>
+  <script src ="./products.js" type="text/javascript"></script>
+  <script src ="./views/functions.js" type="text/javascript"></script>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--CSS LINKS-->
+  <link href="./index.css" rel="stylesheet">
+  <link href="./navbar.css" rel="stylesheet">
+
+
   <title>UH Manoa Athletic Store</title>
 
   <!--SCRIPT TO LOAD NAVBAR-->
   <script type = "text/javascript">
-    // This calls our navbar form navbar.js file 
-    navbar ();
+    // This calls our navbar from navbar.js file 
+    navbar();
+
+  
   </script>
 
   <br>
@@ -77,24 +85,27 @@ Purpose: to create an index page for the site.
 
 <body>
   <!--Creates the product display with links of the 4 different product pages-->
-  <form name = "product_display" action = "process_purchase" method = "POST">
+  <form name = "product_display" action = "/process_purchase" method = "POST">
     <header>
       <h1>UH Manoa Athletic Shop</h1>
     </header>
-
-    <main><script>
+    
+    <main>
+      <script>
        // Outputs the prodtype which returns the product's name and pictures as long it is named exactly how it is named in my var allProducts so it will output the correct product info. as long as it is named exactly the same way as my 4 var (Tickets, Tops, Bottoms, Accessories)
 
+       
        for (let prodtype in allProducts){
           document.write(`
             <section class = "item">
-              <h2>${prodtype}s</h2>
-              <a href = "./products.html?product_key=${prodtype}"><img src="./images/${prodtype}.jpeg"></a> 
+              <h2>${prodtype}</h2>
+              <a href="./products.html?product_key=${prodtype}"><img src="./images/${prodtype}.jpeg"></a> 
               <br>
               <br>
               <p> Click on the image below to enter the page! </p>
             </section>`);}
-    </script></main>
+      </script>
+    </main>
 
     <footer>
 
