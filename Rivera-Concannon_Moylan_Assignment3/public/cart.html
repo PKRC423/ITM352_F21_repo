@@ -147,7 +147,7 @@ Purpose:
         </table>
   </div>
   <script>
-    document.write(`<h5> To modify your shopping cart, please add/ remove items in the quantity box, then press "Update Cart"! Press "Refresh Cart" to view your updated changes!</h5>`)
+    document.write(`<h2> To modify your shopping cart, please change your quantity of items dedicated box, then press "Update Cart"!</h2>`)
   </script>
   <!--Button for UPDATE CART-->
   <input type="submit" value="Update Cart" name="Update Cart!">
@@ -155,17 +155,19 @@ Purpose:
   </form>
 
     <!--If user has the cookie, the button will say "Login to Complete Purchase", if user does not, the button will say "Complete Purchase"-->
+    <form name="purchase_cart" action="/purchase_cart" method="post">
     <script>
       if (getCookie("username") != false) { // If user is logged in, then they can head to complete purchase
         document.write(`
           <div id="purchase_cart" class="completePurchase">
-            <input type="button" onclick="purchase_cart();" value="Complete Purchase">
+            <input type="submit" value="Complete Purchase">
           </div>`);
       } else { // If user is not logged in, they are taken to login
         document.write(`
     <div><input type="button" onclick="location.href='./login.html';" value="Login to Complete Purchase"</div>`);
       }
     </script>
+    </form>
   <div>
     <!--Revised the shipping policy from Invoice4 b/c the products I am selling are of a higher value and price range-->
     <div class="col-75">

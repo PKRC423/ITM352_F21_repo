@@ -4,8 +4,9 @@ Authors: Peter Rivera-Concannon & Nate Moylan
 Purpose: To store functions used. Referenced from a source given by Nate and other outside sources
 */
 
-
-// This function asks the server for a "service" and converts the response to text. 
+//////////////////////////////////////////////////////////////////////////////////////
+/* This function asks the server for a "service" and converts the response to text. */
+//////////////////////////////////////////////////////////////////////////////////////
 function loadJSON(service, callback) {   
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
@@ -19,6 +20,9 @@ function loadJSON(service, callback) {
     xobj.send(null);  
  }
 
+ /////////////////////////////////////////////////////////////////////////////////
+ /* Used to update the cart when the user changes the quantity in the cart.html */
+ /////////////////////////////////////////////////////////////////////////////////
  function updatecart(updated_cart_data) {
   (async () => {
     const rawResponse = await fetch('Cart', {
@@ -34,7 +38,9 @@ function loadJSON(service, callback) {
     alert(content["message"]);
   })();
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////
+/* Used to get the Cookie to chcek if te user is logged in before they are checked out */
+/////////////////////////////////////////////////////////////////////////////////////////
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -51,26 +57,5 @@ function getCookie(cname) {
   return "";
 }
 
-function purchase_cart(){
-    div = cartDiv;
-    var scripts = div.getElementsByTagName('script');
-    var i = scripts.length;
-    while (i--) {
-      scripts[i].parentNode.removeChild(scripts[i]); 
-    }
-    (async () => { // Borrowed and modified code from https://stackoverflow.com/questions/29775797/fetch-post-json-data to load the invoice from the cart screen
-      const rawResponse = await fetch('./purchase_cart', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ "invoicehtml": cartDiv.innerHTML})
-      });
-      const content = await rawResponse.json();
-  
-      alert(content["status"]);
-    })();
-  }
 
  

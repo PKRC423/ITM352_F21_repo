@@ -264,36 +264,50 @@ app.post('/get_cart', function (request, response, next) {
 /* Completes Purchase and emails the Invoice*/
 //////////////////////////////////////////////
 app.post("/purchase_cart", function (request, response) {
-    console.log(request.body.invoice.html);
-    var invoicehtml = request.body.invoicehtml;
-            // return;
-            var username = request.cookies["username"];
-            var the_email = user_data[username].email;
-            var transporter = nodemailer.createTransport({
-                host: "mail.hawaii.edu",
-                port: 25,
-                secure: false, // Use TLS
-                tls: {
-                    // Invalid Certifications
-                    rejectUnauthorized: false
-                }
-            });
-            var mailOptions = {
-                from: 'UHAthleticsStore@gmail.com',
-                to: the_email,
-                subject: 'Your UH Manoa Athletics Purchase',
-                html: invoicehtml
-            };
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    status_str = 'There was an error and your invoice could not be emailed!';
-                } else {
-                    status_str = `Your invoice was mailed to ${user_data[username].email}`;
-                }
-                response.json({ "status" : status_str });
-            });
-            request.session.destroy();
+// Generate HTML invoice string FROM example Assignemnt 3 code
+var invoice_str = `Thank you for your order!<table border><th>Quantity</th><th>Item</th>`;
+var shopping_cart = request.session.cart;
+for(product_key in products) {
+  for(i=0; i<products[product_key].length; i++) {
+      if(typeof shopping_cart[product_key] == 'undefined') continue;
+      qty = shopping_cart[product_key][i];
+      if(qty > 0) {
+        invoice_str += `<tr><td>${qty}</td><td>${products[product_key][i].name}</td><tr>`;
+      }
+  }
+}
+invoice_str += '</table>';
+// Set up mail server. Only will work on UH Network due to security restrictions
+var transporter = nodemailer.createTransport({
+  host: "mail.hawaii.edu",
+  port: 25,
+  secure: false, // use TLS
+  tls: {
+    // do not fail on invalid certs
+    rejectUnauthorized: false
+  }
+});
+var user_name = request.cookies['username'];
+console.log(user_name);
+var user_email = user_login[user_name].email;
+console.log(user_email);
+var mailOptions = {
+  from: 'UHMAthleticsStore@hawaii.edu',
+  to: user_email,
+  subject: 'Inovice from UH Manoa Athletics Sports Shop',
+  html: invoice_str
+};
 
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    invoice_str += '<br>There was an error and your invoice could not be emailed';
+  } else {
+    invoice_str += `<br>Your invoice was mailed to ${user_email}`;
+  }
+  response.send(invoice_str);
+});
+response.clearCookie('username'); // deletes cookie info
+request.session.destroy(); // deletes session
 });
 ///////////////////////////
 /* To LOAD THE CART DATA */
