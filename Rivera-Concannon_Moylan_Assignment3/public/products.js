@@ -27,21 +27,21 @@ var Tops = [
         {
             "name": "Men's Manoa Shirt",
             "price": 25,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHMS.jpg",
             "qty_available": 100
         },
     //Womens Shirt
         {
             "name": "Women's Manoa Shirt",
             "price": 25,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHWS.jpg",
             "qty_available": 100
         },
     //Keiki's Shirt
         {
             "name": "Kid's Manoa Shirt",
             "price": 10,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHMS.jpg",
             "qty_available": 100
         },
     ]
@@ -51,21 +51,21 @@ var Bottoms =[
         {
             "name": "Men's Sweatpants",
             "price": 30,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHMSP.jpg",
             "qty_available": 100
         },
     //Women's Sweatpants
         {
             "name": "Women's Sweatpants",
             "price": 30,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHWSP.jpg",
             "qty_available": 100
         },
     //Kids Sweatpants
         {
             "name": "Kid's Sweatpants",
             "price": 30,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHMSP.jpg",
             "qty_available": 100
         },
     ]
@@ -76,21 +76,21 @@ var Accessories =[
         {
             "name": "Hat",
             "price": 25,
-            "image": "https://github.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHH.jpg?raw=true",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHH.jpg",
             "qty_available": 100
         },
     //Wristband
         {
             "name": "Wristband",
             "price": 25,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHW.jpg",
             "qty_available": 100
         },
     //Lanyard
         {
             "name": "Lanyard",
             "price": 25,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHL.jpg",
             "qty_available": 100
         },
     ]
@@ -100,7 +100,7 @@ var Tickets =[
     {
         "name": "100, 106, 200, 204",
         "price": 15.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -108,7 +108,7 @@ var Tickets =[
     {
         "name": "101, 102, 104, 105, 201, 203",
         "price": 20.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -116,7 +116,7 @@ var Tickets =[
     {
         "name": "103 & 202",
         "price": 30.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -124,7 +124,7 @@ var Tickets =[
     {
         "name": "140, 141, 148, 149",
         "price": 15.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
     
     },
@@ -132,7 +132,7 @@ var Tickets =[
     {
         "section_num": "142, 143, 146, 147",
         "price": 20.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -140,7 +140,7 @@ var Tickets =[
     {
         "name": "144 & 145",
         "price": 30.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -148,7 +148,7 @@ var Tickets =[
     {
         "name": "160 & 161",
         "price": 15.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -156,7 +156,7 @@ var Tickets =[
     {
         "name": "162 & 163",
         "price": 20.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -164,7 +164,7 @@ var Tickets =[
     {
         "name": "164 & 165",
         "price": 15.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -172,7 +172,7 @@ var Tickets =[
     {
         "name": "120 & 121",
         "price": 15.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -180,7 +180,7 @@ var Tickets =[
     {
         "name": "122",
         "price": 20.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/blob/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
@@ -188,7 +188,7 @@ var Tickets =[
     {
         "name": "123 & 124",
         "price": 15.00,
-        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
+        "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/ticket.jpg",
         "qty_available": 100
         
     },
