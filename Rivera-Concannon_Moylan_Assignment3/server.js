@@ -267,8 +267,10 @@ app.post("/purchase_cart", function (request, response) {
 // Generate HTML invoice string FROM example Assignemnt 3 code
 var invoice_str = `Thank you for your order!<table border><th>Quantity</th><th>Item</th>`;
 var shopping_cart = request.session.cart;
-for(product_key in products) {
+console.log(shopping_cart);
+for(product_key in products[allProducts]) {
   for(i=0; i<products[product_key].length; i++) {
+      console.log(`# of items purchased for ${product_key}: ` + shopping_cart[product_key]);
       if(typeof shopping_cart[product_key] == 'undefined') continue;
       qty = shopping_cart[product_key][i];
       if(qty > 0) {
