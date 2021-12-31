@@ -76,7 +76,7 @@ var Accessories =[
         {
             "name": "Hat",
             "price": 25,
-            "image": "https://raw.githubusercontent.com/PKRC423/ITM352_F21_repo/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHVC.jpg",
+            "image": "https://github.com/PKRC423/ITM352_F21_repo/blob/main/Rivera-Concannon_Moylan_Assignment3/public/images/UHH.jpg?raw=true",
             "qty_available": 100
         },
     //Wristband
