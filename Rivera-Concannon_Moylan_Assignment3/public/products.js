@@ -196,12 +196,15 @@ var Tickets =[
 
 var allProducts ={
 
-    "Tickets": Tickets,
+    "Football Tickets": Tickets,
 
-    "Tops": Tops,
+    "Manoa Tops": Tops,
 
-    "Bottoms": Bottoms,
+    "Manoa Bottoms": Bottoms,
 
-    "Accessories": Accessories
+    "Manoa Accessories": Accessories
 
+}
+if (typeof module != 'undefined') {
+    module.exports.allProducts = allProducts;
 }

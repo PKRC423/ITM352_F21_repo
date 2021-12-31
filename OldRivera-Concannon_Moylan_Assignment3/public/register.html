@@ -1,7 +1,8 @@
- <!--
-filename: register.template
-authors: Peter Rivera-Concannon and Nate Moylan
- -->
+<!--
+FileName: register.html
+Authors: Peter Rivera-Concannon & Nate Moylan
+Purpose: to create a register page for new users so they can register an account.
+-->
  
  
  <!DOCTYPE html>
@@ -13,11 +14,25 @@ authors: Peter Rivera-Concannon and Nate Moylan
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./register.css">
        
-       <!--
-       Referenced from Li Xinfei
-       -->
+        <script>
+            //Referenced from Lab 14, this tell the user if there is an error in the username or password
+            let params = (new URL(document.location)).searchParams;
+            window.onload = function () {
+                if (params.has('errors')) {
+                    alert('Errors need fixing; \n' + params.get('errors'));
+                    console.log("INVALID REGISTRATION");
+                    //makes registration sticky
+                    Register["fullname"].value = params.get("fullname");
+                    Register["username"].value = params.get("username");
+                    Register["email"].value = params.get("email");
+                }
+            }
+        </script>
 
-  
+        <script type="text/javascript">
+            //calls the navbar function
+            navbar();
+        </script>
        
     </head>
     
@@ -73,13 +88,19 @@ authors: Peter Rivera-Concannon and Nate Moylan
             </div>
     
             <div class="login_link">
-                <p>Already have an account? <a href="login">Sign In</a>.</p>
+                <p>Already have an account? <a href="./login.html">Sign In</a>.</p>
             </div>
     
         </form>
 
+        <script>
+            //to save the QUERY STRING from the products so it will display on the receipt/invoice
+            register.action += document.location.search;
+        </script>
      
-    <script>
+
+<!--           SHOULD WE STILL USE THIS???? THE CODE ON LINES 17-30 also check the inputs and tells the user what is wrong            -->
+    <script> //stores the users errors 
     let params = (new URL(document.location)).searchParams;
     if (params.has('errors_obj')) {
         // Converts string to json then object

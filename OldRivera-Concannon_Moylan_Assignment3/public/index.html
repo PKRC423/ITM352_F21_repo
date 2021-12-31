@@ -12,7 +12,7 @@ Purpose: to create an index page for the site.
   <!--SCRIPTS-->
   <script src="./navbar.js" type="text/javascript"></script>
   <script src="./products.js" type="text/javascript"></script>
-  <script src="./functions.js" type="text/javascript"></script>
+  <script src="./views/functions.js" type="text/javascript"></script>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,8 +21,9 @@ Purpose: to create an index page for the site.
   <!--CSS LINKS-->
 
 
-  <link href="./uhFB.css" rel="stylesheet"> <!--Using uhFB CSS because the index one looks worse in my opinion-->
+  <link href="./index.css" rel="stylesheet"> <!--Using uhFB CSS because the index one looks worse in my opinion-->
 
+  
   <link href="./navbar.css" rel="stylesheet">
 
 
@@ -34,6 +35,11 @@ Purpose: to create an index page for the site.
       navbar();
 
   </script>
+
+  <br>
+  <p>
+  <h3>Please do not forget to logout after your session!</h3>
+  </p>
 
 </head>
 
@@ -83,7 +89,7 @@ Purpose: to create an index page for the site.
               <a href="./products.html?product_key=${prodtype}"><img src="./images/${prodtype}.jpeg"></a> 
               <br>
               <br>
-              <p> Click on the product to see more!</p>
+              <p> Click on the image below to enter the page! </p>
             </div>`);
         }
       </script>

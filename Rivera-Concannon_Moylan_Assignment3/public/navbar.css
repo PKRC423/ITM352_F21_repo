@@ -1,29 +1,29 @@
 
 /* Configuring and styling navbar, borrowed sticky & active code from Alyssa Mencel */
 ul {
-    list-style-type: none;
+    list-style-type:circle;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: green;
-    position: sticky; /* navbar remains in place when scrolling up & down the page */
+    background-color: lightgray;
+    position:sticky;
     top: 0;
     width: 100%;
 }
 li {
-    float: left;
+   float:inline-end;
+   text-align: center;
 }
-li a {
-    display: block;
-    color: black;
+li, a {
+    display: inline-block;
+    color: green;
     font-size: 16pt;
     text-align: center;
-    padding: 20px 20px;
+    padding: 10px 10px;
     text-decoration: none;
 }
 li a:hover:not(.active) {
-    background-color: whitesmoke;
+    background-color: yellowgreen;
 }
-.active {
-    background-color: whitesmoke;
-    }
+
+

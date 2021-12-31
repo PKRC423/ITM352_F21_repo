@@ -119,8 +119,10 @@ Purpose: a page that will load the products requested based on the users choice 
                         document.write(` 
 
                                 <section style="text-align: center">
-                                    <h1>${nav[i].name}</h1>
+                                    <h1>Item:<p style="color: green;">${nav[i].name}</p></h1>
                                     
+                                    <br>
+
                                     <h2>Price: <br><p style="color:green"> \$${nav[i].price}</p></h2>
 
                                     <img src="./images/${nav[i].image}style='border: 5px solid green;' alt='Image' ">
@@ -130,7 +132,7 @@ Purpose: a page that will load the products requested based on the users choice 
                                     <input type="text" placeholder="0" name="quantity${i}"
                                     onkeyup="checkQuantityTextbox(this);"> 
 
-                                    <h2><label id="quantity_available${i}"> There are:<p style="color: green;"> ${nav[i].qty_available}</p> Items Available! </label></h2><hr>
+                                    <h2><label id="quantity_available${i}"> There are:<p style="color: green;"> ${nav[i].qty_available}</p> Items Available! </label></h2>
 
                                 </section>
                             `);

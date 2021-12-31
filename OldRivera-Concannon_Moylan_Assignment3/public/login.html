@@ -7,9 +7,9 @@ Purpose: to create a login page for the user to login to their account and if ne
 <script>
     let params = (new URL(document.location)).searchParams;
     //if errorMessage is in qry string then put up alert with error message
-    window.onload = function () {
+    windown.onload = function () {
         if (params.has("Login_Error")) {
-            username.value = params.get('the_username'); //Makes the value entered for username sticky
+            username.value = params.get('username'); //Makes the value entered for username sticky
             alert("Invalid Username and/or Password, try again please!")
         }
     }
@@ -47,7 +47,7 @@ Purpose: to create a login page for the user to login to their account and if ne
         <form action="/process_login" method="POST">
             <!--Username Field-->
             <div class="user-field">
-                <input id="username" type="text" name="username" required>
+                <input id="username_tag" type="text" name="username" required>
                 <span></span>
                 <label>Username</label>
             </div>

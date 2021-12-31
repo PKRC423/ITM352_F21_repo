@@ -8,18 +8,38 @@ Purpose: This document is used to create a function that displays a navigation b
 
 function navbar() {
 
+    var cart_qty;
+    loadJSON('./cart_qty', function (res) {
+        // Parsing JSON string into object
+        cart_qty = JSON.parse(res);
+    });
 
     //------------------------------------To create the nav_bar-------------------------------------------//
     
     document.write(`
         <ul>
-            <li style="float:left"><a href = "./index.html">UH Manoa Athletic Store</a></li><br>
+            
+            <li><a href ="./index.html">UH Manoa Athletic Store</a></li>
             <li><a href ="./cart.html${location.search}">Shopping Cart</a></li>
             <li><a href ="./index.html${location.search}">Products</a></li>
                 <div class ="dropdown-content">`);
 
                 for(let prodtype in allProducts){
-                    document.write(`<a href = "./products.html?productkey =${prodtype}">${prodtype}</a></ul>`)
+                    document.write(`<a href = "./products.html?product_key=${prodtype}">${prodtype}</a><br></div>`)
                 }
-
+                if (getCookie("username")!= ""){
+                    document.write(`
+                        <li><a href="./logout">Logout ${getCookie("username")}</a></li>
+                    `);
+                } else {
+                    document.write(`
+                        <li><a href="./login.html${location.search}">Login (You are not logged In!)</a></li>
+                    `);
+                }
+                    document.write(`
+                        <li><a href="./register.html${location.search}">Register</a></li>
+       
+            
+       </ul>
+        `);
 };

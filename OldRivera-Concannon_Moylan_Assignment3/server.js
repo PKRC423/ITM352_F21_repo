@@ -79,14 +79,14 @@ app.post("/process_register", function (request, response) {
     }
     else {
         reg_errors.push('Please only use letters for fullname');
-        console.log('ERROR: fullname invalid');
+        console.log('fullname invalid');
     }
     if (request.body.fullname == "") {
         reg_errors.push('This field cannot be empty!')
     }
     if (request.body.fullname.length > 30 || request.body.fullname.length < 1) {
         reg_errors.push('Maximum 30 Characters');
-        console.log('ERROR: fullname length is bad')
+        console.log('fullname length is bad')
     }
 
     //Username Validation//
@@ -98,18 +98,18 @@ app.post("/process_register", function (request, response) {
 
     if (request.body.username.length > 10 || request.body.username.length < 4) {
         reg_errors.push('Username should be within 4 and 10 characters.');
-        console.log('ERROR: username length not good');
+        console.log('username length not good');
     }
 
     if (typeof reg_username == '') {
         reg_errors.push('Please enter a username.');
-        console.log('ERROR: username empty');
+        console.log('username empty');
     }
     if (/^[0-9a-zA-Z]+$/.test(request.body.username)) {
         console.log('username has no other values')
     } else {
         reg_errors.push('Numbers and letters only please.');
-        console.log('ERROR: username has other values')
+        console.log('username has other values')
 
     }
 
@@ -160,7 +160,7 @@ app.post("/process_register", function (request, response) {
         var user_input = {"username": username, "name": user_login[username].name, "email": user_login[username].email};
         console.log(user_input);
         response.cookie("username", the_username).send
-        response.redirect('/index.html?' + qs.stringify(request.query));
+        response.redirect('/cart.html' + qs.stringify(request.query));
     } else {
         // fix the JSON to show the reg_errors
         request.body.errors_obj = JSON.stringify(reg_errors);
@@ -178,7 +178,7 @@ app.post("/process_register", function (request, response) {
         // data passing through the query currently works
         // Things need to do now: add the <script> in register.template but still need to figure that out and modify it from Bryson's
 
-        response.redirect('/register.html?' + qs.stringify(request.body));
+        response.redirect('/register.html' + qs.stringify(request.body));
         console.log('sent back')
 
     }
@@ -191,7 +191,7 @@ app.post("/process_login", function (request, response, next) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     let POST = request.body;
     var the_username = POST.username.toLowerCase();
-    var Login_Error = [];
+    var Login_Error = '';
 
     if (typeof user_login[the_username] != 'undefined') { //if there is a matching username
         if (user_login[the_username].password == POST.password) { //If the password is correct as well
@@ -221,14 +221,9 @@ app.post("/process_login", function (request, response, next) {
 /* TO PROCESS THE LOGOUT */
 ///////////////////////////
 app.get("/logout", function (request, response) {
-    str = `<script> alert('${request.cookies["username"]} has logged out'); location.href="./index.html";</script>`;
-    console.log(str)
+    str = `<script> alert('${request.cookies["username"]} has logged out); location.href="./index.html";</script>`;
     response.clearCookie('username'); //Clears var user_info
-    console.log("2")
-
     response.send(str);
-    console.log("3")
-
     request.session.destroy();
 })
 
@@ -264,37 +259,35 @@ app.post('/get_cart', function (request, response, next) {
 /* Completes Purchase and emails the Invoice*/
 //////////////////////////////////////////////
 app.post("/purchase_cart", function (request, response) {
-    console.log(request.body.invoice.html);
-    var invoicehtml = request.body.invoicehtml;
-            // return;
-            var username = request.cookies["username"];
-            var the_email = user_data[username].email;
-            var transporter = nodemailer.createTransport({
-                host: "mail.hawaii.edu",
-                port: 25,
-                secure: false, // Use TLS
-                tls: {
-                    // Invalid Certifications
-                    rejectUnauthorized: false
-                }
-            });
-            var mailOptions = {
-                from: 'UHAthleticsStore@gmail.com',
-                to: the_email,
-                subject: 'Your UH Manoa Athletics Purchase',
-                html: invoicehtml
-            };
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    status_str = 'There was an error and your invoice could not be emailed!';
-                } else {
-                    status_str = `Your invoice was mailed to ${user_data[username].email}`;
-                }
-                response.json({ "status" : status_str });
-            });
-            request.session.destroy();
-
+    console.log(request.body.invoiceHTML);
+    var invoiceHTML = request.body.invoiceHTML;
+    var username = request.cookies["username"];
+    var email = user_data[username].email;
+    var transporter = nodemailer.createTransport({
+        host: "mail.hawaii.edu",
+        port: 25,
+        secure: false,
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+    var mailOptions = {
+        from: 'UHAthletics2021@gmail.com',
+        to: email,
+        subject: "UH Athletics Store Invoice",
+        html: invoiceHTML
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            str = 'Error Occured, Invoice not Emailed!';
+        } else {
+            str = `Invoice Sent to ${user_data[username].email}`;
+        }
+        response.join({ "Status": str });
+    });
+    request.session.destroy();
 });
+
 ///////////////////////////
 /* To LOAD THE CART DATA */
 ///////////////////////////
@@ -313,7 +306,7 @@ app.post('/cart_qty', function (request, response) {
     for (product_key in request.session.cart) {
         tot += request.session.cart[product_key].reduce((a, b) => a + b);
     }
-    response.json({ "qty": tot });
+    response.join({ "qty": tot });
 });
 
 /////////////////////////////////////////////////////////
@@ -323,21 +316,14 @@ app.post("/Check", function (request, response) {
     let POST = request.body;
     var qty = POST["prod_qty"];
 
-
-
     //Validating the quantities and checking the availability of the tickets
-    if (typeof POST['submitCart'] != 'undefined') {
-
+    if (typeof POST['submitCart'] != undefined) {
         //try to find the name of the specific product
         product_key = POST["product_key"];
         product = allProducts[product_key];
-      
-
-
+        console.log(product);
         var hasvalidquantities = true;
         let quantities = [];
-
-
         for (i = 0; i < product.length; i++) {
             qty = POST[`quantity${i}`];
             quantities[i] = qty;

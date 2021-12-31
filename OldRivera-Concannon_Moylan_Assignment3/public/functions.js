@@ -1,7 +1,7 @@
 /*
 FileName: functions.js
 Authors: Peter Rivera-Concannon & Nate Moylan
-Purpose: To store functions used. Referenced from a source given by Nate and other outside sources
+Purpose: To store functions used. Referenced from a source given by Nate
 */
 
 
@@ -21,7 +21,7 @@ function loadJSON(service, callback) {
 
  function updatecart(updated_cart_data) {
   (async () => {
-    const rawResponse = await fetch('Cart', {
+    const rawResponse = await fetch('update_cart', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -51,21 +51,22 @@ function getCookie(cname) {
   return "";
 }
 
-function purchase_cart(){
-    div = cartDiv;
+function complete_purchase(){
+  // Borrowed and modified code from Kimberly Matutina
+    div = invoiceTabdiv;
     var scripts = div.getElementsByTagName('script');
     var i = scripts.length;
     while (i--) {
       scripts[i].parentNode.removeChild(scripts[i]); 
     }
-    (async () => { // Borrowed and modified code from https://stackoverflow.com/questions/29775797/fetch-post-json-data to load the invoice from the cart screen
-      const rawResponse = await fetch('./purchase_cart', {
+    (async () => { // Borrowed and modified code https://stackoverflow.com/questions/29775797/fetch-post-json-data
+      const rawResponse = await fetch('./complete_purchase', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "invoicehtml": cartDiv.innerHTML})
+        body: JSON.stringify({ "invoicehtml": invoiceTabdiv.innerHTML})
       });
       const content = await rawResponse.json();
   

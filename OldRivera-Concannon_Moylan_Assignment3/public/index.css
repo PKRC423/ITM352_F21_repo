@@ -1,0 +1,40 @@
+/*
+Authors: Peter Rivera-Concannon & Nate Moylan
+Filname: index.css
+Purpose: stylesheet for the index page
+*/
+
+/* General */
+h1,
+h2 {
+  font-family: "Raleway", sans-serif;
+  color: lightgreen;
+  background-color: black;
+  border-radius: 10px;
+  text-align: center;
+  margin: 50px;
+  display: block;
+  font-size: 35px;
+  
+}
+
+h2{
+  color: green;
+}
+div {
+  border-style: inset;
+  max-width: 40%;
+  background-color: rgba(255, 255, 255, 0.75);
+  align-content: center;
+  padding: 100p;
+}
+body,
+html {
+  height: 100%
+}
+body {
+  background-image: url('./images/tc_Ching_Stadium.jpg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
