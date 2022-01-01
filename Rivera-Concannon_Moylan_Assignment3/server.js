@@ -294,7 +294,7 @@ console.log(user_name);
 var user_email = user_login[user_name].email;
 console.log(user_email);
 var mailOptions = {
-  from: 'UHMAthleticsStore@hawaii.edu',
+  from: 'UHMAthleticsStore@store.com',
   to: user_email,
   subject: 'Inovice from UH Manoa Athletics Sports Shop',
   html: invoice_str
