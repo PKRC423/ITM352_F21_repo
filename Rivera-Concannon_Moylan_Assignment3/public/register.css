@@ -11,17 +11,14 @@ Purpose: stylesheet for the register page
 
 
 body {
-    margin: 0;
-    padding: 0;
-    display: flex;
+   
+    padding: 10px;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     background-color: black;
     color: white;
     background-image: url('./images/tc_Ching_Stadium.jpg');
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-size: cover;
     background-position: center;
 }

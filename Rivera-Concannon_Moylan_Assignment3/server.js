@@ -265,12 +265,42 @@ app.post('/get_cart', function (request, response, next) {
 //////////////////////////////////////////////
 app.post("/purchase_cart", function (request, response) {
 // Generate HTML invoice string FROM example Assignemnt 3 code
-var invoice_str = `Thank you for your order!<table border><th>Quantity</th><th>Item</th>`;
+
+
+var user_name = request.cookies['username'];
+
+var invoice_str = `Thank you for your order <br><b>${user_name}</b>!<table border><th>Quantity</th><th>Item</th>`;
+var shopping_cart = request.session.cart;
+
+for(product_key in products[allProducts]) {
+    
+  for(i=0; i<products[product_key].length; i++) {
+      if(typeof shopping_cart[product_key] == 'undefined') continue;
+
+      a_qty = shopping_cart[product_key][i];
+     
+      if(a_qty > 0) {
+        invoice_str += `<tr><td>${a_qty}</td><td>${products[product_key][i].name}</td><tr>`;
+      }
+  }
+}
+console.log("SHOPPING CART IS:" + shopping_cart);
+console.log("PRODUCT KEY IS :" + product_key);
+invoice_str += '</table>';
+
+
+
+
+
+
+/*var invoice_str = `Thank you for your order!<table border><th>Quantity</th><th>Item</th>`;
 var shopping_cart = request.session.cart;
 console.log(shopping_cart);
+
 for(product_key in products[allProducts]) {
+    console.log(products)
   for(i=0; i<products[product_key].length; i++) {
-      console.log(`# of items purchased for ${product_key}: ` + shopping_cart[product_key]);
+      console.log(`# of items purchased for ${product_key}: `);
       if(typeof shopping_cart[product_key] == 'undefined') continue;
       qty = shopping_cart[product_key][i];
       if(qty > 0) {
@@ -278,7 +308,10 @@ for(product_key in products[allProducts]) {
       }
   }
 }
-invoice_str += '</table>';
+invoice_str += '</table>';*/
+
+
+
 // Set up mail server. Only will work on UH Network due to security restrictions
 var transporter = nodemailer.createTransport({
   host: "mail.hawaii.edu",
@@ -289,10 +322,12 @@ var transporter = nodemailer.createTransport({
     rejectUnauthorized: false
   }
 });
+
 var user_name = request.cookies['username'];
-console.log(user_name);
+console.log("USERNAME IS" + user_name);
 var user_email = user_login[user_name].email;
-console.log(user_email);
+console.log("EMAIL IS" + user_email);
+
 var mailOptions = {
   from: 'UHMAthleticsStore@store.com',
   to: user_email,
@@ -302,12 +337,13 @@ var mailOptions = {
 
 transporter.sendMail(mailOptions, function(error, info){
   if (error) {
-    invoice_str += '<br>There was an error and your invoice could not be emailed';
+    invoice_str += `<br>There was an error and your invoice could not be emailed to <b>${user_login[user_name].email}</b>`;
   } else {
     invoice_str += `<br>Your invoice was mailed to ${user_email}`;
   }
   response.send(invoice_str);
 });
+
 response.clearCookie('username'); // deletes cookie info
 request.session.destroy(); // deletes session
 });

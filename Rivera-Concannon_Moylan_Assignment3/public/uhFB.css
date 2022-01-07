@@ -8,11 +8,16 @@ h1{
     padding-top:32px!important;
     padding-bottom:32px!important;
     text-align: center;
-    color: green;
+    color: black;
     font-family:sans-serif;
     font-weight: bold;
     border-style: inherit;
+    border: 5px solid #9ACD32;
+    border-radius: 20px;
+    box-shadow: 5px 10px #9ACD32;
 }
+
+
 
 h2{
     padding-top:16px!important;
@@ -34,9 +39,18 @@ a{
     width: 85%;
 }
 
+img{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+ 
+    
+}
+
 hr{
     border: 10px solid green;
-  border-radius: 5px;
+    border-radius: 5px;
 }
 
 body {
@@ -44,6 +58,8 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 div {
@@ -68,13 +84,92 @@ footer,header{
     text-align: center;
 }
 
+/*LINE BORDER*/
+
 hr {
     background-color: black;
     align-content: center;
     height: 2%;
 }
 
-input {
+/*TEXTBOX*/
+
+input[type=text] {
+    width: 50%;
+    padding: none;
+    margin: 8px 0;
+    box-sizing: border-box;
     text-align: center;
-    align-content: center;
+    border: 2px solid green;
+    border-radius: 40px;
+}
+
+/*BUTTONS*/
+
+input[type=submit]{
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999; 
+}
+
+input[type=submit]:hover{
+    background-color: #3e8e41;
+}
+
+input[type=submit]:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+
+
+input[type=button]{
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    left: 90%;
+    
+}
+
+input[type=button]:hover{
+    background-color: #3e8e41;
+}
+
+input[type=button]:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+/*CART TABLE*/
+
+#cartTable{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+
+#cartTable th{
+    padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }

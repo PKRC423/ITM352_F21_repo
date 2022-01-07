@@ -19,13 +19,14 @@ function navbar() {
     document.write(`
         <ul>
             
-            <li><a href ="./index.html">UH Manoa Athletic Store</a></li>
-            <li><a href ="./cart.html${location.search}">Shopping Cart</a></li>
-            <li><a href ="./index.html${location.search}">Products</a></li>
-                <div class ="dropdown-content">`);
+            <li><a href ="./index.html"><p style="color:black;"><b>UH Manoa Athletic Store</b></p></a></li>
+            <li><a href ="./index.html${location.search}"><p style="color:black;"><b>Products</b></p></a></li>
+            <li><a href ="./cart.html${location.search}"><p style="color:black;"><b>Shopping Cart</b></p></a></li>
+            
+                `);
 
                 for(let prodtype in allProducts){
-                    document.write(`<a href = "./products.html?product_key=${prodtype}">${prodtype}</a><br></div>`)
+                    document.write(`<div class ="dropdown-content"><a href = "./products.html?product_key=${prodtype}">${prodtype}</a></div>`)
                 }
                 if (getCookie("username")!= ""){
                     document.write(`
@@ -33,11 +34,11 @@ function navbar() {
                     `);
                 } else {
                     document.write(`
-                        <li><a href="./login.html${location.search}">Login (You are not logged In!)</a></li>
+                        <li><a href="./login.html${location.search}"><p style="color:black;"><b>Login <i>(You are not logged In!)</i></b></p></a></li>
                     `);
                 }
                     document.write(`
-                        <li><a href="./register.html${location.search}">Register</a></li>
+                        <li><a href="./register.html${location.search}"><p style="color:black;"><b>Register</b></p></a></li>
        
             
        </ul>

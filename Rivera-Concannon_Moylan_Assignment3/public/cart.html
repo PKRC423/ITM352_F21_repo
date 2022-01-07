@@ -32,6 +32,8 @@ Purpose:
   </script>
 
 
+
+
 </head>
 
 <body>
@@ -47,10 +49,10 @@ Purpose:
         <table border="2">
           <tbody>
             <tr>
-              <th style="text-align: center;" width="100%">Products</th>
-              <th style="text-align: center;" width="100%">Quantity</th>
-              <th style="text-align: center;" width="100%">Price</th>
-              <th style="text-align: center;" width="100%">Extended Price</th>
+              <th style="color: green;">Products</th>
+              <th style="color: green;">Quantity</th>
+              <th style="color: green;">Price</th>
+              <th style="color: green;">Extended Price</th>
             </tr>
 
             <script>
@@ -73,11 +75,13 @@ Purpose:
 
                     document.write(`
                           <tr>
-                            <td width="43%"> ${products[i].name}</td>
+                            <td align="center" width="43%"><b> ${products[i].name}</b></td>
+
                             <td align="center" width="11%">
                             <input type="text" onchange="cart_data['${prodtype}'][${i}]=this.value" name="quantities[${prodtype}][${i}]" value="${cart_data[prodtype][i]}" min="0"></td> 
-                            <td width="13%">\$${products[i].price}</td> 
-                            <td width="54%">\$${extended_price.toFixed(2)}</td>  
+
+                            <td align="center" width="54%">\$${products[i].price}</td> 
+                            <td align="center" width="54%">\$${extended_price.toFixed(2)}</td>  
                           </tr>  
                         `);
                   }
@@ -114,30 +118,29 @@ Purpose:
             </tr>
 
             <tr>
-              <td style="text-align: center;" colspan="3" width="100%">Sub-total</td>
+              <td style="text-align: center;" colspan="3" width="100%"><span style="font-family: arial;">Sub-total</span></td>
               <td width="54%">$
                 <script>document.write(subtotal.toFixed(2));</script>
               </td>
             </tr>
 
             <tr>
-              <td style="text-align: center;" colspan="3" width="100%"><span style="font-family: arial;">Tax @
-                  <script>document.write(100 * tax_rate);</script>%
-                </span></td>
+              <td style="text-align: center;" colspan="3" width="100%"><span style="font-family: arial;">
+                  <script>document.write(100 * tax_rate);</script>% Tax</span></td>
               <td width="54%">$
                 <script>document.write(tax.toFixed(2));</script>
               </td>
             </tr>
 
             <tr>
-              <td style="text-align: center;" colspan="3" width="100%">Shipping</td>
+              <td style="text-align: center;" colspan="3" width="100%"><span style="font-family: arial;">Shipping</span></td>
               <td width="54%">$
                 <script>document.write(shipping.toFixed(2));</script>
               </td>
             </tr>
 
             <tr>
-              <td style="text-align: center;" colspan="3" width="100%"><strong>Total</strong></td>
+              <td style="text-align: center;" colspan="3" width="100%"><strong><span style="font-family: arial;">Total</span></strong></td>
               <td width="54%"><strong>$
                   <script>document.write(total.toFixed(2));</script>
                 </strong></td>
@@ -147,7 +150,7 @@ Purpose:
         </table>
   </div>
   <script>
-    document.write(`<h2> To modify your shopping cart, please change your quantity of items dedicated box, then press "Update Cart"!</h2>`)
+    document.write(`<h1 style="color:white;"> To modify your shopping cart, please change your quantity of items dedicated box, then press "Update Cart"!</h1>`)
   </script>
   <!--Button for UPDATE CART-->
   <input type="submit" value="Update Cart" name="Update Cart!">
@@ -164,14 +167,14 @@ Purpose:
           </div>`);
       } else { // If user is not logged in, they are taken to login
         document.write(`
-    <div><input type="button" onclick="location.href='./login.html';" value="Login to Complete Purchase"</div>`);
+    <input type="button" onclick="location.href='./login.html';" value="Login to Complete Purchase">`);
       }
     </script>
     </form>
   <div>
     <!--Revised the shipping policy from Invoice4 b/c the products I am selling are of a higher value and price range-->
-    <div class="col-75">
-      <div class="container">
+    
+      
         <br><br><b>
           OUR SHIPPING POLICY IS:
           <br>
@@ -180,6 +183,6 @@ Purpose:
           <br>Subtotals over $100 will be charged 3% of the subtotal amount.
           <br><br>
         </b>
-      </div>
+      
 </body>
 </html>

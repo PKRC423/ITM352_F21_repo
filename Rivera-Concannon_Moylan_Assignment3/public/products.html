@@ -119,19 +119,20 @@ Purpose: a page that will load the products requested based on the users choice 
                         document.write(` 
 
                                 <section style="text-align: center">
-                                    <h1>${nav[i].name}</h1>
+                                    <h2>Product:<br></h2><h1>${nav[i].name}</h1>
                                     
                                     <h2>Price: <br><p style="color:green"> \$${nav[i].price}</p></h2>
 
                                     <img src="${nav[i]['image']}" style='border: 5px solid green;' alt='Image'>
 
-                                    <h3><label id="quantity${i}_label"}">Quantity:</label><h3>
+                                    <h2><label id="quantity${i}_label"}">Quantity:</label></h2>
 
                                     <input type="text" placeholder="0" name="quantity${i}"
                                     onkeyup="checkQuantityTextbox(this);"> 
 
                                     <h2><label id="quantity_available${i}"> There are:<p style="color: green;"> ${nav[i].qty_available}</p> Items Available! </label></h2><hr>
 
+                                    
                                 </section>
                             `);
                     }
@@ -139,11 +140,12 @@ Purpose: a page that will load the products requested based on the users choice 
             </main>
         </div>
         <footer>
-            <h1>
-                Support UH Manoa Athletic's Today!
-            </h1><br>
+            <br>
             <!--User selects button to add quantities to cart!"-->
             <input type="submit" value="Add to Cart!" name="submitCart">
+            <h1>
+                Support UH Manoa Athletic's Today!
+            </h1>
         </footer>
     </form>
 </body>

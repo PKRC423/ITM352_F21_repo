@@ -1,25 +1,24 @@
 
 /* Configuring and styling navbar, borrowed sticky & active code from Alyssa Mencel */
 ul {
-    list-style-type:circle;
+
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: lightgray;
     position:sticky;
+    text-align: center;
     top: 0;
     width: 100%;
 }
-li {
-   float:inline-end;
-   text-align: center;
-}
+
+
 li, a {
-    display: inline-block;
+    display:-webkit-inline-flex;
     color: green;
-    font-size: 16pt;
+    font-size: 15pt;
+    
     text-align: center;
-    padding: 10px 10px;
     text-decoration: none;
 }
 li a:hover:not(.active) {
