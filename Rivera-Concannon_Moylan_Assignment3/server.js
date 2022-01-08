@@ -148,6 +148,7 @@ app.post("/process_register", function (request, response) {
 
         var username = request.body.username;
         user_login[username] = {};
+        user_login[username].user_name = request.body.username;
         user_login[username].name = request.body.fullname;
         user_login[username].password = request.body.password;
         user_login[username].email = request.body.email;
@@ -155,7 +156,7 @@ app.post("/process_register", function (request, response) {
         data = JSON.stringify(user_login);
         fs.writeFileSync(user_info, data, "utf-8");
         console.log('fs.writeFileSyncRan');
-        the_username = user_login[username]['name'];
+        the_username = user_login[username]['user_name'];
         the_email = user_login[username]['email'];
         var user_input = {"username": username, "name": user_login[username].name, "email": user_login[username].email};
         console.log(user_input);
